@@ -2,9 +2,9 @@ import { Form, Input, DatePicker, Button, InputNumber, Space } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Store } from "antd/lib/form/interface";
 import React from "react";
-import { Card } from "./models/Card";
+import { Card } from "../models/Card";
 
-export const CardEntry = () => {
+const CardEntryForm = () => {
   const onFinish = (values: Store) => {
     values.cards.forEach((card: Card) => {
       console.log(card)
@@ -118,3 +118,5 @@ export const CardEntry = () => {
     </Form>
   );
 };
+
+export default CardEntryForm;

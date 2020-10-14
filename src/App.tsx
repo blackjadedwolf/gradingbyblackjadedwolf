@@ -1,6 +1,6 @@
 import React from "react";
 
-import { CardEntry } from "./CardEntry";
+import { CardEntryForm } from "./components";
 
 const App = () => {
   return (
@@ -24,7 +24,7 @@ const App = () => {
           </div>
         </form>
       </div>
-      <CardEntry />
+      <CardEntryForm />
     </>
   );
 };
