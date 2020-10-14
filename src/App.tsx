@@ -2,7 +2,7 @@ import React from "react";
 import './styles/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { CardEntry } from "./CardEntry";
+import { CardEntryForm } from "./components";
 
 const App = () => {
   return (
@@ -15,7 +15,7 @@ const App = () => {
           <div className="box">D</div>
         </div>
       </div>
-      {/* <CardEntry /> */}
+      <CardEntryForm />
     </>
   );
 };

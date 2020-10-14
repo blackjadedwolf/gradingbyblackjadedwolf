@@ -5,3 +5,10 @@ export interface Card {
   product: string;
   card_number: number;
 }
+
+export interface User {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber?: string;
+}
