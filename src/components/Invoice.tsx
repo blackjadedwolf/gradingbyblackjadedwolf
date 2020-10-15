@@ -8,6 +8,7 @@ import {
   Image,
   StyleSheet,
   PDFViewer,
+  PDFDownloadLink,
 } from "@react-pdf/renderer";
 import { Card, User } from "../models";
 import logo from "../assets/logo.png";
@@ -123,19 +124,17 @@ const Invoice = (props: Props) => {
     })
     .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
-  return (
-    <PDFViewer>
-      <Document>
-        <Page size="A4" style={styles.page}>
-          <Image style={styles.logo} src={logo} />
-          <View style={styles.titleContainer}>
-            <Text style={styles.reportTitle}>Invoice</Text>
-          </View>
-          <View style={styles.invoiceDateContainer}>
-            <Text style={styles.dateLabel}>Date: </Text>
-            <Text>{new Date().toISOString()}</Text>
-          </View>
-        </Page>
+  const MyInvoice = () => (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <Image style={styles.logo} src={logo} />
+        <View style={styles.titleContainer}>
+          <Text style={styles.reportTitle}>Invoice</Text>
+        </View>
+        <View style={styles.invoiceDateContainer}>
+          <Text style={styles.dateLabel}>Date: </Text>
+          <Text>{new Date().toISOString()}</Text>
+        </View>
         <View style={styles.headerContainer}>
           <Text style={styles.billTo}>Bill To:</Text>
           <Text>
@@ -152,12 +151,12 @@ const Invoice = (props: Props) => {
               <View style={styles.row} key={card.player_name}>
                 <Text style={styles.qty}>{card.quantity}</Text>
                 <Text style={styles.player_name}>{card.player_name}</Text>
-                <Text>{card.year}</Text>
+                <Text>{card.year.toString()}</Text>
                 <Text>{card.brand}</Text>
-                <Text>{card.card_number}</Text>
+                <Text>{card.card_number.toString()}</Text>
                 <Text>{card.product}</Text>
                 <Text style={styles.estimatedValue}>
-                  {card.estimated_value}
+                  {card.estimated_value.toString()}
                 </Text>
               </View>
             );
@@ -165,10 +164,19 @@ const Invoice = (props: Props) => {
         </View>
         <View style={styles.row}>
           <Text style={styles.description}>TOTAL</Text>
-          <Text style={styles.total}>{totalQuantity.toFixed(2)}</Text>
+          <Text style={styles.total}>{totalQuantity}</Text>
         </View>
-      </Document>
-    </PDFViewer>
+      </Page>
+    </Document>
+  );
+
+  return (
+    <PDFDownloadLink
+      document={<MyInvoice />}
+      fileName="BlackJadedWolf_Invoice.pdf"
+    >
+      Download your invoice before you leave!
+    </PDFDownloadLink>
   );
 };
 
