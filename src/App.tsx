@@ -1,6 +1,6 @@
 import React from "react";
 
-import { CardEntryForm } from "./components";
+import { CardEntryForm, Invoice } from "./components";
 
 const App = () => {
   return (
