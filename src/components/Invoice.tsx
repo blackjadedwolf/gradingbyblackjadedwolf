@@ -21,7 +21,7 @@ type Props = {
 const styles = StyleSheet.create({
   page: {
     fontFamily: "Helvetica",
-    fontSize: 11,
+    fontSize: 8,
     paddingTop: 30,
     paddingLeft: 60,
     paddingRight: 60,
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   reportTitle: {
     color: "#61dafb",
     letterSpacing: 4,
-    fontSize: 25,
+    fontSize: 20,
     textAlign: "center",
     textTransform: "uppercase",
   },
@@ -51,62 +51,74 @@ const styles = StyleSheet.create({
   },
   dateLabel: {
     width: 60,
+    paddingBottom: 3,
+    fontFamily: "Helvetica-Oblique",
   },
   headerContainer: {
     marginTop: 36,
   },
   billTo: {
-    marginTop: 20,
+    marginTop: 10,
     paddingBottom: 3,
     fontFamily: "Helvetica-Oblique",
   },
   tableContainer: {
     flexDirection: "row",
-    flexWrap: "wrap",
     marginTop: 24,
     borderWidth: 1,
     borderColor: "#bff0fd",
+    width: "100%"
   },
   row: {
+    display: "flex",
     flexDirection: "row",
-    borderBottomColor: "#bff0fd",
-    borderBottomWidth: 1,
     alignItems: "center",
     height: 24,
     fontStyle: "bold",
   },
-  player_name: {
-    width: "60%",
-    textAlign: "left",
-    borderRightColor: "#90e5fc",
-    borderRightWidth: 1,
-    paddingLeft: 8,
-  },
   qty: {
+    width: "5%",
+    borderRightColor: "#90e5fc",
+    borderRightWidth: 1,
+    textAlign: "center",
+  },
+  player_name: {
+    width: "20%",
+    borderRightColor: "#90e5fc",
+    borderRightWidth: 1,
+    textAlign: "left",
+    paddingLeft:"5px"
+  },
+  cardYear: {
+    width: "15%",
+    borderRightColor: "#90e5fc",
+    borderRightWidth: 1,
+    textAlign: "center",
+  },
+  brand: {
+    width: "15%",
+    borderRightColor: "#90e5fc",
+    borderRightWidth: 1,
+    textAlign: "left",
+    paddingLeft:"5px"
+  },
+  product: {
+    width: "15%",
+    borderRightColor: "#90e5fc",
+    borderRightWidth: 1,
+    textAlign: "left",
+    paddingLeft:"5px"
+  },
+  cardValue: {
     width: "10%",
-    borderRightColor: "#90e5fc",
-    borderRightWidth: 1,
-    textAlign: "right",
-    paddingRight: 8,
+    textAlign: "center",
   },
-  rate: {
+  cardNumber: {
     width: "15%",
     borderRightColor: "#90e5fc",
     borderRightWidth: 1,
-    textAlign: "right",
-    paddingRight: 8,
-  },
-  estimatedValue: {
-    width: "15%",
-    textAlign: "right",
-    paddingRight: 8,
-  },
-  description: {
-    width: "85%",
-    textAlign: "right",
-    borderRightColor: "#90e5fc",
-    borderRightWidth: 1,
-    paddingRight: 8,
+    textAlign: "left",
+    paddingLeft:"5px"
   },
   total: {
     width: "15%",
@@ -117,8 +129,7 @@ const styles = StyleSheet.create({
 
 const Invoice = (props: Props) => {
   const { cards, userDetails } = props;
-
-  const totalQuantity = cards
+  const totalValue = cards
     .map((card) => {
       return card.estimated_value * card.quantity;
     })
@@ -133,7 +144,7 @@ const Invoice = (props: Props) => {
         </View>
         <View style={styles.invoiceDateContainer}>
           <Text style={styles.dateLabel}>Date: </Text>
-          <Text>{new Date().toISOString()}</Text>
+          <Text>{new Date().toISOString().slice(0,10)}</Text>
         </View>
         <View style={styles.headerContainer}>
           <Text style={styles.billTo}>Bill To:</Text>
@@ -148,24 +159,27 @@ const Invoice = (props: Props) => {
         <View style={styles.tableContainer}>
           {cards.map((card) => {
             return (
-              <View style={styles.row} key={card.player_name}>
+              <View style={styles.row}>
                 <Text style={styles.qty}>{card.quantity}</Text>
                 <Text style={styles.player_name}>{card.player_name}</Text>
-                <Text>{card.year.toString()}</Text>
-                <Text>{card.brand}</Text>
-                <Text>{card.card_number.toString()}</Text>
-                <Text>{card.product}</Text>
-                <Text style={styles.estimatedValue}>
-                  {card.estimated_value.toString()}
+                <Text style={styles.cardYear}>{card.year.toString()}</Text>
+                <Text style={styles.brand}>{card.brand}</Text>
+                <Text style={styles.product}>{card.product}</Text>
+                {/* <Text>{card.product}</Text> */}
+                <Text style={styles.cardNumber}>{card.card_number}</Text>
+                <Text style={styles.cardValue}>
+                  ${card.estimated_value.toFixed(2)}
                 </Text>
               </View>
             );
           })}
         </View>
+        {/*
         <View style={styles.row}>
-          <Text style={styles.description}>TOTAL</Text>
-          <Text style={styles.total}>{totalQuantity}</Text>
+          <Text style={styles.description}>Total Value</Text>
+          <Text style={styles.total}> ${totalValue.toFixed(2)}</Text>
         </View>
+        */}
       </Page>
     </Document>
   );
