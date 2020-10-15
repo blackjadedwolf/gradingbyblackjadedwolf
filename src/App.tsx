@@ -1,4 +1,6 @@
 import React from "react";
+import './styles/App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { CardEntryForm, Invoice } from "./components";
 
@@ -6,23 +8,12 @@ const App = () => {
   return (
     <>
       <div className="App">
-        <form>
-          <div className="radio">
-            <label>
-              <input type="radio" name="optradio" checked /> Option 1
-            </label>
-          </div>
-          <div className="radio">
-            <label>
-              <input type="radio" name="optradio" checked /> Option 1
-            </label>
-          </div>
-          <div className="radio">
-            <label>
-              <input type="radio" name="optradio" checked /> Option 1
-            </label>
-          </div>
-        </form>
+        <div className="option-container container border">
+          <div className="box">A</div>
+          <div className="box">B</div>
+          <div className="box">C</div>
+          <div className="box">D</div>
+        </div>
       </div>
       <CardEntryForm />
     </>
