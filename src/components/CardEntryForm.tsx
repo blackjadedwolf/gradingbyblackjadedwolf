@@ -7,9 +7,11 @@ import {
   Space,
   Menu,
   Select,
+  Checkbox,
+  Modal,
 } from "antd";
 
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { MinusCircleOutlined } from "@ant-design/icons";
 import { Store } from "antd/lib/form/interface";
 import React, { useState } from "react";
 import { Card, User } from "../models";
@@ -44,6 +46,14 @@ const CardEntryForm = () => {
     });
 
     setCards(tempCards);
+  };
+
+  const showAgreement = () => {
+    Modal.info({
+      title: "User Submission Agreement",
+      content: <div>Lorem Ipsum don't sue us if you're dumb</div>,
+      onOk() {},
+    });
   };
 
   return !(cards && userDetails) ? (
@@ -240,6 +250,25 @@ const CardEntryForm = () => {
           );
         }}
       </Form.List>
+      <Form.Item
+        name="agreement"
+        valuePropName="checked"
+        rules={[
+          {
+            validator: (_, value) =>
+              value
+                ? Promise.resolve()
+                : Promise.reject("Should accept agreement"),
+          },
+        ]}
+      >
+        <Checkbox>
+          I have read the{" "}
+          <Button type="primary" onClick={showAgreement}>
+            agreement
+          </Button>
+        </Checkbox>
+      </Form.Item>
       <div className="d-flex flex-row align-items-center justify-content-center">
         <Form.Item>
           <Button type="primary" htmlType="submit">
