@@ -1,4 +1,13 @@
-import { Form, Input, DatePicker, Button, InputNumber, Space, Menu, Select } from "antd";
+import {
+  Form,
+  Input,
+  DatePicker,
+  Button,
+  InputNumber,
+  Space,
+  Menu,
+  Select,
+} from "antd";
 
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Store } from "antd/lib/form/interface";
@@ -8,21 +17,13 @@ import { Invoice } from "./";
 
 const DropdownMenu = (
   <Menu>
-    <Menu.Item>
-        1st menu item
-    </Menu.Item>
-    <Menu.Item>
-        2nd menu item
-    </Menu.Item>
-    <Menu.Item>
-        3rd menu item
-    </Menu.Item>
+    <Menu.Item>1st menu item</Menu.Item>
+    <Menu.Item>2nd menu item</Menu.Item>
+    <Menu.Item>3rd menu item</Menu.Item>
   </Menu>
 );
 
-
 const CardEntryForm = () => {
-
   const [cards, setCards] = useState<Card[]>();
   const [userDetails, setUserDetails] = useState<User>();
   const { Option } = Select;
@@ -36,7 +37,6 @@ const CardEntryForm = () => {
     };
     setUserDetails(tempDetails);
 
-
     let tempCards: Card[] = [];
 
     values.cards.forEach((card: Card) => {
@@ -47,26 +47,42 @@ const CardEntryForm = () => {
   };
 
   return !(cards && userDetails) ? (
-
-    <Form name="dynamic_card_entry_form" onFinish={onFinish} autoComplete="off" style={formStyle}>
-      <div className='d-flex flex-row align-items-center justify-content-center mt-5' > 
-        <Form.Item name="first_name" style={{width:"400px", marginRight:"20px"}} required>
+    <Form
+      name="dynamic_card_entry_form"
+      onFinish={onFinish}
+      autoComplete="off"
+      style={formStyle}
+    >
+      <div className="d-flex flex-row align-items-center justify-content-center mt-5">
+        <Form.Item
+          name="first_name"
+          style={{ width: "400px", marginRight: "20px" }}
+          required
+        >
           <Input placeholder={"First Name"} />
         </Form.Item>
 
-        <Form.Item name="last_name" style={{width:"400px", float:"left"}} required>
+        <Form.Item
+          name="last_name"
+          style={{ width: "400px", float: "left" }}
+          required
+        >
           <Input placeholder={"Last Name"} />
         </Form.Item>
       </div>
 
-      <div className='d-flex flex-row align-items-center justify-content-center'>
-        <Form.Item name="email" style={{width:"820px"}} required>
+      <div className="d-flex flex-row align-items-center justify-content-center">
+        <Form.Item name="email" style={{ width: "820px" }} required>
           <Input placeholder={"Email"} />
         </Form.Item>
       </div>
 
-      <div className='d-flex flex-row align-items-center justify-content-center'>
-        <Form.Item name="phone_number" style={{width: "450px", marginRight:"20px"}} required>
+      <div className="d-flex flex-row align-items-center justify-content-center">
+        <Form.Item
+          name="phone_number"
+          style={{ width: "450px", marginRight: "20px" }}
+          required
+        >
           <Input placeholder={"Phone Number"} />
         </Form.Item>
 
@@ -79,19 +95,24 @@ const CardEntryForm = () => {
           >
             <Option value="1"> 20 Day | $25.00 </Option>
             <Option value="2"> 10 Day | $50.00 </Option>
-            <Option value="3">   5 Day | $80.00 </Option>
+            <Option value="3"> 5 Day | $80.00 </Option>
             <Option value="4"> Bulk </Option>
           </Select>
         </Form.Item>
       </div>
-      <div className='d-flex align-items-center justify-content-center'>
-        <div style={{border:"1px solid #E8E8EE", width:"820px", marginBottom:"20px"}}></div>
+      <div className="d-flex align-items-center justify-content-center">
+        <div
+          style={{
+            border: "1px solid #E8E8EE",
+            width: "820px",
+            marginBottom: "20px",
+          }}
+        ></div>
       </div>
 
       <Form.List name="cards">
         {(fields, { add, remove }) => {
           return (
-
             <div>
               {fields.map((field) => (
                 <Space
@@ -99,22 +120,26 @@ const CardEntryForm = () => {
                   style={{ display: "flex", marginBottom: 8 }}
                   align="start"
                 >
-                  <div className='d-flex flex-row justify-content-between' style={{width:"1300px"}}>
-                    
+                  <div
+                    className="d-flex flex-row justify-content-between"
+                    style={{ width: "1300px" }}
+                  >
                     <Form.Item
                       {...field}
                       name={[field.name, "quantity"]}
                       fieldKey={[field.fieldKey, "quantity"]}
                       rules={[{ required: true, message: "Missing quantity" }]}
                     >
-                      <InputNumber placeholder={"Quantity"}/>
+                      <InputNumber min={1} placeholder={"Quantity"} />
                     </Form.Item>
 
                     <Form.Item
                       {...field}
                       name={[field.name, "player_name"]}
                       fieldKey={[field.fieldKey, "player_name"]}
-                      rules={[{ required: true, message: "Missing player name" }]}
+                      rules={[
+                        { required: true, message: "Missing player name" },
+                      ]}
                     >
                       <Input placeholder="Player Name" />
                     </Form.Item>
@@ -132,7 +157,9 @@ const CardEntryForm = () => {
                       {...field}
                       name={[field.name, "brand"]}
                       fieldKey={[field.fieldKey, "brand"]}
-                      rules={[{ required: true, message: "Missing card brand" }]}
+                      rules={[
+                        { required: true, message: "Missing card brand" },
+                      ]}
                     >
                       <Input placeholder="Brand" />
                     </Form.Item>
@@ -152,9 +179,15 @@ const CardEntryForm = () => {
                       {...field}
                       name={[field.name, "card_number"]}
                       fieldKey={[field.fieldKey, "card_number"]}
-                      rules={[{ required: true, message: "Missing card number" }]}
+                      rules={[
+                        { required: true, message: "Missing card number" },
+                      ]}
                     >
-                      <InputNumber style={{width:"200px"}} placeholder="Card #" />
+                      <InputNumber
+                        style={{ width: "200px" }}
+                        min={0}
+                        placeholder="Card #"
+                      />
                     </Form.Item>
 
                     <Form.Item
@@ -180,7 +213,7 @@ const CardEntryForm = () => {
                     </Form.Item>
 
                     <MinusCircleOutlined
-                    style={{marginTop:"8px"}}
+                      style={{ marginTop: "8px" }}
                       onClick={() => {
                         remove(field.name);
                       }}
@@ -188,15 +221,15 @@ const CardEntryForm = () => {
                   </div>
                 </Space>
               ))}
-              
-              <div className='d-flex flex-row align-items-center justify-content-center'>
+
+              <div className="d-flex flex-row align-items-center justify-content-center">
                 <Form.Item>
                   <Button
                     type="dashed"
                     onClick={() => {
                       add();
                     }}
-                    style={{width:"820px",border:"1px solid F7F7EE"}}
+                    style={{ width: "820px", border: "1px solid F7F7EE" }}
                     block
                   >
                     Add Card
@@ -206,9 +239,8 @@ const CardEntryForm = () => {
             </div>
           );
         }}
-
       </Form.List>
-      <div className='d-flex flex-row align-items-center justify-content-center'>
+      <div className="d-flex flex-row align-items-center justify-content-center">
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Submit
@@ -216,12 +248,13 @@ const CardEntryForm = () => {
         </Form.Item>
       </div>
     </Form>
-  ) : <Invoice cards={cards} userDetails={userDetails} />
+  ) : (
+    <Invoice cards={cards} userDetails={userDetails} />
+  );
 };
 
 let formStyle = {
   width: "1300px",
-}
-
+};
 
 export default CardEntryForm;
