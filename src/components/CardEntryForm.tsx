@@ -1,18 +1,45 @@
 import { Form, Input, DatePicker, Button, InputNumber, Space } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Store } from "antd/lib/form/interface";
-import React from "react";
-import { Card } from "../models";
+import React, { useState } from "react";
+import { Card, User } from "../models";
+import { Invoice } from "./";
 
 const CardEntryForm = () => {
+  const [cards, setCards] = useState<Card[]>();
+  const [userDetails, setUserDetails] = useState<User>();
   const onFinish = (values: Store) => {
-    values.cards.forEach((card: Card) => {
-      console.log(card)
+    setUserDetails({
+      email: values.email,
+      firstName: values.first_name,
+      lastName: values.last_name,
+      phoneNumber: values.phone_number
     })
+
+
+    let tempCards: Card[] = []
+
+    values.cards.forEach((card: Card) => {
+      tempCards.push(card)
+    })
+
+    setCards(tempCards);
   };
 
-  return (
+  return !(cards && userDetails) ? (
     <Form name="dynamic_card_entry_form" onFinish={onFinish} autoComplete="off">
+      <Form.Item name="first_name" label="First Name" required>
+        <Input />
+      </Form.Item>
+      <Form.Item name="last_name" label="Last Name" required>
+        <Input />
+      </Form.Item>
+      <Form.Item name="email" label="Email:" required>
+        <Input />
+      </Form.Item>
+      <Form.Item name="phone_number" label="Phone Number" required>
+        <Input />
+      </Form.Item>
       <Form.List name="cards">
         {(fields, { add, remove }) => {
           return (
@@ -23,6 +50,14 @@ const CardEntryForm = () => {
                   style={{ display: "flex", marginBottom: 8 }}
                   align="start"
                 >
+                  <Form.Item
+                    {...field}
+                    name={[field.name, "quantity"]}
+                    fieldKey={[field.fieldKey, "quantity"]}
+                    rules={[{ required: true, message: "Missing quantity" }]}
+                  >
+                    <InputNumber placeholder={"Number of cards"}/>
+                  </Form.Item>
                   <Form.Item
                     {...field}
                     name={[field.name, "player_name"]}
@@ -81,7 +116,9 @@ const CardEntryForm = () => {
                       formatter={(value) =>
                         `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                       }
-                      parser={(value) => value ? value.replace(/\$\s?|(,*)/g, "") : ""}
+                      parser={(value) =>
+                        value ? value.replace(/\$\s?|(,*)/g, "") : ""
+                      }
                     />
                   </Form.Item>
 
@@ -116,6 +153,8 @@ const CardEntryForm = () => {
         </Button>
       </Form.Item>
     </Form>
+  ) : (
+    <Invoice cards={cards} userDetails={userDetails} />
   );
 };
 
