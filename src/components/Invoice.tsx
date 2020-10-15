@@ -7,7 +7,6 @@ import {
   Document,
   Image,
   StyleSheet,
-  PDFViewer,
   PDFDownloadLink,
 } from "@react-pdf/renderer";
 import { Card, User } from "../models";
