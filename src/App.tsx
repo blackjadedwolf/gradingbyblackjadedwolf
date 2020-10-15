@@ -15,7 +15,7 @@ const App = () => {
           <BulkOption/>
         </div>
       </div>
-      {/* <CardEntryForm /> */}
+      <CardEntryForm />
     </>
   );
 };
