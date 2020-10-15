@@ -2,20 +2,20 @@ import React from "react";
 import './styles/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { CardEntryForm } from "./components";
+import { CardEntryForm, Invoice, SubmissionOption, BulkOption } from "./components";
 
 const App = () => {
   return (
     <>
       <div className="App">
         <div className="option-container container border">
-          <div className="box">A</div>
-          <div className="box">B</div>
-          <div className="box">C</div>
-          <div className="box">D</div>
+          <SubmissionOption days={20} price={10} />
+          <SubmissionOption days={10} price={50} />
+          <SubmissionOption days={5} price={80} />
+          <BulkOption/>
         </div>
       </div>
-      <CardEntryForm />
+      {/* <CardEntryForm /> */}
     </>
   );
 };
