@@ -9,12 +9,13 @@ const CardEntryForm = () => {
   const [cards, setCards] = useState<Card[]>();
   const [userDetails, setUserDetails] = useState<User>();
   const onFinish = (values: Store) => {
-    setUserDetails({
+    let tempDetails: User = {
       email: values.email,
       firstName: values.first_name,
       lastName: values.last_name,
       phoneNumber: values.phone_number,
-    });
+    };
+    setUserDetails(tempDetails);
 
     let tempCards: Card[] = [];
 

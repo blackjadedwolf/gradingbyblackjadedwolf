@@ -8,6 +8,7 @@ import {
   Image,
   StyleSheet,
   PDFViewer,
+  PDFDownloadLink,
 } from "@react-pdf/renderer";
 import { Card, User } from "../models";
 import logo from "../assets/logo.png";
@@ -123,52 +124,59 @@ const Invoice = (props: Props) => {
     })
     .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
+  const MyInvoice = () => (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <Image style={styles.logo} src={logo} />
+        <View style={styles.titleContainer}>
+          <Text style={styles.reportTitle}>Invoice</Text>
+        </View>
+        <View style={styles.invoiceDateContainer}>
+          <Text style={styles.dateLabel}>Date: </Text>
+          <Text>{new Date().toISOString()}</Text>
+        </View>
+        <View style={styles.headerContainer}>
+          <Text style={styles.billTo}>Bill To:</Text>
+          <Text>
+            {userDetails.firstName} {userDetails.lastName}
+          </Text>
+          <Text>{userDetails.email}</Text>
+          {userDetails.phoneNumber ? (
+            <Text>{userDetails.phoneNumber}</Text>
+          ) : null}
+        </View>
+        <View style={styles.tableContainer}>
+          {cards.map((card) => {
+            return (
+              <View style={styles.row} key={card.player_name}>
+                <Text style={styles.qty}>{card.quantity}</Text>
+                <Text style={styles.player_name}>{card.player_name}</Text>
+                <Text>{card.year.toString()}</Text>
+                <Text>{card.brand}</Text>
+                <Text>{card.card_number.toString()}</Text>
+                <Text>{card.product}</Text>
+                <Text style={styles.estimatedValue}>
+                  {card.estimated_value.toString()}
+                </Text>
+              </View>
+            );
+          })}
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.description}>TOTAL</Text>
+          <Text style={styles.total}>{totalQuantity}</Text>
+        </View>
+      </Page>
+    </Document>
+  );
+
   return (
-    <PDFViewer>
-      <Document>
-        <Page size="A4" style={styles.page}>
-          <Image style={styles.logo} src={logo} />
-          <View style={styles.titleContainer}>
-            <Text style={styles.reportTitle}>Invoice</Text>
-          </View>
-          <View style={styles.invoiceDateContainer}>
-            <Text style={styles.dateLabel}>Date: </Text>
-            <Text>{new Date().toISOString()}</Text>
-          </View>
-          <View style={styles.headerContainer}>
-            <Text style={styles.billTo}>Bill To:</Text>
-            <Text>
-              {userDetails.firstName} {userDetails.lastName}
-            </Text>
-            <Text>{userDetails.email}</Text>
-            {userDetails.phoneNumber ? (
-              <Text>{userDetails.phoneNumber}</Text>
-            ) : null}
-          </View>
-          <View style={styles.tableContainer}>
-            {cards.map((card) => {
-              return (
-                <View style={styles.row} key={card.player_name}>
-                  <Text style={styles.qty}>{card.quantity}</Text>
-                  <Text style={styles.player_name}>{card.player_name}</Text>
-                  <Text>{card.year.toString()}</Text>
-                  <Text>{card.brand}</Text>
-                  <Text>{card.card_number.toString()}</Text>
-                  <Text>{card.product}</Text>
-                  <Text style={styles.estimatedValue}>
-                    {card.estimated_value.toString()}
-                  </Text>
-                </View>
-              );
-            })}
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.description}>TOTAL</Text>
-            <Text style={styles.total}>{totalQuantity}</Text>
-          </View>
-        </Page>
-      </Document>
-    </PDFViewer>
+    <PDFDownloadLink
+      document={<MyInvoice />}
+      fileName="BlackJadedWolf_Invoice.pdf"
+    >
+      Download your invoice before you leave!
+    </PDFDownloadLink>
   );
 };
 
