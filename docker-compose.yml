@@ -35,7 +35,7 @@ services:
     volumes:
       - ./docker-local/nginx/fb.conf:/etc/nginx/conf.d/default.conf
       - ./docker-local/nginx/nginx_logs:/var/log/nginx/
-      - ./backend:/backend
+      - ./bjwbackend:/backend
     networks:
       - bjw_net
     depends_on:
