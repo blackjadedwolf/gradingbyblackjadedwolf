@@ -5,7 +5,6 @@ import {
   Button,
   InputNumber,
   Space,
-  Menu,
   Select,
   Checkbox,
   Modal,
@@ -17,14 +16,6 @@ import React, { useEffect, useState } from "react";
 import { Card, User } from "../models";
 import { Invoice } from "./";
 import { getTestMessage } from "../services/api";
-
-const DropdownMenu = (
-  <Menu>
-    <Menu.Item>1st menu item</Menu.Item>
-    <Menu.Item>2nd menu item</Menu.Item>
-    <Menu.Item>3rd menu item</Menu.Item>
-  </Menu>
-);
 
 const CardEntryForm = () => {
   const [cards, setCards] = useState<Card[]>();
@@ -270,7 +261,7 @@ const CardEntryForm = () => {
         ]}
       >
         <Checkbox>
-          I have read the following waiver: this is sample text and a placeholder
+          I have read and agree to the following <Button onClick={showAgreement}>terms</Button>
         </Checkbox>
       </Form.Item>
       <div className="d-flex flex-row align-items-center justify-content-center">

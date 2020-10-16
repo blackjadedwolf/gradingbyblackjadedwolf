@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     marginTop: 24,
     borderWidth: 1,
     borderColor: "#bff0fd",
-    width: "100%"
+    width: "100%",
   },
   row: {
     display: "flex",
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     borderRightColor: "#90e5fc",
     borderRightWidth: 1,
     textAlign: "left",
-    paddingLeft:"5px"
+    paddingLeft: "5px",
   },
   cardYear: {
     width: "15%",
@@ -99,14 +99,14 @@ const styles = StyleSheet.create({
     borderRightColor: "#90e5fc",
     borderRightWidth: 1,
     textAlign: "left",
-    paddingLeft:"5px"
+    paddingLeft: "5px",
   },
   product: {
     width: "15%",
     borderRightColor: "#90e5fc",
     borderRightWidth: 1,
     textAlign: "left",
-    paddingLeft:"5px"
+    paddingLeft: "5px",
   },
   cardValue: {
     width: "10%",
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     borderRightColor: "#90e5fc",
     borderRightWidth: 1,
     textAlign: "left",
-    paddingLeft:"5px"
+    paddingLeft: "5px",
   },
   total: {
     width: "15%",
@@ -143,7 +143,7 @@ const Invoice = (props: Props) => {
         </View>
         <View style={styles.invoiceDateContainer}>
           <Text style={styles.dateLabel}>Date: </Text>
-          <Text>{new Date().toISOString().slice(0,10)}</Text>
+          <Text>{new Date().toISOString().slice(0, 10)}</Text>
         </View>
         <View style={styles.headerContainer}>
           <Text style={styles.billTo}>Bill To:</Text>
@@ -173,12 +173,10 @@ const Invoice = (props: Props) => {
             );
           })}
         </View>
-        {/*
         <View style={styles.row}>
           <Text style={styles.description}>Total Value</Text>
           <Text style={styles.total}> ${totalValue.toFixed(2)}</Text>
         </View>
-        */}
       </Page>
     </Document>
   );
