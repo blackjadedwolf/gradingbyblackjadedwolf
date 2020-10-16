@@ -1,6 +1,7 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
+  "name": "blackjadedwolf-submissionform",
+  "version": "1.0.0",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "@react-pdf/renderer": "^1.6.11",
