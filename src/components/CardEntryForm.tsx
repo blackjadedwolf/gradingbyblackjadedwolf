@@ -265,10 +265,7 @@ const CardEntryForm = () => {
         ]}
       >
         <Checkbox>
-          I have read the{" "}
-          <Button type="primary" onClick={showAgreement}>
-            agreement
-          </Button>
+          I have read the following waiver: this is sample text and a placeholder
         </Checkbox>
       </Form.Item>
       <div className="d-flex flex-row align-items-center justify-content-center">
