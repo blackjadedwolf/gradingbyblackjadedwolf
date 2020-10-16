@@ -24,9 +24,9 @@ jobs:
           name: rsyncing frontend build to production
           command: |
             if [ "${CIRCLE_BRANCH}" = "master" ]; then
-              cd bjwfrontend/build && rsync . --omit-dir-times -avc -e ssh $SSH_USERNAME@$SSH_HOST:/var/www/bjwsubmissions/frontend
+              cd bjwfrontend/build && rsync . --omit-dir-times -avc -e ssh $SSH_USERNAME@$SSH_HOST:/var/www/bjwsubmissions/frontend/
             else
-              echo "not master branch, dry run only"
+              echo "not master branch, not syncing files"
             fi
   build-deploy-backend:
     executor:
@@ -50,10 +50,17 @@ jobs:
           name: rsyncing backend build to production
           command: |
             if [ "${CIRCLE_BRANCH}" = "master" ]; then
-              cd bjwbackend/build && rsync . --omit-dir-times -avc -e ssh $SSH_USERNAME@$SSH_HOST:/var/www/bjwsubmissions/backend
+              cd bjwbackend/build && rsync . --omit-dir-times -avc -e ssh $SSH_USERNAME@$SSH_HOST:/var/www/bjwsubmissions/backend/
             else
-              echo "not master branch, dry run only"
+              echo "not master branch, not syncing files"
             fi
+      - run:
+          name: starting backend server
+          command: |
+          if [ "${CIRCLE_BRANCH}" = "master" ]; then
+            ssh ${SSH_USERNAME}@${SSH_HOST} "killall node && node /var/www/bjwsubmissions/backend/build/index.js"
+          else
+            echo "not master branch, not restarting server"
 workflows:
     build-and-deploy:
       jobs:
