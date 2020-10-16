@@ -50,7 +50,7 @@ jobs:
           name: rsyncing package.json, start script, and backend build to production
           command: |
             if [ "${CIRCLE_BRANCH}" = "master" ]; then
-              cd bjwbackend && rsync ./start_server.sh ./package.json ./build/* -avc -e ssh $SSH_USERNAME@$SSH_HOST:/var/www/bjwsubmissions/backend/
+              cd bjwbackend && rsync ./start_server.sh ./package.json ./build -avc -e ssh $SSH_USERNAME@$SSH_HOST:/var/www/bjwsubmissions/backend/
             else
               echo "not master branch, not syncing files"
             fi
