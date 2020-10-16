@@ -57,10 +57,11 @@ jobs:
       - run:
           name: starting backend server
           command: |
-          if [ "${CIRCLE_BRANCH}" = "master" ]; then
-            ssh ${SSH_USERNAME}@${SSH_HOST} "killall node && node /var/www/bjwsubmissions/backend/build/index.js"
-          else
-            echo "not master branch, not restarting server"
+            if [ "${CIRCLE_BRANCH}" = "master" ]; then
+              ssh ${SSH_USERNAME}@${SSH_HOST} "killall node && node /var/www/bjwsubmissions/backend/build/index.js"
+            else
+              echo "not master branch, not restarting server"
+            fi
 workflows:
     build-and-deploy:
       jobs:
