@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  backend:
+    image: node:14.13.1-alpine3.12
+    restart: always
+    container_name: backend
+    environment:
+      - NODE_ENV=dev
+    volumes:
+      - ./bjwbackend:/app
+    entrypoint: "/app/entrypoint.sh"
+    networks:
+      - bjw_net
+
+  frontend:
+    image: node:14.13.1-alpine3.12
+    restart: always
+    container_name: frontend
+    environment:
+      - NODE_ENV=dev
+      - CI=true
+    volumes:
+      - ./bjwfrontend:/app
+    entrypoint: "/app/entrypoint.sh"
+    depends_on:
+      - backend
+    networks:
+      - bjw_net
+
+  webserver:
+    image: nginx:1.19.3-alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker-local/nginx/fb.conf:/etc/nginx/conf.d/default.conf
+      - ./docker-local/nginx/nginx_logs:/var/log/nginx/
+      - ./backend:/backend
+    networks:
+      - bjw_net
+    depends_on:
+      - frontend
+      - backend
+
+networks:
+  bjw_net:
+    driver: bridge
