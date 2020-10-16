@@ -1,0 +1,61 @@
+version: 2.1
+orbs:
+  node: circleci/node@1.1.6
+jobs:
+  build-deploy-frontend:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - add_ssh_keys
+      - run: 
+          name: Install node modules for frontend
+          command: cd bjwfrontend && npm install
+      - run: 
+          name: Building for production
+          command: cd bjwfrontend && npm run-script build
+      - run:
+          name: fix host authenticity for production server
+          command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
+      - run:
+          name: installing rsync
+          command: sudo apt-get install rsync
+      - run:
+          name: rsyncing frontend build to production
+          command: |
+            if [ "${CIRCLE_BRANCH}" = "master" ]; then
+              cd bjwfrontend/build && rsync . -avc -e ssh $SSH_USERNAME@$SSH_HOST:/var/www/bjwsubmissions/frontend
+            else
+              echo "not master branch, dry run only"
+            fi
+  build-deploy-backend:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - add_ssh_keys
+      - run: 
+          name: Install node modules for backend
+          command: cd bjwbackend && npm install
+      - run: 
+          name: Building for production
+          command: cd bjwbackend && npm run-script build
+      - run:
+          name: fix host authenticity for production server
+          command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
+      - run:
+          name: installing rsync
+          command: sudo apt-get install rsync
+      - run:
+          name: rsyncing backend build to production
+          command: |
+            if [ "${CIRCLE_BRANCH}" = "master" ]; then
+              cd bjwbackend/build && rsync . -avc -e ssh $SSH_USERNAME@$SSH_HOST:/var/www/bjwsubmissions/backend
+            else
+              echo "not master branch, dry run only"
+            fi
+workflows:
+    build-and-deploy:
+      jobs:
+        - build-deploy-frontend
+        - build-deploy-backend
