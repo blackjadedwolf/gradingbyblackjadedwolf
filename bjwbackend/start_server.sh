@@ -2,6 +2,7 @@
 
 # starting in /var/www/bjwsubmissions/backend
 # install pm2 manually if spinning up a new instance
+alias pm2=/home/ubuntu/.yarn/bin/pm2
 pm2 list
 pm2 kill
 yarn install --production
