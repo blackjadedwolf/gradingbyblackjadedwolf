@@ -40,7 +40,7 @@ const CardEntryForm = () => {
     values.cards.forEach((card: any) => {
       let tempCard: Card = {...card}
       tempCard.year = Number(card.year._d.toString().slice(11, 15));;
-      tempCards.push(card);
+      tempCards.push(tempCard);
     });
 
     setCards(tempCards);
