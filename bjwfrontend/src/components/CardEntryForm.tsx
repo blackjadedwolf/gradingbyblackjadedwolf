@@ -16,6 +16,7 @@ import React, { useEffect, useState } from "react";
 import { Card, User } from "../models";
 import { Invoice } from "./";
 import { getTestMessage } from "../services/api";
+import '../styles/CardEntryForm.css';
 
 const CardEntryForm = () => {
   const [cards, setCards] = useState<Card[]>();
@@ -55,52 +56,32 @@ const CardEntryForm = () => {
   };
 
   return !(cards && userDetails) ? (
-    <Form
-      name="dynamic_card_entry_form"
-      onFinish={onFinish}
-      autoComplete="off"
-      style={formStyle}
-    >
-      <div className="d-flex flex-row align-items-center justify-content-center mt-5">
-        <Form.Item
-          name="first_name"
-          style={{ width: "400px", marginRight: "20px" }}
-          required
-        >
+
+    <Form name="dynamic_card_entry_form" onFinish={onFinish} autoComplete="off" className="form">
+
+      <div className="contentWrap">
+        <Form.Item name="first_name" className="firstName" required >
           <Input placeholder={"First Name"} />
         </Form.Item>
 
-        <Form.Item
-          name="last_name"
-          style={{ width: "400px", float: "left" }}
-          required
-        >
+        <Form.Item name="last_name" className="lastName" required >
           <Input placeholder={"Last Name"} />
         </Form.Item>
       </div>
 
-      <div className="d-flex flex-row align-items-center justify-content-center">
-        <Form.Item name="email" style={{ width: "820px" }} required>
+      <div className="contentWrap">
+        <Form.Item name="email" className="email" required>
           <Input placeholder={"Email"} />
         </Form.Item>
       </div>
 
-      <div className="d-flex flex-row align-items-center justify-content-center">
-        <Form.Item
-          name="phone_number"
-          style={{ width: "450px", marginRight: "20px" }}
-          required
-        >
+      <div className="contentWrap">
+        <Form.Item name="phone_number" className="phoneNumber" required >
           <Input placeholder={"Phone Number"} />
         </Form.Item>
 
         <Form.Item name="submission_level" required>
-          <Select
-            showSearch
-            style={{ width: "350px" }}
-            placeholder="Select a Submission Level"
-            optionFilterProp="children"
-          >
+          <Select showSearch  className="select" placeholder="Select a Submission Level" optionFilterProp="children" >
             <Option value="1"> 20 Day | $25.00 </Option>
             <Option value="2"> 10 Day | $50.00 </Option>
             <Option value="3"> 5 Day | $80.00 </Option>
@@ -108,14 +89,9 @@ const CardEntryForm = () => {
           </Select>
         </Form.Item>
       </div>
-      <div className="d-flex align-items-center justify-content-center">
-        <div
-          style={{
-            border: "1px solid #E8E8EE",
-            width: "820px",
-            marginBottom: "20px",
-          }}
-        ></div>
+
+      <div className="contentWrap">
+        <div className='divider'></div>
       </div>
 
       <Form.List name="cards">
@@ -123,15 +99,10 @@ const CardEntryForm = () => {
           return (
             <div>
               {fields.map((field) => (
-                <Space
-                  key={field.key}
-                  style={{ display: "flex", marginBottom: 8 }}
-                  align="start"
-                >
-                  <div
-                    className="d-flex flex-row justify-content-between"
-                    style={{ width: "1300px" }}
-                  >
+                <Space key={field.key} className="space" align="start">
+                  
+                  <div className="cardDetailWrap">
+
                     <Form.Item
                       {...field}
                       name={[field.name, "quantity"]}
@@ -220,24 +191,21 @@ const CardEntryForm = () => {
                       />
                     </Form.Item>
 
-                    <MinusCircleOutlined
-                      style={{ marginTop: "8px" }}
-                      onClick={() => {
-                        remove(field.name);
-                      }}
-                    />
+                    <MinusCircleOutlined className="removeBtn" onClick={() => { remove(field.name);}}/>
+                    
                   </div>
                 </Space>
               ))}
 
-              <div className="d-flex flex-row align-items-center justify-content-center">
+              <div className="contentWrap">
                 <Form.Item>
                   <Button
                     type="dashed"
                     onClick={() => {
                       add();
                     }}
-                    style={{ width: "820px", border: "1px solid F7F7EE" }}
+                    className="addBtn"
+                    style={{ width: "820px" }}
                     block
                   >
                     Add Card
@@ -264,7 +232,7 @@ const CardEntryForm = () => {
           I have read and agree to the following <Button onClick={showAgreement}>terms</Button>
         </Checkbox>
       </Form.Item>
-      <div className="d-flex flex-row align-items-center justify-content-center">
+      <div className="contentWrap">
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Submit
@@ -277,8 +245,5 @@ const CardEntryForm = () => {
   );
 };
 
-let formStyle = {
-  width: "1300px",
-};
 
 export default CardEntryForm;
