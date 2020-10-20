@@ -12,21 +12,17 @@ import {
 
 import { MinusCircleOutlined } from "@ant-design/icons";
 import { Store } from "antd/lib/form/interface";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Card, User } from "../models";
 import { Invoice } from "./";
-import { getTestMessage } from "../services/api";
+import { saveOrder } from "../services/api";
 
 const CardEntryForm = () => {
   const [cards, setCards] = useState<Card[]>();
   const [userDetails, setUserDetails] = useState<User>();
   const { Option } = Select;
 
-  useEffect(() => {
-    getTestMessage()
-  }, [])
-
-  const onFinish = (values: Store) => {
+  const onFinish = async (values: Store) => {
     let tempDetails: User = {
       email: values.email,
       firstName: values.first_name,
@@ -40,10 +36,12 @@ const CardEntryForm = () => {
     values.cards.forEach((card: any) => {
       let tempCard: Card = {...card}
       tempCard.year = Number(card.year._d.toString().slice(11, 15));;
-      tempCards.push(card);
+      tempCards.push(tempCard);
     });
 
     setCards(tempCards);
+
+    await saveOrder(tempCards, tempDetails)
   };
 
   const showAgreement = () => {
