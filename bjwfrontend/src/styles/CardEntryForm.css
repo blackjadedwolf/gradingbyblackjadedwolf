@@ -1,0 +1,64 @@
+.form{
+    width: 1300px;
+}
+
+.contentWrap{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.contentWrap:first-child{
+    margin-top:5em;
+}
+
+.firstName{
+    width: 400px;
+    margin-right: "20px";
+}
+
+.lastName{
+    width: 400px;
+    float: left;
+}
+
+.email{
+    width: 820px;
+}
+
+.phoneNumber{
+    width: 450px;
+    margin-right:20px;
+}
+
+.select{
+    width:350px;
+}
+
+.divider{
+    width: 820px;
+    border: 1px solid #E8E8EE;
+    margin-bottom: 20px;
+}
+
+.space{
+    display:flex;
+    margin-bottom: 8px;
+}
+
+.cardDetailWrap{
+    display:flex;
+    flex-direction: row;
+    justify-content: between;
+    width: 1300px;
+}
+
+.removeBtn{
+    margin-top:8px;
+}
+
+.addBtn{
+    width: 820px;
+    display:none;
+}

@@ -11,6 +11,7 @@ import {
 } from "@react-pdf/renderer";
 import { Card, User } from "../models";
 import logo from "../assets/logo.png";
+import Column from "antd/lib/table/Column";
 
 type Props = {
   cards: Card[];
@@ -26,6 +27,10 @@ const styles = StyleSheet.create({
     paddingRight: 60,
     lineHeight: 1.5,
     flexDirection: "column",
+  },
+  container:{
+    display: "flex",
+    flexDirection: "column"
   },
   logo: {
     width: 74,
@@ -66,9 +71,10 @@ const styles = StyleSheet.create({
     marginTop: 24,
     borderWidth: 1,
     borderColor: "#bff0fd",
-    width: "100%",
+    width: "110%",
   },
   row: {
+    width: "100%",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
@@ -82,14 +88,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   player_name: {
-    width: "20%",
+    width: "30%",
     borderRightColor: "#90e5fc",
     borderRightWidth: 1,
     textAlign: "left",
     paddingLeft: "5px",
   },
   cardYear: {
-    width: "15%",
+    width: "8%",
     borderRightColor: "#90e5fc",
     borderRightWidth: 1,
     textAlign: "center",
@@ -120,7 +126,7 @@ const styles = StyleSheet.create({
     paddingLeft: "5px",
   },
   total: {
-    width: "15%",
+    width: "10%",
     textAlign: "right",
     paddingRight: 8,
   },
@@ -158,17 +164,31 @@ const Invoice = (props: Props) => {
         <View style={styles.tableContainer}>
           {cards.map((card) => {
             return (
-              <View style={styles.row}>
-                <Text style={styles.qty}>{card.quantity}</Text>
-                <Text style={styles.player_name}>{card.player_name}</Text>
-                <Text style={styles.cardYear}>{card.year.toString()}</Text>
-                <Text style={styles.brand}>{card.brand}</Text>
-                <Text style={styles.product}>{card.product}</Text>
-                {/* <Text>{card.product}</Text> */}
-                <Text style={styles.cardNumber}>{card.card_number}</Text>
-                <Text style={styles.cardValue}>
-                  ${card.estimated_value.toFixed(2)}
-                </Text>
+              <View style={styles.container}>
+                <View style={[styles.row, {borderBottomColor: "#90e5fc",borderBottomWidth:1}]}>
+                  <Text style={styles.qty}>Qty</Text>
+                  <Text style={styles.player_name}>Name</Text>
+                  <Text style={styles.cardYear}>Year</Text>
+                  <Text style={styles.brand}>Brand</Text>
+                  <Text style={styles.product}>Product</Text>
+                  {/* <Text>{card.product}</Text> */}
+                  <Text style={styles.cardNumber}>Number</Text>
+                  <Text style={styles.cardValue}>
+                    Value
+                  </Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.qty}>{card.quantity}</Text>
+                  <Text style={styles.player_name}>{card.player_name}</Text>
+                  <Text style={styles.cardYear}>{card.year}</Text>
+                  <Text style={styles.brand}>{card.brand}</Text>
+                  <Text style={styles.product}>{card.product}</Text>
+                  {/* <Text>{card.product}</Text> */}
+                  <Text style={styles.cardNumber}>{card.card_number}</Text>
+                  <Text style={styles.cardValue}>
+                    ${card.estimated_value.toFixed(2)}
+                  </Text>
+                </View>
               </View>
             );
           })}
