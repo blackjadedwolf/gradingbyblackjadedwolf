@@ -1,5 +1,5 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { Card, User } from "../models";
+import { Card, Order, User } from "../models";
 
 export const saveOrder = async (cards: Card[], userDetails: User) => {
   console.log("about to send ", cards, userDetails)
@@ -18,3 +18,14 @@ export const saveOrder = async (cards: Card[], userDetails: User) => {
       }
     );
 };
+
+export const getOrders = async() => {
+  await axios.get("/backend/order").then(
+    (response: AxiosResponse) => {
+      return response.data as Order[]
+    },
+    (error: AxiosError) => {
+      console.log(error)
+    }
+  )
+}

@@ -14,3 +14,12 @@ export interface User {
   email: string;
   phoneNumber: string;
 }
+
+export interface Order {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  cards: Card[];
+  fulfilled: boolean;
+}

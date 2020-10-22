@@ -5,8 +5,9 @@ const router = express.Router();
 
 router.get("/backend/order", async (req: Request, res: Response) => {
   console.log("receiving GET request at /backend/order")
-  const card = await Order.find({});
-  return res.status(200).send(card);
+  await Order.find({}, (err, orderDocs) => {
+    return res.status(200).send(orderDocs)
+  });
 });
 
 router.post("/backend/order", async (req: Request, res: Response) => {
