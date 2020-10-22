@@ -1,20 +1,36 @@
 version: "3"
 
 services:
+  database:
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: dbuser
+      MONGO_INITDB_ROOT_PASSWORD: dbuser
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+    networks:
+      - bjw_net
+
   backend:
-    image: node:14.13.1-alpine3.12
+    image: node:current-alpine3.12
     restart: always
     container_name: backend
     environment:
       - NODE_ENV=dev
+      - DATABASE_URI=mongodb://dbuser:dbuser@database:27017
     volumes:
       - ./bjwbackend:/app
     entrypoint: "/app/entrypoint.sh"
+    depends_on:
+      - database
     networks:
       - bjw_net
 
   frontend:
-    image: node:14.13.1-alpine3.12
+    image: node:current-alpine3.12
     restart: always
     container_name: frontend
     environment:
@@ -29,7 +45,7 @@ services:
       - bjw_net
 
   webserver:
-    image: nginx:1.19.3-alpine
+    image: nginx:stable-alpine
     ports:
       - "80:80"
     volumes:
@@ -45,3 +61,6 @@ services:
 networks:
   bjw_net:
     driver: bridge
+
+volumes:
+  mongodb_data_container:
