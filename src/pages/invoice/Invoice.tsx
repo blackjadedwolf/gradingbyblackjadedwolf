@@ -9,13 +9,11 @@ import {
   StyleSheet,
   PDFDownloadLink,
 } from "@react-pdf/renderer";
-import { Card, User } from "../models";
-import logo from "../assets/logo.png";
-import Column from "antd/lib/table/Column";
+import { Order } from "../../models";
+let logo = require("assets/logo.png")
 
 type Props = {
-  cards: Card[];
-  userDetails: User;
+  order: Order;
 };
 
 const styles = StyleSheet.create({
@@ -132,8 +130,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const Invoice = (props: Props) => {
-  const { cards, userDetails } = props;
+export const Invoice = (props: Props) => {
+  const { order } = props;
+
+  const {cards, email, firstName, lastName, phoneNumber} = order;
+  // extract ID later
+
   const totalValue = cards
     .map((card) => {
       return card.estimated_value * card.quantity;
@@ -154,11 +156,11 @@ const Invoice = (props: Props) => {
         <View style={styles.headerContainer}>
           <Text style={styles.billTo}>Bill To:</Text>
           <Text>
-            {userDetails.firstName} {userDetails.lastName}
+            {firstName} {lastName}
           </Text>
-          <Text>{userDetails.email}</Text>
-          {userDetails.phoneNumber ? (
-            <Text>{userDetails.phoneNumber}</Text>
+          <Text>{email}</Text>
+          {phoneNumber ? (
+            <Text>{phoneNumber}</Text>
           ) : null}
         </View>
         <View style={styles.tableContainer}>
@@ -210,5 +212,3 @@ const Invoice = (props: Props) => {
     </PDFDownloadLink>
   );
 };
-
-export default Invoice;

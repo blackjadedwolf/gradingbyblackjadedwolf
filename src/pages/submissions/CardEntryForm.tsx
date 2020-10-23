@@ -12,17 +12,17 @@ import {
 
 import { MinusCircleOutlined } from "@ant-design/icons";
 import { Store } from "antd/lib/form/interface";
-import React, { useState } from "react";
-import { Card, User } from "../models";
-import { Invoice } from "./";
-import { saveOrder } from "../services/api";
-import { getTestMessage } from "../services/api";
-import '../styles/CardEntryForm.css';
+import React from "react";
+import { Card, User } from "../../models";
+import { saveOrder } from "services/api";
+import "./CardEntryForm.css";
 
+type Props = {
+  setOrderID: React.Dispatch<React.SetStateAction<string | undefined>>
+}
 
-const CardEntryForm = () => {
-  const [cards, setCards] = useState<Card[]>();
-  const [userDetails, setUserDetails] = useState<User>();
+export const CardEntryForm = (props: Props) => {
+  const {setOrderID} = {...props};
   const { Option } = Select;
 
   const onFinish = async (values: Store) => {
@@ -32,19 +32,17 @@ const CardEntryForm = () => {
       lastName: values.last_name,
       phoneNumber: values.phone_number,
     };
-    setUserDetails(tempDetails);
 
     let tempCards: Card[] = [];
-
     values.cards.forEach((card: any) => {
-      let tempCard: Card = {...card}
-      tempCard.year = Number(card.year._d.toString().slice(11, 15));;
+      let tempCard: Card = { ...card };
+      tempCard.year = Number(card.year._d.toString().slice(11, 15));
       tempCards.push(tempCard);
     });
 
-    setCards(tempCards);
-
-    await saveOrder(tempCards, tempDetails)
+    await saveOrder(tempCards, tempDetails).then((orderID) => {
+      setOrderID(orderID)
+    });
   };
 
   const showAgreement = () => {
@@ -55,16 +53,19 @@ const CardEntryForm = () => {
     });
   };
 
-  return !(cards && userDetails) ? (
-
-    <Form name="dynamic_card_entry_form" onFinish={onFinish} autoComplete="off" className="form">
-
+  return (
+    <Form
+      name="dynamic_card_entry_form"
+      onFinish={onFinish}
+      autoComplete="off"
+      className="form"
+    >
       <div className="contentWrap">
-        <Form.Item name="first_name" className="firstName" required >
+        <Form.Item name="first_name" className="firstName" required>
           <Input placeholder={"First Name"} />
         </Form.Item>
 
-        <Form.Item name="last_name" className="lastName" required >
+        <Form.Item name="last_name" className="lastName" required>
           <Input placeholder={"Last Name"} />
         </Form.Item>
       </div>
@@ -76,12 +77,17 @@ const CardEntryForm = () => {
       </div>
 
       <div className="contentWrap">
-        <Form.Item name="phone_number" className="phoneNumber" required >
+        <Form.Item name="phone_number" className="phoneNumber" required>
           <Input placeholder={"Phone Number"} />
         </Form.Item>
 
         <Form.Item name="submission_level" required>
-          <Select showSearch  className="select" placeholder="Select a Submission Level" optionFilterProp="children" >
+          <Select
+            showSearch
+            className="select"
+            placeholder="Select a Submission Level"
+            optionFilterProp="children"
+          >
             <Option value="1"> 20 Day | $25.00 </Option>
             <Option value="2"> 10 Day | $50.00 </Option>
             <Option value="3"> 5 Day | $80.00 </Option>
@@ -91,7 +97,7 @@ const CardEntryForm = () => {
       </div>
 
       <div className="contentWrap">
-        <div className='divider'></div>
+        <div className="divider"></div>
       </div>
 
       <Form.List name="cards">
@@ -100,9 +106,7 @@ const CardEntryForm = () => {
             <div>
               {fields.map((field) => (
                 <Space key={field.key} className="space" align="start">
-                  
                   <div className="cardDetailWrap">
-
                     <Form.Item
                       {...field}
                       name={[field.name, "quantity"]}
@@ -191,8 +195,12 @@ const CardEntryForm = () => {
                       />
                     </Form.Item>
 
-                    <MinusCircleOutlined className="removeBtn" onClick={() => { remove(field.name);}}/>
-                    
+                    <MinusCircleOutlined
+                      className="removeBtn"
+                      onClick={() => {
+                        remove(field.name);
+                      }}
+                    />
                   </div>
                 </Space>
               ))}
@@ -217,7 +225,7 @@ const CardEntryForm = () => {
         }}
       </Form.List>
       <Form.Item
-        name="agreement"
+        name="agreement"  
         valuePropName="checked"
         rules={[
           {
@@ -229,7 +237,8 @@ const CardEntryForm = () => {
         ]}
       >
         <Checkbox>
-          I have read and agree to the following <Button onClick={showAgreement}>terms</Button>
+          I have read and agree to the following{" "}
+          <Button onClick={showAgreement}>terms</Button>
         </Checkbox>
       </Form.Item>
       <div className="contentWrap">
@@ -240,10 +249,5 @@ const CardEntryForm = () => {
         </Form.Item>
       </div>
     </Form>
-  ) : (
-    <Invoice cards={cards} userDetails={userDetails} />
   );
 };
-
-
-export default CardEntryForm;
