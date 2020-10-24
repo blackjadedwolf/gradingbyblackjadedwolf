@@ -13,16 +13,16 @@ import {
 import { MinusCircleOutlined } from "@ant-design/icons";
 import { Store } from "antd/lib/form/interface";
 import React from "react";
-import { Card, User } from "../../models";
+import { Card, User } from "models";
 import { saveOrder } from "services/api";
 import "./CardEntryForm.css";
 
 type Props = {
-  setOrderID: React.Dispatch<React.SetStateAction<string | undefined>>
-}
+  setOrderID: React.Dispatch<React.SetStateAction<string | undefined>>;
+};
 
 export const CardEntryForm = (props: Props) => {
-  const {setOrderID} = {...props};
+  const { setOrderID } = { ...props };
   const { Option } = Select;
 
   const onFinish = async (values: Store) => {
@@ -41,7 +41,7 @@ export const CardEntryForm = (props: Props) => {
     });
 
     await saveOrder(tempCards, tempDetails).then((orderID) => {
-      setOrderID(orderID)
+      setOrderID(orderID);
     });
   };
 
@@ -225,7 +225,7 @@ export const CardEntryForm = (props: Props) => {
         }}
       </Form.List>
       <Form.Item
-        name="agreement"  
+        name="agreement"
         valuePropName="checked"
         rules={[
           {
