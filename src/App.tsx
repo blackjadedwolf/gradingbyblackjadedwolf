@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Link, Redirect } from "react-router-dom";
 import "./App.css";
 
 import {
@@ -31,6 +31,9 @@ const App = () => {
           <Route exact path="/submit" component={SubmissionsPage} />
           <Route exact path="/admin" component={AdminPage} />
           <Route exact path="/invoice/:orderID" component={InvoicePage} />
+          <Route exact path="*">
+            <Redirect to="/"/>
+          </Route>
         </Switch>
       </BrowserRouter>
     </div>
