@@ -1,15 +1,18 @@
 import { Card } from "antd";
 import React from "react";
-import { useOrders } from "services/api";
+import { useOrders, useUser } from "services/api";
 
-const Admin = () => {
+const OrdersPage = () => {
+  const [user] = useUser();
   const [orders, ordersLoading, ordersError] = useOrders();
+
+  const userOrders = orders?.filter(order => order.email === user?.email);
 
   return (
     <>
       <ul>
-        {orders ? (
-          orders.map((order) => {
+        {userOrders ? (
+          userOrders.map((order) => {
             return (
               <Card>
                 <p>
@@ -25,9 +28,10 @@ const Admin = () => {
         ) : (
           <p>Loading orders...</p>
         )}
+        {ordersError && <p>Error loading orders, please try again later</p>}
       </ul>
     </>
   );
 };
 
-export default Admin;
+export default OrdersPage;
