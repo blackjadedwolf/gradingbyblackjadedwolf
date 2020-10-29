@@ -73,7 +73,8 @@ export const getOrders = async () => {
 };
 
 export const useOrders = () => {
-  return useCollectionData<Order>(db.collection("orders"));
+  return useCollectionData<Order>(db.collection("orders"),
+  {idField: "id"});
 };
 
 export const getOrder = async (orderID: string) => {

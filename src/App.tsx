@@ -44,8 +44,8 @@ const App = () => {
           <NavLink to="/submit">
             <Button>Submit</Button>
           </NavLink>
-          <NavLink to="/">
-            <Button>Submit</Button>
+          <NavLink to="/orders">
+            <Button>Orders</Button>
           </NavLink>
           {user && user.email === "blackjadedwolf@aol.com" && (
             <NavLink to="/admin"></NavLink>
