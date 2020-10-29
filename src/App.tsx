@@ -12,7 +12,6 @@ import { signOut, useUser } from "services/api";
 import "./App.css";
 
 import {
-  Admin as AdminPage,
   Home as HomePage,
   Submissions as SubmissionsPage,
   Invoice as InvoicePage,
@@ -47,9 +46,6 @@ const App = () => {
           <NavLink to="/orders">
             <Button>Orders</Button>
           </NavLink>
-          {user && user.email === "blackjadedwolf@aol.com" && (
-            <NavLink to="/admin"></NavLink>
-          )}
           {userLoading ? (
             <LoadingOutlined />
           ) : user ? (
@@ -73,7 +69,6 @@ const App = () => {
           <Route exact path="/passwordreset" component={PasswordResetPage} />
           <Route exact path="/submit" component={SubmissionsPage} />
           <PrivateRoute exact path="/orders" component={OrdersPage}/>
-          <Route exact path="/admin" component={AdminPage} />
           <Route exact path="/invoice/:orderID" component={InvoicePage} />
           <Route exact path="*">
             <Redirect to="/" />
