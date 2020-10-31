@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Modal, Form, Button } from "react-bootstrap";
 
@@ -11,6 +11,7 @@ type Props = {
 };
 
 export const CardEntryForm = (props: Props) => {
+  const [showModal, setShowModal] = useState(false);
   const { setOrderID } = { ...props };
 
   const onSubmit = async () => {
@@ -31,15 +32,19 @@ export const CardEntryForm = (props: Props) => {
     // });
   };
 
-  const showAgreement = () => {
-    Modal.info({
-      title: "User Submission Agreement",
-      content: <div>Lorem Ipsum don't sue us if you're dumb</div>,
-      onOk() {},
-    });
-  };
-
   return (
+    <>
+    <Modal show={showModal} onHide={() => {setShowModal(false)}}>
+        <Modal.Header closeButton>
+          <Modal.Title>Terms & Conditions</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Don't sue us</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => {setShowModal(false)}}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     <Form
       name="dynamic_card_entry_form"
       onSubmit={onSubmit}
@@ -219,9 +224,10 @@ export const CardEntryForm = (props: Props) => {
       <Form.Check
         required
         type="checkbox"
-        label="I agree to the terms"
+        label={`I agree to the ${<Button onClick={() => {setShowModal(true)}}>Terms</Button>}`}
       />
       <Button type="submit">Submit</Button>
     </Form>
+    </>
   );
 };

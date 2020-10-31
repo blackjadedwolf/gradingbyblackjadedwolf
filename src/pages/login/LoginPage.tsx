@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const LoginPage = () => {
   const onSubmit = (values: any) => {
     // event.preventDefault();
-    console.log(event)
+    console.log(values)
     // login(event.email, event.password).catch((error) => {
     //   alert(error);
     // });

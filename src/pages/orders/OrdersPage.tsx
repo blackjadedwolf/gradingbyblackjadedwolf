@@ -1,5 +1,4 @@
-import { Button, Card, Collapse, Form, Input, Space } from "antd";
-import { Store } from "antd/lib/form/interface";
+import { Button, Table } from "react-bootstrap";
 import React, { useState } from "react";
 import { useOrders, useUser } from "services/api";
 
@@ -13,81 +12,40 @@ const OrdersPage = () => {
     ? orders
     : orders?.filter((order) => order.email === user?.email);
 
-  const { Panel } = Collapse;
-
-  const onFinish = (values: Store) => {
+  const onFinish = (values: any) => {
     console.log(values);
   };
 
   return (
     <>
-      <ul>
-        {!ordersLoading ? (
-          userOrders &&
-          userOrders.map((order) => {
-            return (
-              <>
-                <Form onFinish={onFinish}>
-                  <Space direction="horizontal">
-                    <Form.Item name="id">
-                      <Input disabled defaultValue={order.id} />
-                    </Form.Item>
-                    <Form.Item name="email">
-                      <Input readOnly defaultValue={order.email} />
-                    </Form.Item>
-                    <Form.Item name="lastName">
-                      <Input
-                        readOnly={!isEditing}
-                        defaultValue={order.lastName}
-                      />
-                    </Form.Item>
-                    <Form.Item name="firstName">
-                      <Input
-                        readOnly={!isEditing}
-                        defaultValue={order.firstName}
-                      />
-                    </Form.Item>
-                    <Collapse>
-                      <Panel header="Cards" key="1">
-                        {order.cards.map((card) => {
-                          return <Card type="inner">{card.player_name}</Card>;
-                        })}
-                      </Panel>
-                    </Collapse>
-                    {isEditing ? (
-                      <>
-                        <Button type="primary" htmlType="submit">
-                          Save
-                        </Button>
-                        <Button
-                          type="default"
-                          htmlType="reset"
-                          onClick={() => {
-                            setEditing(false);
-                          }}
-                        >
-                          Cancel
-                        </Button>
-                      </>
-                    ) : (
-                      <Button
-                        onClick={() => {
-                          setEditing(true);
-                        }}
-                      >
-                        Edit Order
-                      </Button>
-                    )}
-                  </Space>
-                </Form>
-              </>
-            );
-          })
-        ) : (
-          <p>Loading orders...</p>
-        )}
-        {ordersError && <p>Error loading orders, please try again later</p>}
-      </ul>
+      {ordersError && <p>Error loading orders, please try again later</p>}
+      <Table>
+        <thead>
+          <th>Order #</th>
+          <th>Email</th>
+          <th>Last Name</th>
+          <th>First Name</th>
+          <th>Phone Number</th>
+        </thead>
+        <tbody>
+          {!ordersLoading ? (
+            userOrders &&
+            userOrders.map((order) => {
+              return (
+                <tr>
+                  <td>{order.id}</td>
+                  <td>{order.email}</td>
+                  <td>{order.lastName}</td>
+                  <td>{order.firstName}</td>
+                  <td>{order.phoneNumber}</td>
+                </tr>
+              );
+            })
+          ) : (
+            <p>Loading orders...</p>
+          )}
+        </tbody>
+      </Table>
     </>
   );
 };

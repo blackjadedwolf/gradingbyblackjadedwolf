@@ -1,6 +1,3 @@
-
-
-
 import React from "react";
 import { register } from "services/api";
 import { Link } from "react-router-dom";
@@ -9,9 +6,9 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 const RegisterPage = () => {
   const onSubmit = (values: any) => {
     console.log("values", values)
-    register(values.email, values.password).catch((error) => {
-      alert(error);
-    });
+    // register(values.email, values.password).catch((error) => {
+    //   alert(error);
+    // });
   };
 
   return (
