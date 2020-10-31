@@ -1,56 +1,51 @@
-import { Button, Form, Input, Space } from "antd";
-import { MailOutlined, LockOutlined } from "@ant-design/icons";
-import { Store } from "antd/lib/form/interface";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import React from "react";
 import { login } from "services/api";
 import { Link } from "react-router-dom";
 
 const LoginPage = () => {
-  const onFinish = (values: Store) => {
-    login(values.email, values.password).catch((error) => {
-      alert(error);
-    });
+  const onSubmit = (values: any) => {
+    // event.preventDefault();
+    console.log(event)
+    // login(event.email, event.password).catch((error) => {
+    //   alert(error);
+    // });
   };
 
   return (
-    <Form onFinish={onFinish}>
-      <Form.Item
-        name="email"
-        rules={[{ required: true, message: "Please input your email" }]}
-      >
-        <Input
-          prefix={<MailOutlined className="site-form-item-icon" />}
-          type="email"
-          placeholder="you@domain.com"
-        />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[{ required: true, message: "Please input your password" }]}
-      >
-        <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="Password"
-        />
-      </Form.Item>
-      <Space direction="horizontal">
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
-            Log In
-          </Button>
-        </Form.Item>
-        <Link to="/passwordreset">
-          <Button>Reset Password</Button>
-        </Link>
-        <Link to="/register">
-          <Button>Register</Button>
-        </Link>
-      </Space>
+    <Form onSubmit={onSubmit}>
+      <Form.Group controlId="email">
+        <Form.Label>Email</Form.Label>
+        <Form.Control required type="email" placeholder="you@domain.com" />
+        <Form.Control.Feedback type="valid">Looks good!</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">
+          Please enter your email
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group controlId="password">
+        <Form.Label>Password</Form.Label>
+        <Form.Control required type="password" placeholder="Password" />
+        <Form.Control.Feedback type="valid">Looks good!</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">
+          Please enter your password
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Row>
+        <Col>
+          <Button type="submit">Submit</Button>
+        </Col>
+        <Col>
+          {" "}
+          <Link to="/passwordreset">
+            <Button>Reset Password</Button>
+          </Link>
+        </Col>
+        <Col>
+          <Link to="/register">
+            <Button>Register</Button>
+          </Link>
+        </Col>
+      </Row>
     </Form>
   );
 };

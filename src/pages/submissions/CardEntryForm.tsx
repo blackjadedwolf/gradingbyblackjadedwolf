@@ -1,21 +1,10 @@
-import {
-  Form,
-  Input,
-  DatePicker,
-  Button,
-  InputNumber,
-  Space,
-  Select,
-  Checkbox,
-  Modal,
-} from "antd";
-
-import { MinusCircleOutlined } from "@ant-design/icons";
-import { Store } from "antd/lib/form/interface";
 import React from "react";
+
+import { Modal, Form, Button } from "react-bootstrap";
+
 import { Card, User } from "models";
 import { saveOrder } from "services/api";
-import "./CardEntryForm.css";
+// import "./CardEntryForm.css";
 
 type Props = {
   setOrderID: React.Dispatch<React.SetStateAction<string | undefined>>;
@@ -23,26 +12,23 @@ type Props = {
 
 export const CardEntryForm = (props: Props) => {
   const { setOrderID } = { ...props };
-  const { Option } = Select;
 
-  const onFinish = async (values: Store) => {
-    let tempDetails: User = {
-      email: values.email,
-      firstName: values.first_name,
-      lastName: values.last_name,
-      phoneNumber: values.phone_number,
-    };
-
-    let tempCards: Card[] = [];
-    values.cards.forEach((card: any) => {
-      let tempCard: Card = { ...card };
-      tempCard.year = Number(card.year._d.toString().slice(11, 15));
-      tempCards.push(tempCard);
-    });
-
-    await saveOrder(tempCards, tempDetails).then((orderID) => {
-      setOrderID(orderID);
-    });
+  const onSubmit = async () => {
+    // let tempDetails: User = {
+    //   email: values.email,
+    //   firstName: values.first_name,
+    //   lastName: values.last_name,
+    //   phoneNumber: values.phone_number,
+    // };
+    // let tempCards: Card[] = [];
+    // values.cards.forEach((card: any) => {
+    //   let tempCard: Card = { ...card };
+    //   tempCard.year = Number(card.year._d.toString().slice(11, 15));
+    //   tempCards.push(tempCard);
+    // });
+    // await saveOrder(tempCards, tempDetails).then((orderID) => {
+    //   setOrderID(orderID);
+    // });
   };
 
   const showAgreement = () => {
@@ -56,51 +42,57 @@ export const CardEntryForm = (props: Props) => {
   return (
     <Form
       name="dynamic_card_entry_form"
-      onFinish={onFinish}
+      onSubmit={onSubmit}
       autoComplete="off"
       className="form"
     >
-      <div className="contentWrap">
-        <Form.Item name="first_name" className="firstName" required>
-          <Input placeholder={"First Name"} />
-        </Form.Item>
+      <Form.Group controlId="firstName">
+        <Form.Label>First Name</Form.Label>
+        <Form.Control required type="text" placeholder="First Name" />
+        <Form.Control.Feedback type="valid">Looks good!</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">
+          Please enter your first name
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group controlId="lastName">
+        <Form.Label>Last Name</Form.Label>
+        <Form.Control required type="text" placeholder="Last Name" />
+        <Form.Control.Feedback type="valid">Looks good!</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">
+          Please enter your last name
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group controlId="email">
+        <Form.Label>Email</Form.Label>
+        <Form.Control required type="email" placeholder="Email" />
+        <Form.Control.Feedback type="valid">Looks good!</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">
+          Please enter your email
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group controlId="phoneNumber">
+        <Form.Label>Phone Number</Form.Label>
+        <Form.Control required type="text" placeholder="123-456-7890" />
+        <Form.Control.Feedback type="valid">Looks good!</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">
+          Please enter your phone number
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group controlId="submissionLevel">
+        <Form.Label>Email</Form.Label>
+        <Form.Control required as="select">
+          <option>20 Day | $25.00</option>
+          <option>10 Day | $50.00</option>
+          <option>5 Day | $80.00</option>
+          <option>Bulk</option>
+        </Form.Control>
+        <Form.Control.Feedback type="valid">Looks good!</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">
+          Please choose a submission level
+        </Form.Control.Feedback>
+      </Form.Group>
 
-        <Form.Item name="last_name" className="lastName" required>
-          <Input placeholder={"Last Name"} />
-        </Form.Item>
-      </div>
-
-      <div className="contentWrap">
-        <Form.Item name="email" className="email" required>
-          <Input placeholder={"Email"} />
-        </Form.Item>
-      </div>
-
-      <div className="contentWrap">
-        <Form.Item name="phone_number" className="phoneNumber" required>
-          <Input placeholder={"Phone Number"} />
-        </Form.Item>
-
-        <Form.Item name="submission_level" required>
-          <Select
-            showSearch
-            className="select"
-            placeholder="Select a Submission Level"
-            optionFilterProp="children"
-          >
-            <Option value="1"> 20 Day | $25.00 </Option>
-            <Option value="2"> 10 Day | $50.00 </Option>
-            <Option value="3"> 5 Day | $80.00 </Option>
-            <Option value="4"> Bulk </Option>
-          </Select>
-        </Form.Item>
-      </div>
-
-      <div className="contentWrap">
-        <div className="divider"></div>
-      </div>
-
-      <Form.List name="cards">
+      {/* <Form.List name="cards">
         {(fields, { add, remove }) => {
           return (
             <div>
@@ -223,31 +215,13 @@ export const CardEntryForm = (props: Props) => {
             </div>
           );
         }}
-      </Form.List>
-      <Form.Item
-        name="agreement"
-        valuePropName="checked"
-        rules={[
-          {
-            validator: (_, value) =>
-              value
-                ? Promise.resolve()
-                : Promise.reject("Should accept agreement"),
-          },
-        ]}
-      >
-        <Checkbox>
-          I have read and agree to the following{" "}
-          <Button onClick={showAgreement}>terms</Button>
-        </Checkbox>
-      </Form.Item>
-      <div className="contentWrap">
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </div>
+      </Form.List> */}
+      <Form.Check
+        required
+        type="checkbox"
+        label="I agree to the terms"
+      />
+      <Button type="submit">Submit</Button>
     </Form>
   );
 };
