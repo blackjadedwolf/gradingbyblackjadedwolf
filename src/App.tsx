@@ -7,7 +7,6 @@ import {
   NavLink,
 } from "react-router-dom";
 import { signOut, useUser } from "services/api";
-// import "./App.css";
 
 import {
   Home as HomePage,
