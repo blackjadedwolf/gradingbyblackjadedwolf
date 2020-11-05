@@ -69,7 +69,7 @@ const RegisterPage = () => {
       </Form.Group>
       <Row>
         <Col>
-          <Button variant="primary" type="submit">Submit</Button>
+          <Button variant="primary" type="submit">Register</Button>
         </Col>
         <Col>
           <Link to="/login">

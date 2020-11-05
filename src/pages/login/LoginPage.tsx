@@ -54,7 +54,7 @@ const LoginPage = () => {
       <Row>
         <Col>
           <Button variant="primary" type="submit">
-            Submit
+            Login
           </Button>
         </Col>
         <Col>

@@ -19,28 +19,37 @@ import {
   Orders as OrdersPage,
 } from "pages";
 
-import { PublicRoute, PrivateRoute, Header, Hero, About, Footer } from "components";
+import {
+  PublicRoute,
+  PrivateRoute,
+  Header,
+  Footer,
+} from "components";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Person, ExclamationTriangle, Clock } from "react-bootstrap-icons";
-import './assets/styles/theme_styles.css';
+import "./assets/styles/theme_styles.css";
 
 const App = () => {
-  const [user, userLoading, userError] = useUser();
-
-  const handleSignOut = async () => {
-    await signOut().then(() => {
-      console.log("signed out");
-      return <Redirect to="/login" />;
-    });
-  };
 
   return (
-    <div className="App">
-      <Header/>
-      <Hero/>
-      <About/>
-      <Footer/>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Header />
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <PublicRoute exact path="/login" component={LoginPage} />
+          <PublicRoute exact path="/register" component={RegisterPage} />
+          <Route exact path="/passwordreset" component={PasswordResetPage} />
+          <Route exact path="/submit" component={SubmissionsPage} />
+          <PrivateRoute exact path="/orders" component={OrdersPage} />
+          <Route exact path="/invoice/:orderID" component={InvoicePage} />
+          <Route exact path="*">
+            <Redirect to="/" />
+          </Route>
+        </Switch>
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 };
 
