@@ -19,7 +19,7 @@ import {
   Orders as OrdersPage,
 } from "pages";
 
-import { PublicRoute, PrivateRoute, Header, Hero } from "components";
+import { PublicRoute, PrivateRoute, Header, Hero, Footer } from "components";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Person, ExclamationTriangle, Clock } from "react-bootstrap-icons";
 import './assets/styles/theme_styles.css';
@@ -38,6 +38,7 @@ const App = () => {
     <div className="App">
       <Header/>
       <Hero/>
+      <Footer/>
     </div>
   );
 };

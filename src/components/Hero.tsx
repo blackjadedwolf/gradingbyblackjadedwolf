@@ -2,7 +2,7 @@ import React from 'react';
 
 const Hero = () => {
   return(
-    <header className="masthead bg-primary text-white text-center">
+    <header className="masthead bg-primary text-white text-center" id="custom_masthead">
       <div className="container d-flex align-items-center flex-column">
         <img className="masthead-avatar mb-5" src="../assets/img/logo.png" alt="" />
         <h1 className="masthead-heading text-uppercaset mb-0">Grading by BlackJadedWolf</h1>
