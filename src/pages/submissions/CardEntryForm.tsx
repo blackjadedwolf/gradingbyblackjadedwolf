@@ -11,6 +11,12 @@ type Props = {
 };
 
 export const CardEntryForm = (props: Props) => {
+  const [firstName, setFirstName] = useState<string>();
+  const [lastName, setLastName] = useState<string>();
+  const [email, setEmail] = useState<string>();
+  const [phoneNumber, setPhoneNumber] = useState<string>();
+  const [cards, setCards] = useState<Card[]>();
+
   const [showModal, setShowModal] = useState(false);
   const { setOrderID } = { ...props };
 
@@ -84,7 +90,7 @@ export const CardEntryForm = (props: Props) => {
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group controlId="submissionLevel">
-        <Form.Label>Email</Form.Label>
+        <Form.Label>Submission Level</Form.Label>
         <Form.Control required as="select">
           <option>20 Day | $25.00</option>
           <option>10 Day | $50.00</option>
