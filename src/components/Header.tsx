@@ -6,8 +6,8 @@ const Header = () => {
     <Nav className="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
       <div className="container">
         <a className="navbar-brand js-scroll-trigger" href="#page-top">BlackJadedWolf</a>
-        <Button className="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          Menu
+        <Button className="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold text-white rounded" id="mobile-menu" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu &nbsp;
           <i className="fas fa-bars"></i>
         </Button>
         <div className="collapse navbar-collapse" id="navbarResponsive">

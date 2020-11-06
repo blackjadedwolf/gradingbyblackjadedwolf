@@ -3973,6 +3973,11 @@ input[type=button].btn-block {
   justify-content: space-between;
   padding: 0.5rem 1rem;
 }
+
+#mobile-menu{
+  background-color:#1EBC9B !important;
+}
+
 .navbar .container,
 .navbar .container-fluid,
 .navbar .container-sm,
@@ -9989,6 +9994,7 @@ h3 {
 .page-section .page-section-heading {
   font-size: 2.25rem;
   line-height: 2rem;
+  color: #1EBC9B;
 }
 @media (min-width: 992px) {
   .page-section .page-section-heading {
@@ -10149,7 +10155,7 @@ h3 {
 
 .masthead .masthead-subheading {
   font-size: 1.25rem;
-  color: #1EBC9B;
+  color: white;
   margin-top:-1.5rem;
 }
 .masthead .masthead-avatar {
@@ -10274,4 +10280,12 @@ form .row:first-child .floating-label-form-group {
 
 #custom-about{
   background-color: black !important;
+}
+
+#about-btn{
+  border: 1px solid #1EBC9B;
+}
+
+.custom-footer{
+  color: #1EBC9B;
 }
