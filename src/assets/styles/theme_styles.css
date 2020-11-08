@@ -3973,6 +3973,11 @@ input[type=button].btn-block {
   justify-content: space-between;
   padding: 0.5rem 1rem;
 }
+
+#mobile-menu{
+  background-color:#1EBC9B !important;
+}
+
 .navbar .container,
 .navbar .container-fluid,
 .navbar .container-sm,
