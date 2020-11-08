@@ -23,7 +23,8 @@ const Header = () => {
           BlackjadedWolf
         </Link>
         <Button
-          className="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded"
+          className="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold text-white rounded"
+          id="mobile-menu"
           type="button"
           data-toggle="collapse"
           data-target="#navbarResponsive"
@@ -31,7 +32,7 @@ const Header = () => {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          Menu
+          Menu &nbsp;
           <i className="fas fa-bars"></i>
         </Button>
         <div className="collapse navbar-collapse" id="navbarResponsive">
@@ -57,14 +58,20 @@ const Header = () => {
             </li>
             {user ? (
               <li className="nav-item mx-0 mx-lg-1">
-                <Button className="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" onClick={handleSignOut}>
+                <Button
+                  className="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                  onClick={handleSignOut}
+                >
                   {" "}
                   Logout
                 </Button>
               </li>
             ) : (
               <li className="nav-item mx-0 mx-lg-1">
-                <Link className="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" to="/login">
+                <Link
+                  className="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                  to="/login"
+                >
                   {" "}
                   Login
                 </Link>

@@ -10,7 +10,7 @@ import {
   PDFDownloadLink,
 } from "@react-pdf/renderer";
 import { Order } from "../../models";
-let logo = require("assets/logo.png")
+let logo = require("../../assets/img/logo.png")
 
 type Props = {
   order: Order;
