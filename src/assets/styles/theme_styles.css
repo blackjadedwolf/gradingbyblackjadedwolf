@@ -10134,7 +10134,6 @@ h3 {
   display:flex;
   align-items: center;
   justify-content: center;
-  border:3px solid black;
 }
 
 #custom_masthead{
@@ -10142,7 +10141,7 @@ h3 {
 }
 
 .masthead .masthead-heading {
-  font-size: 2.5rem;
+  font-size: 1.8rem;
   line-height: 2.75rem;
   color: #1EBC9B;
 }
@@ -10163,7 +10162,7 @@ h3 {
     padding-bottom: 6rem;
   }
   .masthead .masthead-heading {
-    font-size: 3.0rem;
+    font-size: 2.0rem;
     line-height: 3.5rem;
   }
   .masthead .masthead-subheading {
@@ -10295,4 +10294,9 @@ form .row:first-child .floating-label-form-group {
     height: 250px !important;
     width: 350px !important; 
   }
+}
+
+.custom-logo-wrap
+{
+  height: 800px;
 }
