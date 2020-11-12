@@ -10148,7 +10148,7 @@ h3 {
 
 @media (min-width: 992px) {
   #custom_masthead {
-    height: 800px;
+    height: 700px;
   }
 }
 
@@ -10315,7 +10315,6 @@ form .row:first-child .floating-label-form-group {
 
 
 .submission-wrap{
-  border:1px solid blue;
   margin-top:70px;
   background-color: black;
 }
@@ -10325,7 +10324,6 @@ form .row:first-child .floating-label-form-group {
 }
 
 .submission-heading{
-  border:1px solid white;
   font-family: "Montserrat";
   font-size: 1.5rem;
   color: #FFF952;
@@ -10340,11 +10338,30 @@ form .row:first-child .floating-label-form-group {
 
 .submission-row-wrap{
   display:flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items:center;
-  justify-content: center;
+  height: 400px;
+  justify-content: space-around;
+  border-bottom: 1px solid white;
+}
+
+@media (min-width: 992px) {
+  .submission-row-wrap{
+    flex-direction: row;
+    align-items:center;
+    justify-content: space-around;
+    height: 200px;
+  }
 }
 
 .submission-row{
-  border:1px solid white;
+  font-family: "Montserrat";
+  font-size: 1.5rem;
+  color: white;
+}
+
+.submit-directive{
+  font-family: "Montserrat";
+  font-size: 1.5rem;
+  color: white;
 }

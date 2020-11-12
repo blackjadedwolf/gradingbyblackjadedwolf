@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <>
       <header
-        className="masthead bg-primary text-white text-center custom-logo-wrap"
+        className="masthead bg-primary text-white text-center custom-logo-wrap mt-5"
         id="custom_masthead"
       >
         <div className="container d-flex align-items-center flex-column" id="custom_img_wrap">

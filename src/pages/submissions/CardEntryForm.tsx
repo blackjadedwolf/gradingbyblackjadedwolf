@@ -71,7 +71,7 @@ export const CardEntryForm = (props: Props) => {
   };
 
   return (
-    <>
+    <div className="mt-5">
       <Modal
         show={showModal}
         onHide={() => {
@@ -100,7 +100,6 @@ export const CardEntryForm = (props: Props) => {
         className="form"
       >
         <Form.Group controlId="firstName">
-          <Form.Label>First Name</Form.Label>
           <Form.Control
             required
             type="text"
@@ -117,7 +116,6 @@ export const CardEntryForm = (props: Props) => {
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group controlId="lastName">
-          <Form.Label>Last Name</Form.Label>
           <Form.Control
             required
             type="text"
@@ -134,7 +132,6 @@ export const CardEntryForm = (props: Props) => {
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group controlId="email">
-          <Form.Label>Email</Form.Label>
           <Form.Control
             required
             type="email"
@@ -151,11 +148,10 @@ export const CardEntryForm = (props: Props) => {
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group controlId="phoneNumber">
-          <Form.Label>Phone Number</Form.Label>
           <Form.Control
             required
             type="text"
-            placeholder="123-456-7890"
+            placeholder="Phone #"
             onChange={(event) => {
               setPhoneNumber(event.target.value);
             }}
@@ -168,10 +164,10 @@ export const CardEntryForm = (props: Props) => {
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group controlId="submissionLevel">
-          <Form.Label>Submission Level</Form.Label>
           <Form.Control
             required
             as="select"
+            placeholder="Submission Level"
             onChange={(event) => {
               setSubmissionLevel(event.target.value);
             }}
@@ -188,7 +184,6 @@ export const CardEntryForm = (props: Props) => {
             Please choose a submission level
           </Form.Control.Feedback>
         </Form.Group>
-        <Form.Label>Enter Cards</Form.Label>
         <Form.Row>
           <Col>
             <Form.Control
@@ -353,6 +348,6 @@ export const CardEntryForm = (props: Props) => {
         </Button>
         <Button type="submit">Submit</Button>
       </Form>
-    </>
+    </div>
   );
 };
