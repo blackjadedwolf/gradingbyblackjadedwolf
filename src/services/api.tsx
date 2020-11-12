@@ -38,8 +38,9 @@ export const resetPassword = async (email: string) => {
  **CRUD**
  ********/
 
-export const saveOrder = async (cards: Card[], userDetails: User) => {
+export const saveOrder = async (submissionLevel: string, cards: Card[], userDetails: User) => {
   const order: Order = {
+    submissionLevel: submissionLevel,
     cards: cards,
     email: userDetails.email,
     firstName: userDetails.firstName,
@@ -51,9 +52,6 @@ export const saveOrder = async (cards: Card[], userDetails: User) => {
   return await db
     .collection("orders")
     .add(order)
-    .then((doc) => {
-      return doc.id;
-    });
 };
 
 export const getOrders = async () => {

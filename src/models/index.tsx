@@ -17,6 +17,7 @@ export interface User {
 
 export interface Order {
   id?: string;
+  submissionLevel: string;
   firstName: string;
   lastName: string;
   email: string;
