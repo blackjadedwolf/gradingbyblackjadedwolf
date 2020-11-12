@@ -26,6 +26,7 @@ const OrdersPage = () => {
           <th>Last Name</th>
           <th>First Name</th>
           <th>Phone Number</th>
+          <th>Submission Level</th>
         </thead>
         <tbody>
           {!ordersLoading ? (
@@ -38,6 +39,7 @@ const OrdersPage = () => {
                   <td>{order.lastName}</td>
                   <td>{order.firstName}</td>
                   <td>{order.phoneNumber}</td>
+                  <td>{order.submissionLevel}</td>
                 </tr>
               );
             })
