@@ -8,21 +8,13 @@ const Home = () => {
         className="masthead bg-primary text-white text-center custom-logo-wrap"
         id="custom_masthead"
       >
-        <div className="container d-flex align-items-center flex-column">
+        <div className="container d-flex align-items-center flex-column" id="custom_img_wrap">
           <img
             className="masthead-avatar mb-5 custom-img"
             src={logo}
             alt=""
           />
-          <h1 className="masthead-heading text-uppercaset mb-0">
-            Card Grading and Consignment
-          </h1>
-          <div className="divider-custom divider-light"></div>
-        </div>
-      </header>
-      <section className="page-section bg-primary text-white mb-0" id="custom-about">
-      <div className="container">
-        <h2 className="page-section-heading text-center text-uppercase">About</h2>
+           <h2 className="page-section-heading text-center" id="custom_heading">Card Grading and Consignment</h2>
         <div className="divider-custom">
             <div className="divider-custom-line"></div>
             <div className="divider-custom-line"></div>
@@ -40,7 +32,9 @@ const Home = () => {
               Learn More
             </a>
         </div>
-    </div>
+        </div>
+      </header>
+      <section className="page-section bg-primary text-white mb-0" id="custom-about">
     </section>
     </>
   );

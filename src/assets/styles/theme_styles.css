@@ -9989,16 +9989,21 @@ h3 {
   }
 }
 .page-section {
-  padding: 6rem 0;
+  padding: 2rem 0;
 }
 .page-section .page-section-heading {
   font-size: 2.25rem;
   line-height: 2rem;
-  color: #1EBC9B;
 }
+
+#custom_heading{
+  color: #1EBC9B !important;
+  font-size: 1.5rem;
+}
+
 @media (min-width: 992px) {
   .page-section .page-section-heading {
-    font-size: 2.5rem;
+    font-size: 2.0rem;
     line-height: 2.5rem;
   }
 }
@@ -10130,7 +10135,7 @@ h3 {
 .masthead {
   padding-top: calc(6rem + 74px);
   padding-bottom: 6rem;
-  height: 600px;
+  height: 200px;
   display:flex;
   align-items: center;
   justify-content: center;
@@ -10138,10 +10143,17 @@ h3 {
 
 #custom_masthead{
   background-color:black !important;
+  height: 950px;
+}
+
+@media (min-width: 992px) {
+  #custom_masthead {
+    height: 800px;
+  }
 }
 
 .masthead .masthead-heading {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   line-height: 2.75rem;
   color: #1EBC9B;
 }
@@ -10162,7 +10174,7 @@ h3 {
     padding-bottom: 6rem;
   }
   .masthead .masthead-heading {
-    font-size: 2.0rem;
+    font-size: 1.0rem;
     line-height: 3.5rem;
   }
   .masthead .masthead-subheading {
@@ -10280,7 +10292,7 @@ form .row:first-child .floating-label-form-group {
 }
 
 .custom-about-btn{
-  border: 1px solid #1EBC9B !important;
+  border: 2px solid #1EBC9B !important;
   color:white !important;
 }
 
@@ -10299,4 +10311,40 @@ form .row:first-child .floating-label-form-group {
 .custom-logo-wrap
 {
   height: 800px;
+}
+
+
+.submission-wrap{
+  border:1px solid blue;
+  margin-top:70px;
+  background-color: black;
+}
+
+.submission-description{
+  color:white;
+}
+
+.submission-heading{
+  border:1px solid white;
+  font-family: "Montserrat";
+  font-size: 1.5rem;
+  color: #FFF952;
+  font-weight: 600;
+}
+
+@media (min-width: 992px) {
+  .submission-wrap{
+    margin-top:100px;
+  }
+}
+
+.submission-row-wrap{
+  display:flex;
+  flex-direction: row;
+  align-items:center;
+  justify-content: center;
+}
+
+.submission-row{
+  border:1px solid white;
 }
