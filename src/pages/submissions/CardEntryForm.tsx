@@ -71,7 +71,7 @@ export const CardEntryForm = (props: Props) => {
   };
 
   return (
-    <div className="mt-5">
+    <div className="mt-5 pb-5">
       <Modal
         show={showModal}
         onHide={() => {
@@ -184,7 +184,7 @@ export const CardEntryForm = (props: Props) => {
             Please choose a submission level
           </Form.Control.Feedback>
         </Form.Group>
-        <Form.Row>
+        <Form.Row style={{marginTop:"2rem"}}>
           <Col>
             <Form.Control
               required
@@ -287,14 +287,14 @@ export const CardEntryForm = (props: Props) => {
                 }
               }}
             >
-              <PlusCircle />
+              <PlusCircle  style={{color:"white"}} />
             </Button>
           </Col>
         </Form.Row>
         {cards &&
           cards.map((card) => {
             return (
-              <Form.Row>
+              <Form.Row style={{marginTop:"2rem"}}>
                 <Col>
                   <Form.Control readOnly placeholder={String(card.quantity)} />
                 </Col>
@@ -335,18 +335,22 @@ export const CardEntryForm = (props: Props) => {
             );
           })}
         <Form.Check
+          style={{marginTop:"1.5rem", color:"white", fontFamily:"Montserrat", fontSize:"1rem", fontWeight:"bolder"}}
           required
           type="checkbox"
           label="I agree to the following terms"
         />
-        <Button
-          onClick={() => {
-            setShowModal(true);
-          }}
-        >
-          Terms
-        </Button>
-        <Button type="submit">Submit</Button>
+        <div style={{marginTop:"1.5rem", display:"flex", alignItems:"center", justifyContent:"center"}}>
+          <Button
+          style={{marginRight:"2rem", border:"2px solid #1EBC9B", backgroundColor:"black"}}
+            onClick={() => {
+              setShowModal(true);
+            }}
+          >
+            Terms
+          </Button>
+          <Button type="submit" style={{border:"2px solid #1EBC9B", backgroundColor:"black"}}>Submit</Button>
+        </div>
       </Form>
     </div>
   );
