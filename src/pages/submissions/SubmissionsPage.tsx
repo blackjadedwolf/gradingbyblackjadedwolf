@@ -2,11 +2,30 @@ import { Button } from "react-bootstrap";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { CardEntryForm } from "./CardEntryForm";
+import psaLogo from '../../assets/img/psa-logo.png';
+import beckettLogo from '../../assets/img/beckett-logo.png';
 
 const Submissions = () => {
   const [orderID, setOrderID] = useState<string>();
   return (
     <div className="submission-wrap">
+
+      <div className="submission-partners">
+
+        <div className="container submission-row-wrap pt submission-img-wrap">
+          <div className="submission-row">
+            <img className='submission-partner-img' src={psaLogo} alt="" />
+          </div>
+
+          <div className="submission-row">
+            <img className='submission-partner-img' src={beckettLogo} alt="" />
+          </div>
+
+        </div>
+
+      </div>
+
+
       <div className="submission-description mt-5 pt-5">
 
         <div className="submission-heading text-center text-uppercase"> Standard Submissions </div>
@@ -34,6 +53,7 @@ const Submissions = () => {
           </div>
 
         </div> 
+
       </div>
 
       <div className="submission-description mt-3 pt-5">

@@ -294,7 +294,7 @@ export const CardEntryForm = (props: Props) => {
         {cards &&
           cards.map((card) => {
             return (
-              <Form.Row style={{marginTop:"2rem"}}>
+              <Form.Row style={{marginTop:"2rem", display:"flex"}}>
                 <Col>
                   <Form.Control readOnly placeholder={String(card.quantity)} />
                 </Col>

@@ -10378,3 +10378,26 @@ form .row:first-child .floating-label-form-group {
    align-items:center;
    justify-content:center;
 }
+
+.submission-partners{
+  padding-top: 50px;
+  margin-top:0rem !important;
+}
+
+
+@media (min-width: 992px) {
+  .submission-partners{
+     padding-top: 50px;
+    margin-top: 5rem !important;
+  }
+  .submission-img-wrap{
+    justify-content:space-around !important;
+  }
+}
+
+
+
+.submission-partner-img{
+  height: 200px;
+  width: 200px;
+}
