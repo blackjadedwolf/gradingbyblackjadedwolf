@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import { CardEntryForm } from "./CardEntryForm";
 import psaLogo from '../../assets/img/psa-logo.png';
 import beckettLogo from '../../assets/img/beckett-logo.png';
+import bulk_pdf from "../../assets/bulk.pdf";
+import submission_pdf from "../../assets/submission.pdf";
+
 
 const Submissions = () => {
   const [orderID, setOrderID] = useState<string>();
@@ -12,7 +15,7 @@ const Submissions = () => {
 
       <div className="submission-partners">
 
-        <div className="container submission-row-wrap pt submission-img-wrap">
+        <div className="container submission-row-wrap submission-img-wrap">
           <div className="submission-row">
             <img className='submission-partner-img' src={psaLogo} alt="" />
           </div>
@@ -26,7 +29,7 @@ const Submissions = () => {
       </div>
 
 
-      <div className="submission-description mt-5 pt-5">
+      <div className="submission-description mt-2 pt-5">
 
         <div className="submission-heading text-center text-uppercase"> Standard Submissions </div>
 
@@ -47,7 +50,7 @@ const Submissions = () => {
           </div>
 
           <div className="text-center mt-4">
-            <a className="btn btn-xl custom-about-btn" href="https://blackjadedwolf.com">
+            <a className="btn btn-xl custom-about-btn" href={submission_pdf}>
               Learn More
             </a>
           </div>
@@ -56,7 +59,7 @@ const Submissions = () => {
 
       </div>
 
-      <div className="submission-description mt-3 pt-5">
+      <div className="submission-description pt-5">
 
         <div className="submission-heading text-center text-uppercase"> Bulk / TCG Submissions </div>
 
@@ -77,7 +80,7 @@ const Submissions = () => {
           </div>
 
           <div className="text-center mt-4">
-            <a className="btn btn-xl custom-about-btn" href="https://blackjadedwolf.com">
+            <a className="btn btn-xl custom-about-btn" href={bulk_pdf}>
               Learn More
             </a>
           </div>
