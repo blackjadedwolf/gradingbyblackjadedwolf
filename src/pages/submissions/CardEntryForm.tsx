@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 import { Modal, Form, Button, Col } from "react-bootstrap";
 
-import { Card, User } from "models";
-import { saveOrder } from "services/api";
+import { Card } from "models";
+import { saveOrder, useUser } from "services/api";
 import { PlusCircle, Trash } from "react-bootstrap-icons";
 // import "./CardEntryForm.css";
 
@@ -12,9 +12,14 @@ type Props = {
 };
 
 export const CardEntryForm = (props: Props) => {
+  const [user] = useUser();
+
+  // some magic to whittle down the types from string | null | undefined to string | undefined
+  const defaultEmail = user ? (user.email ? user.email : undefined) : undefined;
+
   const [firstName, setFirstName] = useState<string>();
   const [lastName, setLastName] = useState<string>();
-  const [email, setEmail] = useState<string>();
+  const [email, setEmail] = useState<string | undefined>(defaultEmail);
   const [phoneNumber, setPhoneNumber] = useState<string>();
   const [submissionLevel, setSubmissionLevel] = useState<string>();
   const [cards, setCards] = useState<Card[]>();
@@ -136,6 +141,7 @@ export const CardEntryForm = (props: Props) => {
             required
             type="email"
             placeholder="Email"
+            defaultValue={defaultEmail}
             onChange={(event) => {
               setEmail(event.target.value);
             }}
@@ -172,6 +178,7 @@ export const CardEntryForm = (props: Props) => {
               setSubmissionLevel(event.target.value);
             }}
           >
+            <option value="none" selected disabled hidden>Please choose a submission level</option>
             <option>20 Day | $25.00</option>
             <option>10 Day | $50.00</option>
             <option>5 Day | $80.00</option>
