@@ -14,7 +14,7 @@ const Home = () => {
             src={logo}
             alt=""
           />
-           <h2 className="page-section-heading text-center" id="custom_heading">Card Grading and Consignment</h2>
+           <h2 className="page-section-heading text-center" id="custom_heading">Group Submission and Appraisal</h2>
         <div className="divider-custom">
             <div className="divider-custom-line"></div>
             <div className="divider-custom-line"></div>

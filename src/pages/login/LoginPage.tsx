@@ -20,13 +20,13 @@ const LoginPage = () => {
   };
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form className="login-form" onSubmit={onSubmit} style={FormStyles}>
       <Form.Group controlId="email">
-        <Form.Label>Email</Form.Label>
         <Form.Control
           required
+          style={{width:"20rem"}}
           type="email"
-          placeholder="you@domain.com"
+          placeholder="Email"
           onChange={(event) => {
             setEmail(event.target.value);
           }}
@@ -37,9 +37,9 @@ const LoginPage = () => {
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group controlId="password">
-        <Form.Label>Password</Form.Label>
         <Form.Control
           required
+          style={{width:"20rem"}}
           type="password"
           placeholder="Password"
           onChange={(event) => {
@@ -51,26 +51,44 @@ const LoginPage = () => {
           Please enter your password
         </Form.Control.Feedback>
       </Form.Group>
-      <Row>
-        <Col>
-          <Button variant="primary" type="submit">
-            Login
-          </Button>
-        </Col>
-        <Col>
-          {" "}
-          <Link to="/passwordreset">
-            <Button>Reset Password</Button>
-          </Link>
-        </Col>
-        <Col>
-          <Link to="/register">
-            <Button>Register</Button>
-          </Link>
-        </Col>
-      </Row>
+      <div style={BtnWrap}>
+        <Row>
+          <Col>
+            <Button variant="primary" type="submit" className="login-btn">
+              Login
+            </Button>
+          </Col>
+          <Col>
+            {" "}
+            <Link to="/passwordreset">
+              <Button className="login-btn">Reset </Button>
+            </Link>
+          </Col>
+          <Col>
+            <Link to="/register">
+              <Button className="login-btn">Register</Button>
+            </Link>
+          </Col>
+        </Row>
+      </div>
     </Form>
   );
 };
 
 export default LoginPage;
+
+const FormStyles = {
+  marginTop:"4rem",
+  height: "38.3rem",
+  display:"flex",
+  flexDirection:"column",
+  alignItems:"center",
+  justifyContent:"center",
+  backgroundColor:"black"
+} as React.CSSProperties
+
+const BtnWrap = {
+  display:"flex",
+  alignItems:"center",
+  justifyContent:"center"
+} as React.CSSProperties

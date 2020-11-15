@@ -10401,3 +10401,8 @@ form .row:first-child .floating-label-form-group {
   height: 200px;
   width: 200px;
 }
+
+.login-form{
+  display:none;
+}
+

@@ -20,13 +20,13 @@ const RegisterPage = () => {
   };
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit} style={FormStyles}>
       <Form.Group controlId="email">
-        <Form.Label>Email</Form.Label>
         <Form.Control
           required
+          style={{width:"20rem"}}
           type="email"
-          placeholder="you@domain.com"
+          placeholder="Email"
           onChange={(event) => {
             setEmail(event.target.value);
           }}
@@ -37,9 +37,9 @@ const RegisterPage = () => {
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group controlId="password">
-        <Form.Label>Password</Form.Label>
         <Form.Control
           required
+          style={{width:"20rem"}}
           type="password"
           placeholder="Password"
           onChange={(event) => {
@@ -52,9 +52,9 @@ const RegisterPage = () => {
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group controlId="confirmPassword">
-        <Form.Label>Confirm Password</Form.Label>
         <Form.Control
           required
+          style={{width:"20rem"}}
           type="password"
           placeholder="Confirm Password"
           isInvalid={password !== confirmPassword}
@@ -73,7 +73,7 @@ const RegisterPage = () => {
         </Col>
         <Col>
           <Link to="/login">
-            <Button>Back to Login</Button>
+            <Button>Login</Button>
           </Link>
         </Col>
       </Row>
@@ -82,3 +82,20 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+
+
+const FormStyles = {
+  marginTop:"4rem",
+  height: "38.3rem",
+  display:"flex",
+  flexDirection:"column",
+  alignItems:"center",
+  justifyContent:"center",
+  backgroundColor:"black"
+} as React.CSSProperties
+
+const BtnWrap = {
+  display:"flex",
+  alignItems:"center",
+  justifyContent:"center"
+} as React.CSSProperties
