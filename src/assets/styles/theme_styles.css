@@ -10411,3 +10411,18 @@ form .row:first-child .floating-label-form-group {
   font-family: "Montserrat";
   font-size: 1.5rem;
 }
+
+.orders-header{
+  color:black;
+  margin-top:6.5rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family: "Montserrat";
+  font-size: 1.5rem;
+  font-weight: 600;
+  background-color:black;
+  color:white;
+  padding-bottom:1rem;
+  padding-top:1rem;
+}

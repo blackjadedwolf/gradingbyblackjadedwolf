@@ -19,7 +19,10 @@ const OrdersPage = () => {
   return (
     <>
       {ordersError && <p>Error loading orders, please try again later</p>}
-      <Table>
+      <div className="orders-header">
+        My Orders
+      </div>
+      <Table style={PageStyles}>
         <thead>
           <th>Order #</th>
           <th>Email</th>
@@ -53,3 +56,9 @@ const OrdersPage = () => {
 };
 
 export default OrdersPage;
+
+const PageStyles = {
+  backgroundColor:"black",
+  color:"white",
+  minHeight:"37.5rem"
+} as React.CSSProperties
