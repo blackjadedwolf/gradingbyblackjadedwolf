@@ -21,10 +21,13 @@ const RegisterPage = () => {
 
   return (
     <Form onSubmit={onSubmit} style={FormStyles}>
+      <div className="login-header">
+        Create An Account
+      </div>
       <Form.Group controlId="email">
         <Form.Control
           required
-          style={{width:"20rem"}}
+          style={{width:"20rem", marginTop:"2rem"}}
           type="email"
           placeholder="Email"
           onChange={(event) => {
@@ -67,16 +70,18 @@ const RegisterPage = () => {
           Please confirm your password
         </Form.Control.Feedback>
       </Form.Group>
-      <Row>
-        <Col>
-          <Button variant="primary" type="submit">Register</Button>
-        </Col>
-        <Col>
-          <Link to="/login">
-            <Button>Login</Button>
-          </Link>
-        </Col>
-      </Row>
+      <div style={BtnWrap}>
+        <Row>
+          <Col>
+            <Button variant="primary" type="submit">Register</Button>
+          </Col>
+          <Col>
+            <Link to="/login">
+              <Button>Login</Button>
+            </Link>
+          </Col>
+        </Row>
+      </div>
     </Form>
   );
 };
@@ -96,6 +101,7 @@ const FormStyles = {
 
 const BtnWrap = {
   display:"flex",
+  marginTop:"1rem",
   alignItems:"center",
   justifyContent:"center"
 } as React.CSSProperties

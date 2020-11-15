@@ -10406,3 +10406,8 @@ form .row:first-child .floating-label-form-group {
   display:none;
 }
 
+.login-header{
+  color:white;
+  font-family: "Montserrat";
+  font-size: 1.5rem;
+}
