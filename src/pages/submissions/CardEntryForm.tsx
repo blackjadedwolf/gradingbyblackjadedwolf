@@ -141,7 +141,7 @@ export const CardEntryForm = (props: Props) => {
             required
             type="email"
             placeholder="Email"
-            defaultValue={defaultEmail}
+            value={email}
             onChange={(event) => {
               setEmail(event.target.value);
             }}
@@ -294,7 +294,7 @@ export const CardEntryForm = (props: Props) => {
                 }
               }}
             >
-              <PlusCircle  style={{color:"white"}} />
+              <PlusCircle style={{color:"white"}} />
             </Button>
           </Col>
         </Form.Row>

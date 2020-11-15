@@ -1,6 +1,7 @@
 import { Button, Table } from "react-bootstrap";
 import React, { useState } from "react";
 import { useOrders, useUser } from "services/api";
+import { Link } from "react-router-dom";
 
 const OrdersPage = () => {
   const [user] = useUser();
@@ -31,25 +32,28 @@ const OrdersPage = () => {
           <th>Phone Number</th>
           <th>Submission Level</th>
         </thead>
-        <tbody>
-          {!ordersLoading ? (
-            userOrders &&
-            userOrders.map((order) => {
-              return (
-                <tr>
-                  <td>{order.id}</td>
-                  <td>{order.email}</td>
-                  <td>{order.lastName}</td>
-                  <td>{order.firstName}</td>
-                  <td>{order.phoneNumber}</td>
-                  <td>{order.submissionLevel}</td>
-                </tr>
-              );
-            })
-          ) : (
-            <p>Loading orders...</p>
-          )}
-        </tbody>
+
+        {!ordersLoading ? (
+          userOrders && (
+            <tbody>
+              {userOrders.map((order) => {
+                return (
+                  <tr key={order.id}>
+                    <td>{order.id}</td>
+                    <td>{order.email}</td>
+                    <td>{order.lastName}</td>
+                    <td>{order.firstName}</td>
+                    <td>{order.phoneNumber}</td>
+                    <td>{order.submissionLevel}</td>
+                    <td><Link to={`/invoice/${order.id}`}>View Invoice</Link></td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          )
+        ) : (
+          <p>Loading orders...</p>
+        )}
       </Table>
     </>
   );
