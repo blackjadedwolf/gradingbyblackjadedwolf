@@ -59,25 +59,7 @@ const OrdersPage = () => {
                     <td>{order.firstName}</td>
                     <td>{order.phoneNumber}</td>
                     <td>{order.submissionLevel}</td>
-<<<<<<< HEAD
                     <td><Link to={`/invoice/${order.id}`}><Button>View Invoice</Button></Link></td>
-=======
-                    <td>
-                      <Link to={`/invoice/${order.id}`}>View Invoice</Link>
-                    </td>
-                    {isAdmin && (
-                      <td>
-                        <Button
-                          onClick={() => {
-                            setShowDeleteModal(true);
-                            setOrderID(order.id);
-                          }}
-                        >
-                          <Trash />
-                        </Button>
-                      </td>
-                    )}
->>>>>>> 48d17cadf3a2dc2edec75de2912e5878fc363e8d
                   </tr>
                 );
               })}
@@ -94,16 +76,9 @@ const OrdersPage = () => {
 export default OrdersPage;
 
 const PageStyles = {
-<<<<<<< HEAD
   backgroundColor:"black",
   color:"white",
   minHeight:"37.5rem",
   width:"90rem",
   display:"block !important"
 } as React.CSSProperties
-=======
-  backgroundColor: "black",
-  color: "white",
-  minHeight: "37.5rem",
-} as React.CSSProperties;
->>>>>>> 48d17cadf3a2dc2edec75de2912e5878fc363e8d
