@@ -36,31 +36,20 @@ const OrdersPage = () => {
           <div className="table-heading">First Name</div>
           <div className="table-heading">Phone Number</div>
           <div className="table-heading">Submission Level</div>
-          <div className="table-heading"></div>
-        </div>
-        <div className="table-row mt-3 text-center">
-          <div>8457287HFV3</div>
-          <div>niaz151@gmail.com</div>
-          <div>Ahmed</div>
-          <div> Niaz </div>
-          <div>3473223039</div>
-          <div>20 Day</div>
-          <div><Link to={`/invoice/1`}><Button>View Invoice</Button></Link></div>
         </div>
         {!ordersLoading ? (
           userOrders && (
-            <tbody style={{display:"none"}}>
+            <tbody >
               {userOrders.map((order) => {
                 return (
-                  <tr key={order.id}>
-                    <td>{order.id}</td>
-                    <td>{order.email}</td>
-                    <td>{order.lastName}</td>
-                    <td>{order.firstName}</td>
-                    <td>{order.phoneNumber}</td>
-                    <td>{order.submissionLevel}</td>
-                    <td><Link to={`/invoice/${order.id}`}><Button>View Invoice</Button></Link></td>
-                  </tr>
+                  <div className="table-row mt-3 text-center" key={order.id} >
+                    <div>{order.id}</div>
+                    <div>{order.email}</div>
+                    <div>{order.lastName}</div>
+                    <div>{order.firstName}</div>
+                    <div>{order.phoneNumber}</div>
+                    <div>{order.submissionLevel}</div>
+                  </div>
                 );
               })}
             </tbody>

@@ -10438,11 +10438,10 @@ form .row:first-child .floating-label-form-group {
 .table-headings{
   display:flex;
   align-items:center;
-  justify-content:space-between;
 }
 
 .table-headings div{ 
-  width:calc(90rem/7);
+  width:15rem;
   font-family: "Montserrat";
   font-size: 1.2rem;
   color:#1EBC9B ;
@@ -10457,11 +10456,10 @@ form .row:first-child .floating-label-form-group {
 .table-row{
   display:flex;
   align-items:center;
-  justify-content: center;
 }
 
 .table-row div{ 
-  width:calc(90rem/7);
+  width:15rem;
 }
 
 .form-row{
