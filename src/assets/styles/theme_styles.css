@@ -10463,3 +10463,34 @@ form .row:first-child .floating-label-form-group {
 .table-row div{ 
   width:calc(90rem/7);
 }
+
+.form-row{
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row .form-control{
+  width: 100% !important;
+  margin-top:1rem;
+}
+
+.form-row .col .btn-primary{
+  margin-top:1rem;
+}
+
+@media (min-width: 992px) {
+  .form-row{
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .form-row .form-control{
+    width: 8rem !important;
+    margin-top:0rem;
+    justify-content: space-around;
+  }
+  
+  .form-row .col .btn-primary{
+    margin-top:0rem;
+  }
+}

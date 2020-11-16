@@ -191,7 +191,7 @@ export const CardEntryForm = (props: Props) => {
             Please choose a submission level
           </Form.Control.Feedback>
         </Form.Group>
-        <Form.Row style={{marginTop:"2rem"}}>
+        <Form.Row className="test" style={{marginTop:"2rem"}}>
           <Col>
             <Form.Control
               required
@@ -362,3 +362,8 @@ export const CardEntryForm = (props: Props) => {
     </div>
   );
 };
+
+
+const MobileStyles = {
+  display: "flex"
+} as React.CSSProperties
