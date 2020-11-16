@@ -1,17 +1,23 @@
-import { Button, Table } from "react-bootstrap";
-import React, { useState } from "react";
+import { Button, Form, Table } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
 import { useOrders, useUser } from "services/api";
 import { Link } from "react-router-dom";
 
 const OrdersPage = () => {
   const [user] = useUser();
   const [orders, ordersLoading, ordersError] = useOrders();
-  const [isEditing, setEditing] = useState(false);
+  const [search, setSearch] = useState<string>();
+
   const isAdmin = user?.email === "blackjadedwolf@aol.com";
 
-  const userOrders = isAdmin
+  let userOrders = isAdmin
     ? orders
     : orders?.filter((order) => order.email === user?.email);
+
+  userOrders =
+    isAdmin && search
+      ? userOrders?.filter((order) => order.email.includes(search))
+      : userOrders;
 
   const onFinish = (values: any) => {
     console.log(values);
@@ -20,9 +26,20 @@ const OrdersPage = () => {
   return (
     <>
       {ordersError && <p>Error loading orders, please try again later</p>}
-      <div className="orders-header">
-        My Orders
-      </div>
+      <div className="orders-header">{isAdmin ? "All" : "My"} Orders</div>
+      {isAdmin && (
+        <Form>
+          <Form.Group>
+            <Form.Label>Search by Email</Form.Label>
+            <Form.Control
+              required
+              onChange={(event) => {
+                setSearch(event.target.value);
+              }}
+            />
+          </Form.Group>
+        </Form>
+      )}
       <Table style={PageStyles}>
         <thead>
           <th>Order #</th>
@@ -45,7 +62,9 @@ const OrdersPage = () => {
                     <td>{order.firstName}</td>
                     <td>{order.phoneNumber}</td>
                     <td>{order.submissionLevel}</td>
-                    <td><Link to={`/invoice/${order.id}`}>View Invoice</Link></td>
+                    <td>
+                      <Link to={`/invoice/${order.id}`}>View Invoice</Link>
+                    </td>
                   </tr>
                 );
               })}
@@ -62,7 +81,7 @@ const OrdersPage = () => {
 export default OrdersPage;
 
 const PageStyles = {
-  backgroundColor:"black",
-  color:"white",
-  minHeight:"37.5rem"
-} as React.CSSProperties
+  backgroundColor: "black",
+  color: "white",
+  minHeight: "37.5rem",
+} as React.CSSProperties;
