@@ -10426,3 +10426,40 @@ form .row:first-child .floating-label-form-group {
   padding-bottom:1rem;
   padding-top:1rem;
 }
+
+.orders-wrap{
+  background-color:black;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+}
+
+.table-headings{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.table-headings div{ 
+  width:calc(90rem/7);
+  font-family: "Montserrat";
+  font-size: 1.2rem;
+  color:#1EBC9B ;
+}
+
+
+.table-heading{
+  border-top:0px solid black !important;
+  border-bottom:0px solid black !important;
+}
+
+.table-row{
+  display:flex;
+  align-items:center;
+  justify-content: center;
+}
+
+.table-row div{ 
+  width:calc(90rem/7);
+}

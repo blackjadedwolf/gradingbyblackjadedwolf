@@ -18,24 +18,33 @@ const OrdersPage = () => {
   };
 
   return (
-    <>
+    <div className="orders-wrap">
       {ordersError && <p>Error loading orders, please try again later</p>}
-      <div className="orders-header">
+      <div className="orders-header pt-5">
         My Orders
       </div>
-      <Table style={PageStyles}>
-        <thead>
-          <th>Order #</th>
-          <th>Email</th>
-          <th>Last Name</th>
-          <th>First Name</th>
-          <th>Phone Number</th>
-          <th>Submission Level</th>
-        </thead>
-
+      <div style={PageStyles} className="mt-3 text-center">
+        <div className="table-headings">
+          <div className="table-heading">Order #</div>
+          <div className="table-heading">Email</div>
+          <div className="table-heading">Last Name</div>
+          <div className="table-heading">First Name</div>
+          <div className="table-heading">Phone Number</div>
+          <div className="table-heading">Submission Level</div>
+          <div className="table-heading"></div>
+        </div>
+        <div className="table-row mt-3 text-center">
+          <div>8457287HFV3</div>
+          <div>niaz151@gmail.com</div>
+          <div>Ahmed</div>
+          <div> Niaz </div>
+          <div>3473223039</div>
+          <div>20 Day</div>
+          <div><Link to={`/invoice/1`}><Button>View Invoice</Button></Link></div>
+        </div>
         {!ordersLoading ? (
           userOrders && (
-            <tbody>
+            <tbody style={{display:"none"}}>
               {userOrders.map((order) => {
                 return (
                   <tr key={order.id}>
@@ -45,7 +54,7 @@ const OrdersPage = () => {
                     <td>{order.firstName}</td>
                     <td>{order.phoneNumber}</td>
                     <td>{order.submissionLevel}</td>
-                    <td><Link to={`/invoice/${order.id}`}>View Invoice</Link></td>
+                    <td><Link to={`/invoice/${order.id}`}><Button>View Invoice</Button></Link></td>
                   </tr>
                 );
               })}
@@ -54,8 +63,8 @@ const OrdersPage = () => {
         ) : (
           <p>Loading orders...</p>
         )}
-      </Table>
-    </>
+      </div>
+    </div>
   );
 };
 
@@ -64,5 +73,7 @@ export default OrdersPage;
 const PageStyles = {
   backgroundColor:"black",
   color:"white",
-  minHeight:"37.5rem"
+  minHeight:"37.5rem",
+  width:"90rem",
+  display:"block !important"
 } as React.CSSProperties
