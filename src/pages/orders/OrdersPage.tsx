@@ -1,12 +1,15 @@
-import { Button, Form, Table } from "react-bootstrap";
-import React, { useEffect, useState } from "react";
-import { useOrders, useUser } from "services/api";
+import { Button, Form, Modal, Table } from "react-bootstrap";
+import React, { useState } from "react";
+import { useOrders, useUser, deleteOrder } from "services/api";
 import { Link } from "react-router-dom";
+import { Trash } from "react-bootstrap-icons";
 
 const OrdersPage = () => {
   const [user] = useUser();
   const [orders, ordersLoading, ordersError] = useOrders();
   const [search, setSearch] = useState<string>();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [orderID, setOrderID] = useState<string>();
 
   const isAdmin = user?.email === "blackjadedwolf@aol.com";
 
@@ -19,12 +22,35 @@ const OrdersPage = () => {
       ? userOrders?.filter((order) => order.email.includes(search))
       : userOrders;
 
-  const onFinish = (values: any) => {
-    console.log(values);
-  };
-
   return (
     <>
+      {isAdmin && (
+        <Modal show={showDeleteModal}>
+          <Modal.Header>
+            <Modal.Title>Confirm your choice</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Deleting this order will permanently delete the record of this order
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() => setShowDeleteModal(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="danger"
+              onClick={() => {
+                deleteOrder(orderID!);
+                setShowDeleteModal(false);
+              }}
+            >
+              Delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
       {ordersError && <p>Error loading orders, please try again later</p>}
       <div className="orders-header">{isAdmin ? "All" : "My"} Orders</div>
       {isAdmin && (
@@ -65,6 +91,18 @@ const OrdersPage = () => {
                     <td>
                       <Link to={`/invoice/${order.id}`}>View Invoice</Link>
                     </td>
+                    {isAdmin && (
+                      <td>
+                        <Button
+                          onClick={() => {
+                            setShowDeleteModal(true);
+                            setOrderID(order.id);
+                          }}
+                        >
+                          <Trash />
+                        </Button>
+                      </td>
+                    )}
                   </tr>
                 );
               })}
