@@ -1,4 +1,5 @@
 import React from 'react';
+import {Button} from 'react-bootstrap';
 
 const Footer = () => {
   return(
@@ -21,11 +22,10 @@ const Footer = () => {
             <a className="btn btn-outline-light btn-social mx-1 " href="https://youtube.com/blackjadedwolf"><i className="fab fa-fw fa-youtube social-icon"></i></a>
           </div>
           <div className="col-lg-4">
-            <h4 className="text-uppercase mb-4 custom-header">Third Category</h4>
-            <p className="lead mb-0">
-              Lorem ipsum blah blah
-              .
-            </p>
+            <h4 className="text-uppercase mb-4 custom-header">Book An Appointment</h4>
+            <Button>
+              <a href="https://square.site/book/YGJ7WNMRJ722T/blackjadedwolf-inc-brooklyn-ny" style={{color:"white"}}> Book </a>
+            </Button>
           </div>
         </div>
       </div>
