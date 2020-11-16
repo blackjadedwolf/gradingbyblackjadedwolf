@@ -94,3 +94,10 @@ export const getOrder = async (orderID: string) => {
 export const useOrder = async (orderID: string) => {
   return useDocumentData<Order>(db.collection("orders").doc(orderID));
 };
+
+export const deleteOrder = async(orderID: string) => {
+  return await db
+    .collection("orders")
+    .doc(orderID)
+    .delete()
+}

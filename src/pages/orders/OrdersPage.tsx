@@ -1,21 +1,26 @@
-import { Button, Table } from "react-bootstrap";
+import { Button, Form, Modal, Table } from "react-bootstrap";
 import React, { useState } from "react";
-import { useOrders, useUser } from "services/api";
+import { useOrders, useUser, deleteOrder } from "services/api";
 import { Link } from "react-router-dom";
+import { Trash } from "react-bootstrap-icons";
 
 const OrdersPage = () => {
   const [user] = useUser();
   const [orders, ordersLoading, ordersError] = useOrders();
-  const [isEditing, setEditing] = useState(false);
+  const [search, setSearch] = useState<string>();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [orderID, setOrderID] = useState<string>();
+
   const isAdmin = user?.email === "blackjadedwolf@aol.com";
 
-  const userOrders = isAdmin
+  let userOrders = isAdmin
     ? orders
     : orders?.filter((order) => order.email === user?.email);
 
-  const onFinish = (values: any) => {
-    console.log(values);
-  };
+  userOrders =
+    isAdmin && search
+      ? userOrders?.filter((order) => order.email.includes(search))
+      : userOrders;
 
   return (
     <div className="orders-wrap">
@@ -54,7 +59,25 @@ const OrdersPage = () => {
                     <td>{order.firstName}</td>
                     <td>{order.phoneNumber}</td>
                     <td>{order.submissionLevel}</td>
+<<<<<<< HEAD
                     <td><Link to={`/invoice/${order.id}`}><Button>View Invoice</Button></Link></td>
+=======
+                    <td>
+                      <Link to={`/invoice/${order.id}`}>View Invoice</Link>
+                    </td>
+                    {isAdmin && (
+                      <td>
+                        <Button
+                          onClick={() => {
+                            setShowDeleteModal(true);
+                            setOrderID(order.id);
+                          }}
+                        >
+                          <Trash />
+                        </Button>
+                      </td>
+                    )}
+>>>>>>> 48d17cadf3a2dc2edec75de2912e5878fc363e8d
                   </tr>
                 );
               })}
@@ -71,9 +94,16 @@ const OrdersPage = () => {
 export default OrdersPage;
 
 const PageStyles = {
+<<<<<<< HEAD
   backgroundColor:"black",
   color:"white",
   minHeight:"37.5rem",
   width:"90rem",
   display:"block !important"
 } as React.CSSProperties
+=======
+  backgroundColor: "black",
+  color: "white",
+  minHeight: "37.5rem",
+} as React.CSSProperties;
+>>>>>>> 48d17cadf3a2dc2edec75de2912e5878fc363e8d
