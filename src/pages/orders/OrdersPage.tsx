@@ -28,27 +28,27 @@ const OrdersPage = () => {
       <div className="orders-header pt-5">
         My Orders
       </div>
-      <div style={PageStyles} className="mt-3 text-center">
-        <div className="table-headings">
+      <div style={PageStyles} className=" container-fluid mt-3 text-center order-flex">
+        <div className="container-fluid table-headings">
           <div className="table-heading">Order #</div>
-          <div className="table-heading">Email</div>
-          <div className="table-heading">Last Name</div>
-          <div className="table-heading">First Name</div>
-          <div className="table-heading">Phone Number</div>
-          <div className="table-heading">Submission Level</div>
+          <div className="table-heading order-hide">Email</div>
+          <div className="table-heading order-hide">Last Name</div>
+          <div className="table-heading order-hide">First Name</div>
+          <div className="table-heading order-hide">Phone Number</div>
+          <div className="table-heading order-hide">Submission Level</div>
         </div>
         {!ordersLoading ? (
           userOrders && (
             <tbody >
               {userOrders.map((order) => {
                 return (
-                  <div className="table-row mt-3 text-center" key={order.id} >
+                  <div className="container-fluid table-row mt-3 text-center" key={order.id} >
                     <div>{order.id}</div>
-                    <div>{order.email}</div>
-                    <div>{order.lastName}</div>
-                    <div>{order.firstName}</div>
-                    <div>{order.phoneNumber}</div>
-                    <div>{order.submissionLevel}</div>
+                    <div className='order-hide'>{order.email}</div>
+                    <div className='order-hide'>{order.lastName}</div>
+                    <div className='order-hide'>{order.firstName}</div>
+                    <div className='order-hide'>{order.phoneNumber}</div>
+                    <div className='order-hide'>{order.submissionLevel}</div>
                   </div>
                 );
               })}
