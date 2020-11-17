@@ -43,7 +43,7 @@ const OrdersPage = () => {
               {userOrders.map((order) => {
                 return (
                   <div className="container-fluid table-row mt-3 text-center" key={order.id} >
-                    <div>{order.id}</div>
+                    <Link to={`/orders/${order.id}`}>{order.id}</Link>
                     <div className='order-hide'>{order.email}</div>
                     <div className='order-hide'>{order.lastName}</div>
                     <div className='order-hide'>{order.firstName}</div>

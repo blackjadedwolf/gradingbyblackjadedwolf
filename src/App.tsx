@@ -17,6 +17,7 @@ import {
   Register as RegisterPage,
   PasswordReset as PasswordResetPage,
   Orders as OrdersPage,
+  ViewOrder as ViewOrderPage
 } from "pages";
 
 import {
@@ -42,6 +43,7 @@ const App = () => {
           <Route exact path="/passwordreset" component={PasswordResetPage} />
           <Route exact path="/submit" component={SubmissionsPage} />
           <PrivateRoute exact path="/orders" component={OrdersPage} />
+          <PrivateRoute exact path="/orders/:orderID" component={ViewOrderPage} />
           <Route exact path="/invoice/:orderID" component={InvoicePage} />
           <Route exact path="*">
             <Redirect to="/" />
