@@ -23,5 +23,5 @@ export interface Order {
   email: string;
   phoneNumber: string;
   cards: Card[];
-  fulfilled: boolean;
+  status: string
 }

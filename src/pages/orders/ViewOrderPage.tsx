@@ -1,7 +1,7 @@
 import { Button, Form, Modal, Table } from "react-bootstrap";
 import { useParams } from "react-router";
 import React, { useState } from "react";
-import { useUser, deleteOrder, useOrder } from "services/api";
+import { useUser, deleteOrder, useOrder, updateOrder } from "services/api";
 import { Link } from "react-router-dom";
 import { Trash } from "react-bootstrap-icons";
 
@@ -55,6 +55,17 @@ const ViewOrderPage = () => {
           <div>{order.firstName}</div>
           <div>{order.phoneNumber}</div>
           <div>{order.submissionLevel}</div>
+          {isAdmin ? <Form>
+            <Form.Control as="select" defaultValue={order.status} onChange={async (event) => {
+              await updateOrder({...order, status: event.target.value})
+            }}>
+              <option value="Awaiting Cards">Awaiting Cards</option>
+              <option value="Received">Received</option>
+              <option value="Under Review">Under Review</option>
+              <option value="Shipping Back">Shipping Back</option>
+              <option value="Completed">Completed</option>
+            </Form.Control>
+          </Form> : <div>{order.status}</div>}
           {isAdmin && (
             <Button
               onClick={() => {

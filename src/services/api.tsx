@@ -38,7 +38,11 @@ export const resetPassword = async (email: string) => {
  **CRUD**
  ********/
 
-export const saveOrder = async (submissionLevel: string, cards: Card[], userDetails: User) => {
+export const saveOrder = async (
+  submissionLevel: string,
+  cards: Card[],
+  userDetails: User
+) => {
   const order: Order = {
     submissionLevel: submissionLevel,
     cards: cards,
@@ -46,12 +50,17 @@ export const saveOrder = async (submissionLevel: string, cards: Card[], userDeta
     firstName: userDetails.firstName,
     lastName: userDetails.lastName,
     phoneNumber: userDetails.phoneNumber,
-    fulfilled: false,
+    status: "Awaiting Cards",
   };
 
+  return await db.collection("orders").add(order);
+};
+
+export const updateOrder = async (updatedOrder: Order) => {
   return await db
     .collection("orders")
-    .add(order)
+    .doc(updatedOrder.id)
+    .update(updatedOrder);
 };
 
 export const getOrders = async () => {
@@ -71,8 +80,7 @@ export const getOrders = async () => {
 };
 
 export const useOrders = () => {
-  return useCollectionData<Order>(db.collection("orders"),
-  {idField: "id"});
+  return useCollectionData<Order>(db.collection("orders"), { idField: "id" });
 };
 
 export const getOrder = async (orderID: string) => {
@@ -92,12 +100,11 @@ export const getOrder = async (orderID: string) => {
 };
 
 export const useOrder = (orderID: string) => {
-  return useDocumentData<Order>(db.collection("orders").doc(orderID), {idField: "id"});
+  return useDocumentData<Order>(db.collection("orders").doc(orderID), {
+    idField: "id",
+  });
 };
 
-export const deleteOrder = async(orderID: string) => {
-  return await db
-    .collection("orders")
-    .doc(orderID)
-    .delete()
-}
+export const deleteOrder = async (orderID: string) => {
+  return await db.collection("orders").doc(orderID).delete();
+};
