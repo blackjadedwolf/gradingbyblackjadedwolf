@@ -25,7 +25,20 @@ const OrdersPage = () => {
   return (
     <div className="orders-wrap">
       {ordersError && <p>Error loading orders, please try again later</p>}
-      <div className="orders-header pt-5">My Orders</div>
+      <div className="orders-header pt-5">{isAdmin ? "All" : "My"} Orders</div>
+      {isAdmin && (
+        <Form>
+          <Form.Group>
+            <Form.Label>Search by Email</Form.Label>
+            <Form.Control
+              required
+              onChange={(event) => {
+                setSearch(event.target.value);
+              }}
+            />
+          </Form.Group>
+        </Form>
+      )}
       <div
         style={PageStyles}
         className=" container-fluid mt-3 text-center order-flex"
@@ -48,12 +61,16 @@ const OrdersPage = () => {
                     className="container-fluid table-row mt-3 text-center dynamic-order-data"
                     key={order.id}
                   >
-                    <Link className="order" to={`/orders/${order.id}`}>{order.id}</Link>
+                    <Link className="order" to={`/orders/${order.id}`}>
+                      {order.id}
+                    </Link>
                     <div className="order order-hide">{order.email}</div>
                     <div className="order order-hide">{order.lastName}</div>
                     <div className="order order-hide">{order.firstName}</div>
                     <div className="order order-hide">{order.phoneNumber}</div>
-                    <div className="order order-hide">{order.submissionLevel}</div>
+                    <div className="order order-hide">
+                      {order.submissionLevel}
+                    </div>
                     <div className="order order-hide"> Status </div>
                     {isAdmin ? (
                       <Form>
