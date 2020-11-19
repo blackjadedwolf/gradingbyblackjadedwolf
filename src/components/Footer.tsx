@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="row">
           <div className="col-lg-4 mb-5 mb-lg-0">
             <h4 className="text-uppercase mb-4 custom-header">Contact</h4>
-            <p className="lead mb-0">
+            <p className="lead mb-0" style={{fontSize:"1rem"}}>
               blackjadedwolf@aol.com
               <br />
               123-456-7890
@@ -16,15 +16,15 @@ const Footer = () => {
           </div>
           <div className="col-lg-4 mb-5 mb-lg-0">
             <h4 className="text-uppercase mb-4 custom-header">Around the Web</h4>
-            <a className="btn btn-outline-light btn-social mx-1 " href="https://facebook.com/blackjadedwolf"><i className="fab fa-fw fa-facebook-f social-icon"></i></a>
-            <a className="btn btn-outline-light btn-social mx-1 " href="https://twitter.com/blackjadedwolf"><i className="fab fa-fw fa-twitter social-icon"></i></a>
-            <a className="btn btn-outline-light btn-social mx-1 " href="https://instagram.com/blackjadedwolf"><i className="fab fa-fw fa-instagram social-icon"></i></a>
-            <a className="btn btn-outline-light btn-social mx-1 " href="https://youtube.com/blackjadedwolf"><i className="fab fa-fw fa-youtube social-icon"></i></a>
+            <a className="btn btn-outline-light btn-social mx-1 footer-btn" href="https://facebook.com/blackjadedwolf"><i className="fab fa-fw fa-facebook-f social-icon"></i></a>
+            <a className="btn btn-outline-light btn-social mx-1 footer-btn" href="https://twitter.com/blackjadedwolf"><i className="fab fa-fw fa-twitter social-icon"></i></a>
+            <a className="btn btn-outline-light btn-social mx-1 footer-btn" href="https://instagram.com/blackjadedwolf"><i className="fab fa-fw fa-instagram social-icon"></i></a>
+            <a className="btn btn-outline-light btn-social mx-1 footer-btn" href="https://youtube.com/blackjadedwolf"><i className="fab fa-fw fa-youtube social-icon"></i></a>
           </div>
           <div className="col-lg-4">
             <h4 className="text-uppercase mb-4 custom-header">Book An Appointment</h4>
             <Button>
-              <a href="https://square.site/book/YGJ7WNMRJ722T/blackjadedwolf-inc-brooklyn-ny" style={{color:"white"}}> Book </a>
+              <a href="https://square.site/book/YGJ7WNMRJ722T/blackjadedwolf-inc-brooklyn-ny" style={{color:"white", fontSize:"1rem"}}> Book </a>
             </Button>
           </div>
         </div>

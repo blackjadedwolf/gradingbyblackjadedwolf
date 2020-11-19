@@ -29,9 +29,10 @@ const OrdersPage = () => {
       {isAdmin && (
         <Form>
           <Form.Group>
-            <Form.Label>Search by Email</Form.Label>
             <Form.Control
               required
+              placeholder="Searh By Email"
+              style={{width:"15rem"}}
               onChange={(event) => {
                 setSearch(event.target.value);
               }}
@@ -71,9 +72,8 @@ const OrdersPage = () => {
                     <div className="order order-hide">
                       {order.submissionLevel}
                     </div>
-                    <div className="order order-hide"> {order.status} </div>
                     {isAdmin ? (
-                      <Form>
+                      <Form className="order order-hide">
                         <Form.Control
                           as="select"
                           defaultValue={order.status}
@@ -91,8 +91,9 @@ const OrdersPage = () => {
                           <option value="Completed">Completed</option>
                         </Form.Control>
                       </Form>
-                    ) : null
-                        }
+                    ) : (
+                      <div className="order order-hide">{order.status}</div>
+                    )}
                   </div>
                 );
               })}

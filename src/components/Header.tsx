@@ -64,7 +64,7 @@ const Header = () => {
                   onClick={handleSignOut}
                 >
                   {" "}
-                  Logout
+                  LOGOUT
                 </Button>
               </li>
             ) : (
