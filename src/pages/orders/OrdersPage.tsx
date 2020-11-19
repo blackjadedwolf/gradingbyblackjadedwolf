@@ -91,9 +91,8 @@ const OrdersPage = () => {
                           <option value="Completed">Completed</option>
                         </Form.Control>
                       </Form>
-                    ) : (
-                      <div className="order-hide">{order.status}</div>
-                    )}
+                    ) : null
+                        }
                   </div>
                 );
               })}

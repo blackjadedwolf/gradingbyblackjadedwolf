@@ -10494,13 +10494,15 @@ form .row:first-child .floating-label-form-group {
 }
 
 .table-row{
+  width: 90vw !important;
   display:flex;
   align-items:center;
+  justify-content: space-between;
   width: calc(100vw-1rem) !important;
 }
 
 .order{ 
-  width:12rem;
+  flex:1;
 }
 
 .order{
