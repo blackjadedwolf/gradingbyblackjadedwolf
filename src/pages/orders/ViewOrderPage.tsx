@@ -41,6 +41,7 @@ const ViewOrderPage = () => {
                 onClick={() => {
                   deleteOrder(orderID);
                   setShowDeleteModal(false);
+                  window.location.reload();
                 }}
               >
                 Delete
