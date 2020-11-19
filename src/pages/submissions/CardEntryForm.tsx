@@ -86,7 +86,15 @@ export const CardEntryForm = (props: Props) => {
         <Modal.Header closeButton>
           <Modal.Title>Terms & Conditions</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Don't sue us</Modal.Body>
+        <Modal.Body>
+          I agree not to submit any items with which bear evidence of trimming, recoloring, restoration or any other form of tampering, or are of questionable authenticity. <br></br><br></br>
+
+          I agree that in the event PSA rejects any items for grading, PSA shall not refund the amount paid by customer because the determination to reject an item requires a review by PSA's graders and authenticators. <br></br><br></br>
+
+          If items are submitted for services for which they do not qualify, I authorize PSA to correct the order and charge any additional authentication, grading, handling, and shipping fees that may apply. Turnaround time does not begin until order has been places into grading. <br></br><br></br>
+
+          Inability to follow the above terms and conditions will result in being banned from Grading by BlackJadedWolf Inc.
+        </Modal.Body>
         <Modal.Footer>
           <Button
             variant="secondary"
