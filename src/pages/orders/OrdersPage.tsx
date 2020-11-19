@@ -41,19 +41,20 @@ const OrdersPage = () => {
         </div>
         {!ordersLoading ? (
           userOrders && (
-            <tbody>
+            <div>
               {userOrders.map((order) => {
                 return (
                   <div
-                    className="container-fluid table-row mt-3 text-center"
+                    className="container-fluid table-row mt-3 text-center dynamic-order-data"
                     key={order.id}
                   >
-                    <Link to={`/orders/${order.id}`}>{order.id}</Link>
-                    <div className="order-hide">{order.email}</div>
-                    <div className="order-hide">{order.lastName}</div>
-                    <div className="order-hide">{order.firstName}</div>
-                    <div className="order-hide">{order.phoneNumber}</div>
-                    <div className="order-hide">{order.submissionLevel}</div>
+                    <Link className="order" to={`/orders/${order.id}`}>{order.id}</Link>
+                    <div className="order order-hide">{order.email}</div>
+                    <div className="order order-hide">{order.lastName}</div>
+                    <div className="order order-hide">{order.firstName}</div>
+                    <div className="order order-hide">{order.phoneNumber}</div>
+                    <div className="order order-hide">{order.submissionLevel}</div>
+                    <div className="order order-hide"> Status </div>
                     {isAdmin ? (
                       <Form>
                         <Form.Control
@@ -79,7 +80,7 @@ const OrdersPage = () => {
                   </div>
                 );
               })}
-            </tbody>
+            </div>
           )
         ) : (
           <p>Loading orders...</p>

@@ -10458,7 +10458,7 @@ form .row:first-child .floating-label-form-group {
   align-items:center;
   justify-content:center;
   font-family: "Montserrat";
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 600;
   background-color:black;
   color:white;
@@ -10477,27 +10477,34 @@ form .row:first-child .floating-label-form-group {
 .table-headings{
   display:flex;
   align-items:center;
-}
-
-.table-headings div{ 
-  flex:1;
-  font-family: "Montserrat";
-  font-size: 1.2rem;
-  color:#1EBC9B ;
+  justify-content:space-between;
+  width: calc(100vw-1rem) !important;
+  padding-left:1rem;
+  padding-right:1rem;
 }
 
 .table-heading{
+  flex:1;
   border-top:0px solid black !important;
   border-bottom:0px solid black !important;
+  font-family: "Montserrat";
+  font-size: 1rem;
+  color:#1EBC9B ;
 }
 
 .table-row{
   display:flex;
   align-items:center;
+  width: calc(100vw-1rem) !important;
 }
 
-.table-row div{ 
-  width:15rem;
+.order{ 
+  width:12rem;
+}
+
+.order{
+  font-family: "Montserrat";
+  font-size: 0.8rem;
 }
 
 .order-hide{
@@ -10509,15 +10516,26 @@ form .row:first-child .floating-label-form-group {
   min-height:0 !important;
 }
 
+.dynamic-order-data{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
-@media (min-width: 992px) {
+@media (min-width: 962px) and (max-width: 1299px){
+  .order-flex{
+    min-height: 24.3rem !important;
+  }
+}
+
+@media (min-width: 1300px) {
 
   table-headings{
     width:100vw;
   }
 
   .order-flex{
-    min-height: 23.55rem !important;
+    min-height: 24.3rem !important;
   }
   
   .table-headings div{ 
@@ -10536,5 +10554,7 @@ form .row:first-child .floating-label-form-group {
     display:flex;
   }
 
+
 }
+
 

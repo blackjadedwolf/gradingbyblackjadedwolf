@@ -17,6 +17,7 @@ const Header = () => {
     <Nav
       className="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top"
       id="mainNav"
+      style={{width:"100vw"}}
     >
       <div className="container">
         <Link className="navbar-brand js-scroll-trigger" to="/">
