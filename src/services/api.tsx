@@ -1,4 +1,4 @@
-import { Card, Order, User } from "../models";
+import { Card, Order, User, OrderStatus } from "../models";
 import { auth, db } from "./firebase";
 import {
   useCollectionData,
@@ -50,7 +50,7 @@ export const saveOrder = async (
     firstName: userDetails.firstName,
     lastName: userDetails.lastName,
     phoneNumber: userDetails.phoneNumber,
-    status: "Awaiting Cards",
+    status: OrderStatus.Waiting,
   };
 
   return await db.collection("orders").add(order);
