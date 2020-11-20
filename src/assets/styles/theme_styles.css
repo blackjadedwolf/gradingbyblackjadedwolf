@@ -10578,7 +10578,7 @@ form .row:first-child .floating-label-form-group {
 
 @media (min-width: 962px) and (max-width: 1299px){
   .indiv-order-page-wrap{
-    margin-top: 6rem !important;
+    margin-top: 6.7rem !important;
     min-height: 34.05rem !important;
   }
 }
@@ -10595,5 +10595,38 @@ form .row:first-child .floating-label-form-group {
   background-color: black;
   margin-top: 4rem;
   min-height: 16.2rem;
+  position:relative;
   color:white;
+ 
 }
+
+.indiv-order-section{
+  font-family: "Montserrat";
+  font-size: 1rem;
+}
+
+.indiv-order-caption{
+  color:#1EBC9B;
+}
+
+.indiv-order-header{
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.indiv-order-product-row{
+  display:flex;
+  flex-direction: row;
+}
+
+.indiv-order-product-row:first-child{
+  border:1px solid white; 
+}
+
+
+.indiv-order-product-row div{
+  flex:1;
+  text-align: center;
+}
+

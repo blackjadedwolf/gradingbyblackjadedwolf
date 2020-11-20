@@ -17,6 +17,7 @@ const ViewOrderPage = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const isAdmin = user?.email === "blackjadedwolf@aol.com";
+  var cards = order?.cards
 
   return (
     <>
@@ -48,33 +49,85 @@ const ViewOrderPage = () => {
               </Button>
             </Modal.Footer>
           </Modal>
+          <div className="container indiv-order-data-wrap pt-5">
 
-          <div>{order.id}</div>
-          <div>{order.email}</div>
-          <div>{order.lastName}</div>
-          <div>{order.firstName}</div>
-          <div>{order.phoneNumber}</div>
-          <div>{order.submissionLevel}</div>
-          {isAdmin ? <Form>
-            <Form.Control as="select" defaultValue={order.status} onChange={async (event) => {
-              await updateOrder({...order, status: event.target.value})
-            }}>
-              <option value="Awaiting Cards">Awaiting Cards</option>
-              <option value="Received">Received</option>
-              <option value="Under Review">Under Review</option>
-              <option value="Shipping Back">Shipping Back</option>
-              <option value="Completed">Completed</option>
-            </Form.Control>
-          </Form> : <div>{order.status}</div>}
-          {isAdmin && (
-            <Button
-              onClick={() => {
-                setShowDeleteModal(true);
-              }}
-            >
-              <Trash />
-            </Button>
-          )}
+            <div className="container-fluid indiv-order-header indiv-order-section">
+                <div> <span className="indiv-order-caption"> Order #: </span> {order.id} </div>
+                <div> <span className="indiv-order-caption"> Status: </span> {order.status} </div>
+            </div>
+
+            <div className="container-fluid indiv-order-customer-info indiv-order-section mt-5">
+                <div> <span className="indiv-order-caption"> Customer Information: </span> </div> <br></br>
+                <div className="indiv-order-address-wrap">
+                  <div> {order.firstName} {order.lastName} </div>  
+                  <div> {order.email} </div>
+                  <div> {order.phoneNumber} </div>
+                </div>
+            </div>
+
+            <div className="container-fluid indiv-order-products-info indiv-order-section mt-5">
+                <div> <span className="indiv-order-caption"> Products Information: </span> </div> <br></br>
+                <div className="indiv-order-product-wrap">
+                    <div className="indiv-order-product-row"> 
+                      <div className="indiv-order-product-name "> Name </div>
+                      <div className="indiv-order-product-card-number"> Card Number </div>
+                      <div className="indiv-order-product-brand"> Brand </div>
+                      <div className="indiv-order-product-quantity"> Quantity </div>
+                      <div className="indiv-order-product-price"> Value </div>
+                    </div>
+                  {cards?.map( card => {
+                    return(
+                      <div className="indiv-order-product-row mt-4"> 
+                        <div className="indiv-order-product-name"> {card.player_name} </div>
+                        <div className="indiv-order-product-card-number"> {card.card_number} </div>
+                        <div className="indiv-order-product-brand"> {card.brand} </div>
+                        <div className="indiv-order-product-quantity"> {card.quantity} </div>
+                        <div className="indiv-order-product-quantity"> ${card.estimated_value.toFixed(2)} </div>
+                      </div>
+                    )
+                  })}
+                </div>
+            </div>
+ 
+            <div className="container-fluid indiv-order-options-info indiv-order-section mt-5">
+                <div> <span className="indiv-order-caption"> Submission Cost </span> </div> <br></br>
+                <div className="indiv-order-address-wrap">
+                  <div> {order.submissionLevel} </div>
+                </div>
+            </div>
+ 
+
+            {/*
+            <div>{order.id}</div>
+            <div>{order.email}</div>
+            <div>{order.lastName}</div>
+            <div>{order.firstName}</div>
+            <div>{order.phoneNumber}</div>
+            <div>{order.submissionLevel}</div>
+            {isAdmin ? <Form>
+              <Form.Control as="select" defaultValue={order.status} onChange={async (event) => {
+                await updateOrder({...order, status: event.target.value})
+              }}>
+                <option value="Awaiting Cards">Awaiting Cards</option>
+                <option value="Received">Received</option>
+                <option value="Under Review">Under Review</option>
+                <option value="Shipping Back">Shipping Back</option>
+                <option value="Completed">Completed</option>
+              </Form.Control>
+            </Form> : <div>{order.status}</div>}
+            {isAdmin && (
+              <Button
+                onClick={() => {
+                  setShowDeleteModal(true);
+                }}
+              >
+                <Trash />
+              </Button>
+            )}
+            */}
+
+
+          </div>
         </div>
       )}
     </>
