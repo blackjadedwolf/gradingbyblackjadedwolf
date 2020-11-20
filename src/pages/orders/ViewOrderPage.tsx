@@ -23,7 +23,7 @@ const ViewOrderPage = () => {
       {orderError && <p>Error loading order</p>}
       {orderLoading && <p>Loading order...</p>}
       {order && (
-        <div>
+        <div className="indiv-order-page-wrap pt-5">
           <Modal show={showDeleteModal}>
             <Modal.Header>
               <Modal.Title>Confirm your choice</Modal.Title>
@@ -48,7 +48,6 @@ const ViewOrderPage = () => {
               </Button>
             </Modal.Footer>
           </Modal>
-          <h1>{order?.id}</h1>
 
           <div>{order.id}</div>
           <div>{order.email}</div>

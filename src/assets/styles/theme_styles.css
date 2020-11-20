@@ -10575,3 +10575,25 @@ form .row:first-child .floating-label-form-group {
 
 /* = = = = = = = = = = = INDIVIDUAL ORDER PAGE = = = = = = = = = = = */
 
+
+@media (min-width: 962px) and (max-width: 1299px){
+  .indiv-order-page-wrap{
+    margin-top: 6rem !important;
+    min-height: 34.05rem !important;
+  }
+}
+
+
+@media (min-width: 1300px) {
+  .indiv-order-page-wrap{
+    margin-top: 6rem !important;
+    min-height: 34.05rem !important;
+  }
+}
+
+.indiv-order-page-wrap{
+  background-color: black;
+  margin-top: 4rem;
+  min-height: 16.2rem;
+  color:white;
+}
