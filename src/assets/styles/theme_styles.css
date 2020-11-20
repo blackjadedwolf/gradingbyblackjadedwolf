@@ -10524,7 +10524,7 @@ form .row:first-child .floating-label-form-group {
 
 @media (min-width: 962px) and (max-width: 1299px){
   .order-flex{
-    min-height: 24.3rem !important;
+    min-height: 24.5rem !important;
   }
 }
 
@@ -10535,7 +10535,7 @@ form .row:first-child .floating-label-form-group {
   }
 
   .order-flex{
-    min-height: 24.3rem !important;
+    min-height: 25.05rem !important;
   }
   
   .table-headings div{ 

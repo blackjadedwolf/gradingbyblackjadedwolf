@@ -71,7 +71,7 @@ const OrdersPage = () => {
                     <div className="order order-hide">
                       {order.submissionLevel}
                     </div>
-                    <div className="order order-hide"> Status </div>
+                    <div className="order order-hide"> {order.status} </div>
                     {isAdmin ? (
                       <Form>
                         <Form.Control
