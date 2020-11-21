@@ -56,10 +56,11 @@ const ViewOrderPage = () => {
                 <span className="indiv-order-caption"> Order #: &nbsp; </span>
                 {order.id}
               </div>
+             
               <div className="indiv-mobile-heading">
                 <span className="indiv-order-caption"> Status:  &nbsp; </span>
                 {isAdmin ? (
-                  <Form>
+                  <Form className="indiv-order-form">
                   <Form.Control
                     as="select"
                     defaultValue={order.status}
@@ -103,18 +104,7 @@ const ViewOrderPage = () => {
                   order.status
                 )}
               </div>
-              {isAdmin && (
-                <div>
-                  <span className="indiv-order-caption">Delete Order</span>
-                  <Button
-                    onClick={() => {
-                      setShowDeleteModal(true);
-                    }}
-                  >
-                    <Trash />
-                  </Button>
-                </div>
-              )}
+              
             </div>
 
             <div className="container-fluid indiv-order-customer-info indiv-order-section mt-5">
@@ -183,6 +173,16 @@ const ViewOrderPage = () => {
                 {order.submissionLevel.split("|")[1]} 
               </div>
             </div>
+
+            <div className="indiv-mobile-heading mt-5">
+                {isAdmin && (
+                  <div className="d-flex flex-column align-items-center justify-content-center">
+                    <Button onClick={() => {setShowDeleteModal(true);}} className="mt-3">
+                      <Trash style={{fontSize:'25px'}} />
+                    </Button>
+                  </div>
+                )}
+              </div>
           </div>
         </div>
       )}

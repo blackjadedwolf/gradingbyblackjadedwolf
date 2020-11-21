@@ -10616,6 +10616,10 @@ form .row:first-child .floating-label-form-group {
   .indiv-order-product-row:first-child{
     border:1px solid white !important;
   }
+
+  .indiv-order-form{
+    margin-top:0rem !important;
+  }
   
 }
 
@@ -10698,4 +10702,8 @@ form .row:first-child .floating-label-form-group {
 
 .indiv-mobile-product-hide{
   display:none;
+}
+
+.indiv-order-form{
+  margin-top:1rem;
 }
