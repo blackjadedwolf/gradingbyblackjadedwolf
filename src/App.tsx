@@ -28,7 +28,6 @@ import {
 } from "components";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Person, ExclamationTriangle, Clock } from "react-bootstrap-icons";
-import "./assets/styles/theme_styles.css";
 
 const App = () => {
 
