@@ -70,11 +70,9 @@ const OrdersPage = () => {
                     <div className="order order-hide">{order.lastName}</div>
                     <div className="order order-hide">{order.firstName}</div>
                     <div className="order order-hide">{order.phoneNumber}</div>
-                    <div className="order order-hide">
-                      {order.submissionLevel}
-                    </div>
+                    <div className="order order-hide"> {order.submissionLevel}</div>
                     {isAdmin ? (
-                      <Form>
+                      <Form className="order order-hide">
                         <Form.Control
                           as="select"
                           defaultValue={order.status}
