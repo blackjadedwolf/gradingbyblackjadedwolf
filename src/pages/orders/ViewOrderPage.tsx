@@ -52,12 +52,12 @@ const ViewOrderPage = () => {
           <div className="container indiv-order-data-wrap pt-5">
 
             <div className="container-fluid indiv-order-header indiv-order-section">
-                <div> <span className="indiv-order-caption"> Order #: </span> {order.id} </div>
-                <div> <span className="indiv-order-caption"> Status: </span> {order.status} </div>
+                <div className="indiv-mobile-heading"> <span className="indiv-order-caption"> Order #: &nbsp;  </span> {order.id} </div>
+                <div className="indiv-mobile-heading"> <span className="indiv-order-caption"> Status: &nbsp; </span> {order.status} </div>
             </div>
 
             <div className="container-fluid indiv-order-customer-info indiv-order-section mt-5">
-                <div> <span className="indiv-order-caption"> Customer Information: </span> </div> <br></br>
+                <div className="indiv-mobile-section-header"> <span className="indiv-order-caption"> Customer Information: </span> </div> <br></br>
                 <div className="indiv-order-address-wrap">
                   <div> {order.firstName} {order.lastName} </div>  
                   <div> {order.email} </div>
@@ -66,9 +66,10 @@ const ViewOrderPage = () => {
             </div>
 
             <div className="container-fluid indiv-order-products-info indiv-order-section mt-5">
-                <div> <span className="indiv-order-caption"> Products Information: </span> </div> <br></br>
+                <div className="indiv-mobile-section-header"> <span className="indiv-order-caption"> Product Information: </span> </div> <br></br>
                 <div className="indiv-order-product-wrap">
-                    <div className="indiv-order-product-row"> 
+                    <div className="indiv-mobile-product-show"> Please visit our desktop website to view your order items </div>
+                    <div className="indiv-order-product-row indiv-mobile-product-hide" style={{border:'1px solid white'}}> 
                       <div className="indiv-order-product-name "> Name </div>
                       <div className="indiv-order-product-card-number"> Card Number </div>
                       <div className="indiv-order-product-brand"> Brand </div>
@@ -77,7 +78,7 @@ const ViewOrderPage = () => {
                     </div>
                   {cards?.map( card => {
                     return(
-                      <div className="indiv-order-product-row mt-4"> 
+                      <div className="indiv-order-product-row mt-4 indiv-mobile-product-hide"> 
                         <div className="indiv-order-product-name"> {card.player_name} </div>
                         <div className="indiv-order-product-card-number"> {card.card_number} </div>
                         <div className="indiv-order-product-brand"> {card.brand} </div>
@@ -90,10 +91,10 @@ const ViewOrderPage = () => {
             </div>
  
             <div className="container-fluid indiv-order-options-info indiv-order-section mt-5">
-                <div> <span className="indiv-order-caption"> Submission Cost </span> </div> <br></br>
-                <div className="indiv-order-address-wrap">
-                  <div> {order.submissionLevel} </div>
-                </div>
+                <div className="indiv-mobile-section-header"> <span className="indiv-order-caption"> Submission Cost: &nbsp; </span>
+                  {order.submissionLevel.split("|")[1]}
+                </div> 
+                <br></br>
             </div>
  
 

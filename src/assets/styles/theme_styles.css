@@ -10576,20 +10576,50 @@ form .row:first-child .floating-label-form-group {
 /* = = = = = = = = = = = INDIVIDUAL ORDER PAGE = = = = = = = = = = = */
 
 
-@media (min-width: 962px) and (max-width: 1299px){
+@media (min-width: 962px){
   .indiv-order-page-wrap{
     margin-top: 6.7rem !important;
     min-height: 34.05rem !important;
   }
-}
 
+  .indiv-order-header{
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }  
 
-@media (min-width: 1300px) {
-  .indiv-order-page-wrap{
-    margin-top: 6rem !important;
-    min-height: 34.05rem !important;
+  .indiv-mobile-heading{
+    width: auto !important;
+    flex-direction: row !important;
   }
+  
+  .indiv-mobile-heading:nth-child(2){
+    margin-top:0rem !important;
+  }
+
+  .indiv-mobile-section-header{
+    display:block !important;
+  }
+  
+  .indiv-order-address-wrap{
+    align-items: flex-start !important;
+  }
+
+  .indiv-mobile-product-show{
+    display:none !important;
+  }
+  
+  .indiv-mobile-product-hide{
+    display:flex !important;
+  }
+
+  .indiv-order-product-row:first-child{
+    border:1px solid white !important;
+  }
+  
 }
+
+
 
 .indiv-order-page-wrap{
   background-color: black;
@@ -10605,14 +10635,25 @@ form .row:first-child .floating-label-form-group {
   font-size: 1rem;
 }
 
+.indiv-mobile-section-header{
+  display:flex;
+  align-items:center;
+  justify-content: center;  
+}
+
 .indiv-order-caption{
   color:#1EBC9B;
 }
 
 .indiv-order-header{
   display:flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+}
+
+.indiv-order-header div{
+  width:100%;
 }
 
 .indiv-order-product-row{
@@ -10620,13 +10661,41 @@ form .row:first-child .floating-label-form-group {
   flex-direction: row;
 }
 
-.indiv-order-product-row:first-child{
-  border:1px solid white; 
+.indiv-order-product-row div{
+  justify-self: center !important;
 }
 
+.indiv-mobile-heading{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.indiv-mobile-heading:nth-child(2){
+  margin-top:2rem;
+}
 
 .indiv-order-product-row div{
   flex:1;
   text-align: center;
 }
 
+.indiv-order-product-row:first-child{
+  border:1px solid white !important;
+}
+
+.indiv-order-address-wrap{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.indiv-mobile-product-show{
+  text-align: center;
+}
+
+.indiv-mobile-product-hide{
+  display:none;
+}
