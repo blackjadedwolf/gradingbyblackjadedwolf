@@ -10,7 +10,7 @@ import {
   PDFDownloadLink,
 } from "@react-pdf/renderer";
 import { Order } from "../../models";
-let logo = require("../../assets/img/logo.png")
+let logo = require("../../assets/img/logo.png");
 
 type Props = {
   order: Order;
@@ -26,9 +26,9 @@ const styles = StyleSheet.create({
     lineHeight: 1.5,
     flexDirection: "column",
   },
-  container:{
+  container: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   logo: {
     width: 74,
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
 export const Invoice = (props: Props) => {
   const { order } = props;
 
-  const {cards, email, firstName, lastName, phoneNumber} = order;
+  const { cards, email, firstName, lastName, phoneNumber } = order;
   // extract ID later
 
   const totalValue = cards
@@ -142,7 +142,7 @@ export const Invoice = (props: Props) => {
     })
     .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
-  const MyInvoice = () => (
+  return (
     <Document>
       <Page size="A4" style={styles.page}>
         <Image style={styles.logo} src={logo} />
@@ -159,15 +159,18 @@ export const Invoice = (props: Props) => {
             {firstName} {lastName}
           </Text>
           <Text>{email}</Text>
-          {phoneNumber ? (
-            <Text>{phoneNumber}</Text>
-          ) : null}
+          {phoneNumber ? <Text>{phoneNumber}</Text> : null}
         </View>
         <View style={styles.tableContainer}>
           {cards.map((card) => {
             return (
-              <View style={styles.container}>
-                <View style={[styles.row, {borderBottomColor: "#90e5fc",borderBottomWidth:1}]}>
+              <View style={styles.container} key={card.player_name + card.card_number}>
+                <View
+                  style={[
+                    styles.row,
+                    { borderBottomColor: "#90e5fc", borderBottomWidth: 1 },
+                  ]}
+                >
                   <Text style={styles.qty}>Qty</Text>
                   <Text style={styles.player_name}>Name</Text>
                   <Text style={styles.cardYear}>Year</Text>
@@ -175,9 +178,7 @@ export const Invoice = (props: Props) => {
                   <Text style={styles.product}>Product</Text>
                   {/* <Text>{card.product}</Text> */}
                   <Text style={styles.cardNumber}>Number</Text>
-                  <Text style={styles.cardValue}>
-                    Value
-                  </Text>
+                  <Text style={styles.cardValue}>Value</Text>
                 </View>
                 <View style={styles.row}>
                   <Text style={styles.qty}>{card.quantity}</Text>
@@ -201,14 +202,5 @@ export const Invoice = (props: Props) => {
         </View>
       </Page>
     </Document>
-  );
-
-  return (
-    <PDFDownloadLink
-      document={<MyInvoice />}
-      fileName="BlackJadedWolf_Invoice.pdf"
-    >
-      Download your invoice before you leave!
-    </PDFDownloadLink>
   );
 };

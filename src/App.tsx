@@ -12,7 +12,6 @@ import { signOut, useUser } from "services/api";
 import {
   Home as HomePage,
   Submissions as SubmissionsPage,
-  Invoice as InvoicePage,
   Login as LoginPage,
   Register as RegisterPage,
   PasswordReset as PasswordResetPage,
@@ -26,8 +25,6 @@ import {
   Header,
   Footer,
 } from "components";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import { Person, ExclamationTriangle, Clock } from "react-bootstrap-icons";
 
 const App = () => {
 
@@ -43,7 +40,6 @@ const App = () => {
           <Route exact path="/submit" component={SubmissionsPage} />
           <PrivateRoute exact path="/orders" component={OrdersPage} />
           <PrivateRoute exact path="/orders/:orderID" component={ViewOrderPage} />
-          <Route exact path="/invoice/:orderID" component={InvoicePage} />
           <Route exact path="*">
             <Redirect to="/" />
           </Route>
