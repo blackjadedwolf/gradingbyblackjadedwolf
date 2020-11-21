@@ -52,14 +52,12 @@ const ViewOrderPage = () => {
           </Modal>
           <div className="container indiv-order-data-wrap pt-5">
             <div className="container-fluid indiv-order-header indiv-order-section">
-              <div>
-                {" "}
-                <span className="indiv-order-caption"> Order #: </span>{" "}
-                {order.id}{" "}
+              <div className="indiv-mobile-heading">
+                <span className="indiv-order-caption"> Order #: &nbsp; </span>
+                {order.id}
               </div>
-              <div>
-                {" "}
-                <span className="indiv-order-caption"> Status: </span>{" "}
+              <div className="indiv-mobile-heading">
+                <span className="indiv-order-caption"> Status:  &nbsp; </span>
                 {isAdmin ? (
                   <Form>
                   <Form.Control
@@ -103,11 +101,11 @@ const ViewOrderPage = () => {
                 </Form>
                 ) : (
                   order.status
-                )}{" "}
+                )}
               </div>
               {isAdmin && (
                 <div>
-                  <span className="indiv-order-caption">Delete Order</span>{" "}
+                  <span className="indiv-order-caption">Delete Order</span>
                   <Button
                     onClick={() => {
                       setShowDeleteModal(true);
@@ -120,18 +118,15 @@ const ViewOrderPage = () => {
             </div>
 
             <div className="container-fluid indiv-order-customer-info indiv-order-section mt-5">
-              <div>
-                {" "}
+              <div  className="indiv-mobile-section-header">
                 <span className="indiv-order-caption">
-                  {" "}
-                  Customer Information:{" "}
-                </span>{" "}
-              </div>{" "}
+                  Customer Information:
+                </span>
+              </div>
               <br></br>
               <div className="indiv-order-address-wrap">
                 <div>
-                  {" "}
-                  {order.firstName} {order.lastName}{" "}
+                  {order.firstName} {order.lastName}
                 </div>
                 <div> {order.email} </div>
                 <div> {order.phoneNumber} </div>
@@ -139,20 +134,18 @@ const ViewOrderPage = () => {
             </div>
 
             <div className="container-fluid indiv-order-products-info indiv-order-section mt-5">
-              <div>
-                {" "}
+              <div  className="indiv-mobile-section-header">
                 <span className="indiv-order-caption">
-                  {" "}
-                  Products Information:{" "}
-                </span>{" "}
-              </div>{" "}
+                  Products Information:
+                </span>
+              </div>
               <br></br>
               <div className="indiv-order-product-wrap">
-                <div className="indiv-order-product-row">
+                <div className="indiv-mobile-product-show"> Please visit our desktop website to view your order items </div>
+                <div className="indiv-order-product-row indiv-mobile-product-hide" style={{border:'1px solid white'}}>
                   <div className="indiv-order-product-name "> Name </div>
                   <div className="indiv-order-product-card-number">
-                    {" "}
-                    Card Number{" "}
+                    Card Number
                   </div>
                   <div className="indiv-order-product-brand"> Brand </div>
                   <div className="indiv-order-product-quantity"> Quantity </div>
@@ -160,26 +153,21 @@ const ViewOrderPage = () => {
                 </div>
                 {cards?.map((card) => {
                   return (
-                    <div className="indiv-order-product-row mt-4" key={card.player_name + card.card_number}>
+                    <div className="indiv-order-product-row mt-4 indiv-mobile-product-hide" key={card.player_name + card.card_number}>
                       <div className="indiv-order-product-name">
-                        {" "}
-                        {card.player_name}{" "}
+                        {card.player_name}
                       </div>
                       <div className="indiv-order-product-card-number">
-                        {" "}
-                        {card.card_number}{" "}
+                        {card.card_number}
                       </div>
                       <div className="indiv-order-product-brand">
-                        {" "}
-                        {card.brand}{" "}
+                        {card.brand}
                       </div>
                       <div className="indiv-order-product-quantity">
-                        {" "}
-                        {card.quantity}{" "}
+                        {card.quantity}
                       </div>
                       <div className="indiv-order-product-quantity">
-                        {" "}
-                        ${card.estimated_value.toFixed(2)}{" "}
+                        ${card.estimated_value.toFixed(2)}
                       </div>
                     </div>
                   );
@@ -188,16 +176,11 @@ const ViewOrderPage = () => {
             </div>
 
             <div className="container-fluid indiv-order-options-info indiv-order-section mt-5">
-              <div>
-                {" "}
+              <div  className="indiv-mobile-section-header">
                 <span className="indiv-order-caption">
-                  {" "}
-                  Submission Cost{" "}
-                </span>{" "}
-              </div>{" "}
-              <br></br>
-              <div className="indiv-order-address-wrap">
-                <div> {order.submissionLevel} </div>
+                  Submission Cost: &nbsp;
+                </span>
+                {order.submissionLevel.split("|")[1]} 
               </div>
             </div>
           </div>
