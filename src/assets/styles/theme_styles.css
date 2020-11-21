@@ -10042,15 +10042,15 @@ h3 {
 .btn-social {
   border-radius: 100% !important;
   display: inline-flex;
-  width: 3.25rem;
-  height: 3.25rem;
+  width: 3.5rem;
+  height: 3.5rem;
   font-size: 1.25rem;
   text-align: center;
 }
 
 .social-icon{
   margin-top:25%;
-  margin-left:-20%;
+  margin-left:-50%;
   height: 60%;
   width: 60%;
 }

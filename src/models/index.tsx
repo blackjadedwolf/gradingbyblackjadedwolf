@@ -15,6 +15,15 @@ export interface User {
   phoneNumber: string;
 }
 
+
+export enum OrderStatus {
+  Waiting = "Awaiting Cards",
+  Received = "Received",
+  UnderReview = "Under Review",
+  Shipping = "Shipping Back",
+  Completed = "Completed"
+}
+
 export interface Order {
   id?: string;
   submissionLevel: string;
@@ -23,5 +32,5 @@ export interface Order {
   email: string;
   phoneNumber: string;
   cards: Card[];
-  status: string
+  status: OrderStatus
 }

@@ -21,9 +21,9 @@ const Footer = () => {
             <a className="btn btn-outline-light btn-social mx-1 footer-btn" href="https://instagram.com/blackjadedwolf"><i className="fab fa-fw fa-instagram social-icon"></i></a>
             <a className="btn btn-outline-light btn-social mx-1 footer-btn" href="https://youtube.com/blackjadedwolf"><i className="fab fa-fw fa-youtube social-icon"></i></a>
           </div>
-          <div className="col-lg-4">
+          <div className="col-lg-4 d-flex align-items-center justify-content-center flex-column">
             <h4 className="text-uppercase mb-4 custom-header">Book An Appointment</h4>
-            <Button>
+            <Button style={{width:"5rem"}}>  
               <a href="https://square.site/book/YGJ7WNMRJ722T/blackjadedwolf-inc-brooklyn-ny" style={{color:"white", fontSize:"1rem"}}> Book </a>
             </Button>
           </div>

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useUser, deleteOrder, useOrder, updateOrder } from "services/api";
 import { Link } from "react-router-dom";
 import { Trash } from "react-bootstrap-icons";
+import { OrderStatus } from "models";
 
 interface RouteParams {
   orderID: string;
@@ -17,7 +18,7 @@ const ViewOrderPage = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const isAdmin = user?.email === "blackjadedwolf@aol.com";
-  var cards = order?.cards
+  var cards = order?.cards;
 
   return (
     <>
@@ -50,84 +51,155 @@ const ViewOrderPage = () => {
             </Modal.Footer>
           </Modal>
           <div className="container indiv-order-data-wrap pt-5">
-
             <div className="container-fluid indiv-order-header indiv-order-section">
-                <div className="indiv-mobile-heading"> <span className="indiv-order-caption"> Order #: &nbsp;  </span> {order.id} </div>
-                <div className="indiv-mobile-heading"> <span className="indiv-order-caption"> Status: &nbsp; </span> {order.status} </div>
+              <div>
+                {" "}
+                <span className="indiv-order-caption"> Order #: </span>{" "}
+                {order.id}{" "}
+              </div>
+              <div>
+                {" "}
+                <span className="indiv-order-caption"> Status: </span>{" "}
+                {isAdmin ? (
+                  <Form>
+                  <Form.Control
+                    as="select"
+                    defaultValue={order.status}
+                    onChange={(event) => {
+                      let newStatus: OrderStatus;
+
+                      switch (event.target.value) {
+                        case OrderStatus.Completed.toString():
+                          newStatus = OrderStatus.Completed;
+                          break;
+                        case OrderStatus.Received.toString():
+                          newStatus = OrderStatus.Received;
+                          break;
+                        case OrderStatus.Shipping.toString():
+                          newStatus = OrderStatus.Shipping;
+                          break;
+                        case OrderStatus.UnderReview.toString():
+                          newStatus = OrderStatus.UnderReview;
+                          break;
+                        case OrderStatus.Waiting.toString():
+                          newStatus = OrderStatus.Waiting;
+                          break;
+                        default:
+                          throw new Error(
+                            "invalid argument in order change switch statement"
+                          );
+                      }
+
+                      updateOrder({
+                        ...order,
+                        status: newStatus,
+                      });
+                    }}
+                  >
+                    {Object.entries(OrderStatus).map((entry) => {
+                      return <option key={entry[0]} value={entry[0]}>{entry[1]}</option>;
+                    })}
+                  </Form.Control>
+                </Form>
+                ) : (
+                  order.status
+                )}{" "}
+              </div>
+              {isAdmin && (
+                <div>
+                  <span className="indiv-order-caption">Delete Order</span>{" "}
+                  <Button
+                    onClick={() => {
+                      setShowDeleteModal(true);
+                    }}
+                  >
+                    <Trash />
+                  </Button>
+                </div>
+              )}
             </div>
 
             <div className="container-fluid indiv-order-customer-info indiv-order-section mt-5">
-                <div className="indiv-mobile-section-header"> <span className="indiv-order-caption"> Customer Information: </span> </div> <br></br>
-                <div className="indiv-order-address-wrap">
-                  <div> {order.firstName} {order.lastName} </div>  
-                  <div> {order.email} </div>
-                  <div> {order.phoneNumber} </div>
+              <div>
+                {" "}
+                <span className="indiv-order-caption">
+                  {" "}
+                  Customer Information:{" "}
+                </span>{" "}
+              </div>{" "}
+              <br></br>
+              <div className="indiv-order-address-wrap">
+                <div>
+                  {" "}
+                  {order.firstName} {order.lastName}{" "}
                 </div>
+                <div> {order.email} </div>
+                <div> {order.phoneNumber} </div>
+              </div>
             </div>
 
             <div className="container-fluid indiv-order-products-info indiv-order-section mt-5">
-                <div className="indiv-mobile-section-header"> <span className="indiv-order-caption"> Product Information: </span> </div> <br></br>
-                <div className="indiv-order-product-wrap">
-                    <div className="indiv-mobile-product-show"> Please visit our desktop website to view your order items </div>
-                    <div className="indiv-order-product-row indiv-mobile-product-hide" style={{border:'1px solid white'}}> 
-                      <div className="indiv-order-product-name "> Name </div>
-                      <div className="indiv-order-product-card-number"> Card Number </div>
-                      <div className="indiv-order-product-brand"> Brand </div>
-                      <div className="indiv-order-product-quantity"> Quantity </div>
-                      <div className="indiv-order-product-price"> Value </div>
-                    </div>
-                  {cards?.map( card => {
-                    return(
-                      <div className="indiv-order-product-row mt-4 indiv-mobile-product-hide"> 
-                        <div className="indiv-order-product-name"> {card.player_name} </div>
-                        <div className="indiv-order-product-card-number"> {card.card_number} </div>
-                        <div className="indiv-order-product-brand"> {card.brand} </div>
-                        <div className="indiv-order-product-quantity"> {card.quantity} </div>
-                        <div className="indiv-order-product-quantity"> ${card.estimated_value.toFixed(2)} </div>
-                      </div>
-                    )
-                  })}
+              <div>
+                {" "}
+                <span className="indiv-order-caption">
+                  {" "}
+                  Products Information:{" "}
+                </span>{" "}
+              </div>{" "}
+              <br></br>
+              <div className="indiv-order-product-wrap">
+                <div className="indiv-order-product-row">
+                  <div className="indiv-order-product-name "> Name </div>
+                  <div className="indiv-order-product-card-number">
+                    {" "}
+                    Card Number{" "}
+                  </div>
+                  <div className="indiv-order-product-brand"> Brand </div>
+                  <div className="indiv-order-product-quantity"> Quantity </div>
+                  <div className="indiv-order-product-price"> Value </div>
                 </div>
+                {cards?.map((card) => {
+                  return (
+                    <div className="indiv-order-product-row mt-4" key={card.player_name + card.card_number}>
+                      <div className="indiv-order-product-name">
+                        {" "}
+                        {card.player_name}{" "}
+                      </div>
+                      <div className="indiv-order-product-card-number">
+                        {" "}
+                        {card.card_number}{" "}
+                      </div>
+                      <div className="indiv-order-product-brand">
+                        {" "}
+                        {card.brand}{" "}
+                      </div>
+                      <div className="indiv-order-product-quantity">
+                        {" "}
+                        {card.quantity}{" "}
+                      </div>
+                      <div className="indiv-order-product-quantity">
+                        {" "}
+                        ${card.estimated_value.toFixed(2)}{" "}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
- 
+
             <div className="container-fluid indiv-order-options-info indiv-order-section mt-5">
-                <div className="indiv-mobile-section-header"> <span className="indiv-order-caption"> Submission Cost: &nbsp; </span>
-                  {order.submissionLevel.split("|")[1]}
-                </div> 
-                <br></br>
+              <div>
+                {" "}
+                <span className="indiv-order-caption">
+                  {" "}
+                  Submission Cost{" "}
+                </span>{" "}
+              </div>{" "}
+              <br></br>
+              <div className="indiv-order-address-wrap">
+                <div> {order.submissionLevel} </div>
+              </div>
             </div>
- 
-
-            {/*
-            <div>{order.id}</div>
-            <div>{order.email}</div>
-            <div>{order.lastName}</div>
-            <div>{order.firstName}</div>
-            <div>{order.phoneNumber}</div>
-            <div>{order.submissionLevel}</div>
-            {isAdmin ? <Form>
-              <Form.Control as="select" defaultValue={order.status} onChange={async (event) => {
-                await updateOrder({...order, status: event.target.value})
-              }}>
-                <option value="Awaiting Cards">Awaiting Cards</option>
-                <option value="Received">Received</option>
-                <option value="Under Review">Under Review</option>
-                <option value="Shipping Back">Shipping Back</option>
-                <option value="Completed">Completed</option>
-              </Form.Control>
-            </Form> : <div>{order.status}</div>}
-            {isAdmin && (
-              <Button
-                onClick={() => {
-                  setShowDeleteModal(true);
-                }}
-              >
-                <Trash />
-              </Button>
-            )}
-            */}
-
-
           </div>
         </div>
       )}

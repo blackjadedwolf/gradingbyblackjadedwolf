@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useOrders, useUser, deleteOrder, updateOrder } from "services/api";
 import { Link } from "react-router-dom";
 import { Trash } from "react-bootstrap-icons";
+import { OrderStatus } from "models";
 
 const OrdersPage = () => {
   const [user] = useUser();
@@ -32,7 +33,7 @@ const OrdersPage = () => {
             <Form.Control
               required
               placeholder="Searh By Email"
-              style={{width:"15rem"}}
+              style={{ width: "15rem" }}
               onChange={(event) => {
                 setSearch(event.target.value);
               }}
@@ -73,22 +74,44 @@ const OrdersPage = () => {
                       {order.submissionLevel}
                     </div>
                     {isAdmin ? (
-                      <Form className="order order-hide">
+                      <Form>
                         <Form.Control
                           as="select"
                           defaultValue={order.status}
-                          onChange={async (event) => {
-                            await updateOrder({
+                          onChange={(event) => {
+                            let newStatus: OrderStatus;
+
+                            switch (event.target.value) {
+                              case OrderStatus.Completed.toString():
+                                newStatus = OrderStatus.Completed;
+                                break;
+                              case OrderStatus.Received.toString():
+                                newStatus = OrderStatus.Received;
+                                break;
+                              case OrderStatus.Shipping.toString():
+                                newStatus = OrderStatus.Shipping;
+                                break;
+                              case OrderStatus.UnderReview.toString():
+                                newStatus = OrderStatus.UnderReview;
+                                break;
+                              case OrderStatus.Waiting.toString():
+                                newStatus = OrderStatus.Waiting;
+                                break;
+                              default:
+                                throw new Error(
+                                  "invalid argument in order change switch statement"
+                                );
+                            }
+
+                            updateOrder({
                               ...order,
-                              status: event.target.value,
+                              status: newStatus,
                             });
                           }}
                         >
-                          <option value="Awaiting Cards">Awaiting Cards</option>
-                          <option value="Received">Received</option>
-                          <option value="Under Review">Under Review</option>
-                          <option value="Shipping Back">Shipping Back</option>
-                          <option value="Completed">Completed</option>
+                          {Object.entries(OrderStatus).map((entry) => {
+                            return <option key= {entry[0]} value={entry[0]}>{entry[1]}</option>;
+                          })}
                         </Form.Control>
                       </Form>
                     ) : (
