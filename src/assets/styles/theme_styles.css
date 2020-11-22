@@ -10049,8 +10049,8 @@ h3 {
 }
 
 .social-icon{
-  margin-top:25%;
-  margin-left:-50%;
+  margin-top:35%;
+  margin-left:-52%;
   height: 60%;
   width: 60%;
 }
@@ -10384,11 +10384,16 @@ form .row:first-child .floating-label-form-group {
 }
 
 .btn-primary{
-   border:2px solid #1EBC9B !important;
+   border:0px solid #1EBC9B !important;
    background-color:black !important;
    display:flex;
    align-items:center;
    justify-content:center;
+}
+
+.custom-footer-btn{
+  border:1px solid #1EBC9B !important;
+  width: 5rem;
 }
 
 .submission-partners{
