@@ -188,13 +188,15 @@ const ViewOrderPage = () => {
               </div>
             </div>
 
-            <div>
-              <PDFDownloadLink
-                document={<Invoice order={order} />}
-                fileName="BlackJadedWolf_Invoice.pdf"
-              >
-                Download your invoice here!
-              </PDFDownloadLink>
+            <div className="container-fluid indiv-order-options-info indiv-order-section mt-5">
+              <div className="indiv-mobile-section-header">
+                <PDFDownloadLink
+                  document={<Invoice order={order} />}
+                  fileName="BlackJadedWolf_Invoice.pdf"
+                >
+                  Download your invoice here!
+                </PDFDownloadLink>
+              </div>
             </div>
 
             <div className="indiv-mobile-heading mt-5">

@@ -10384,7 +10384,7 @@ form .row:first-child .floating-label-form-group {
 }
 
 .btn-primary{
-   border:0px solid #1EBC9B !important;
+   border:1px solid #1EBC9B !important;
    background-color:black !important;
    display:flex;
    align-items:center;
@@ -10583,7 +10583,7 @@ form .row:first-child .floating-label-form-group {
 
 @media (min-width: 962px){
   .indiv-order-page-wrap{
-    margin-top: 6.7rem !important;
+    margin-top: 6.5rem !important;
     min-height: 34.05rem !important;
   }
 

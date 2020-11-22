@@ -22,7 +22,7 @@ const Footer = () => {
             <a className="btn btn-outline-light btn-social mx-1 footer-btn" href="https://youtube.com/blackjadedwolf"><i className="fab fa-fw fa-youtube social-icon"></i></a>
           </div>
           <div className="col-lg-4 d-flex mb-5 align-items-center justify-content-center flex-column">
-            <h4 className="text-uppercase custom-header">Book An Appointment</h4>
+            <h4 className="text-uppercase custom-header mb-4">Book An Appointment</h4>
             <Button className="custom-footer-btn">  
               <a href="https://square.site/book/YGJ7WNMRJ722T/blackjadedwolf-inc-brooklyn-ny" style={{color:"white", fontSize:"1rem", }}> Book </a>
             </Button>

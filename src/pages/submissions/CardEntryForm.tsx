@@ -357,7 +357,7 @@ export const CardEntryForm = (props: Props) => {
         />
         <div style={{marginTop:"1.5rem", display:"flex", alignItems:"center", justifyContent:"center"}}>
           <Button
-          style={{marginRight:"2rem", border:"2px solid #1EBC9B", backgroundColor:"black"}}
+          style={{marginRight:"2rem", border:"2px solid #1EBC9B !important", backgroundColor:"black"}}
             onClick={() => {
               setShowModal(true);
             }}
