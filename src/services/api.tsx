@@ -1,5 +1,5 @@
 import { Card, Order, User, OrderStatus } from "../models";
-import { auth, db } from "./firebase";
+import { auth, firestore } from "./firebase";
 import {
   useCollectionData,
   useDocumentData,
@@ -51,20 +51,21 @@ export const saveOrder = async (
     lastName: userDetails.lastName,
     phoneNumber: userDetails.phoneNumber,
     status: OrderStatus.Waiting,
+    dateCreated: new Date(Date.now()).toISOString()
   };
 
-  return await db.collection("orders").add(order);
+  return await firestore.collection("orders").add(order);
 };
 
 export const updateOrder = async (updatedOrder: Order) => {
-  return await db
+  return await firestore
     .collection("orders")
     .doc(updatedOrder.id)
     .update(updatedOrder);
 };
 
 export const getOrders = async () => {
-  return await db
+  return await firestore
     .collection("orders")
     .get()
     .then((querySnapshot) => {
@@ -80,11 +81,11 @@ export const getOrders = async () => {
 };
 
 export const useOrders = () => {
-  return useCollectionData<Order>(db.collection("orders"), { idField: "id" });
+  return useCollectionData<Order>(firestore.collection("orders"), { idField: "id" });
 };
 
 export const getOrder = async (orderID: string) => {
-  return await db
+  return await firestore
     .collection("orders")
     .doc(orderID)
     .get()
@@ -100,11 +101,11 @@ export const getOrder = async (orderID: string) => {
 };
 
 export const useOrder = (orderID: string) => {
-  return useDocumentData<Order>(db.collection("orders").doc(orderID), {
+  return useDocumentData<Order>(firestore.collection("orders").doc(orderID), {
     idField: "id",
   });
 };
 
 export const deleteOrder = async (orderID: string) => {
-  return await db.collection("orders").doc(orderID).delete();
+  return await firestore.collection("orders").doc(orderID).delete();
 };

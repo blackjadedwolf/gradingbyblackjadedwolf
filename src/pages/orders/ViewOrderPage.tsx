@@ -5,6 +5,8 @@ import { useUser, deleteOrder, useOrder, updateOrder } from "services/api";
 import { Link } from "react-router-dom";
 import { Trash } from "react-bootstrap-icons";
 import { OrderStatus } from "models";
+import { Invoice } from "./Invoice";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 interface RouteParams {
   orderID: string;
@@ -56,59 +58,62 @@ const ViewOrderPage = () => {
                 <span className="indiv-order-caption"> Order #: &nbsp; </span>
                 {order.id}
               </div>
-             
+
               <div className="indiv-mobile-heading">
-                <span className="indiv-order-caption"> Status:  &nbsp; </span>
+                <span className="indiv-order-caption"> Status: &nbsp; </span>
                 {isAdmin ? (
                   <Form className="indiv-order-form">
-                  <Form.Control
-                    as="select"
-                    defaultValue={order.status}
-                    onChange={(event) => {
-                      let newStatus: OrderStatus;
+                    <Form.Control
+                      as="select"
+                      defaultValue={order.status}
+                      onChange={(event) => {
+                        let newStatus: OrderStatus;
 
-                      switch (event.target.value) {
-                        case OrderStatus.Completed.toString():
-                          newStatus = OrderStatus.Completed;
-                          break;
-                        case OrderStatus.Received.toString():
-                          newStatus = OrderStatus.Received;
-                          break;
-                        case OrderStatus.Shipping.toString():
-                          newStatus = OrderStatus.Shipping;
-                          break;
-                        case OrderStatus.UnderReview.toString():
-                          newStatus = OrderStatus.UnderReview;
-                          break;
-                        case OrderStatus.Waiting.toString():
-                          newStatus = OrderStatus.Waiting;
-                          break;
-                        default:
-                          throw new Error(
-                            "invalid argument in order change switch statement"
-                          );
-                      }
+                        switch (event.target.value) {
+                          case OrderStatus.Completed.toString():
+                            newStatus = OrderStatus.Completed;
+                            break;
+                          case OrderStatus.Received.toString():
+                            newStatus = OrderStatus.Received;
+                            break;
+                          case OrderStatus.Shipping.toString():
+                            newStatus = OrderStatus.Shipping;
+                            break;
+                          case OrderStatus.UnderReview.toString():
+                            newStatus = OrderStatus.UnderReview;
+                            break;
+                          case OrderStatus.Waiting.toString():
+                            newStatus = OrderStatus.Waiting;
+                            break;
+                          default:
+                            throw new Error(
+                              "invalid argument in order change switch statement"
+                            );
+                        }
 
-                      updateOrder({
-                        ...order,
-                        status: newStatus,
-                      });
-                    }}
-                  >
-                    {Object.entries(OrderStatus).map((entry) => {
-                      return <option key={entry[0]} value={entry[0]}>{entry[1]}</option>;
-                    })}
-                  </Form.Control>
-                </Form>
+                        updateOrder({
+                          ...order,
+                          status: newStatus,
+                        });
+                      }}
+                    >
+                      {Object.entries(OrderStatus).map((entry) => {
+                        return (
+                          <option key={entry[0]} value={entry[0]}>
+                            {entry[1]}
+                          </option>
+                        );
+                      })}
+                    </Form.Control>
+                  </Form>
                 ) : (
                   order.status
                 )}
               </div>
-              
             </div>
 
             <div className="container-fluid indiv-order-customer-info indiv-order-section mt-5">
-              <div  className="indiv-mobile-section-header">
+              <div className="indiv-mobile-section-header">
                 <span className="indiv-order-caption">
                   Customer Information:
                 </span>
@@ -124,15 +129,21 @@ const ViewOrderPage = () => {
             </div>
 
             <div className="container-fluid indiv-order-products-info indiv-order-section mt-5">
-              <div  className="indiv-mobile-section-header">
+              <div className="indiv-mobile-section-header">
                 <span className="indiv-order-caption">
                   Products Information:
                 </span>
               </div>
               <br></br>
               <div className="indiv-order-product-wrap">
-                <div className="indiv-mobile-product-show"> Please visit our desktop website to view your order items </div>
-                <div className="indiv-order-product-row indiv-mobile-product-hide" style={{border:'1px solid white'}}>
+                <div className="indiv-mobile-product-show">
+                  {" "}
+                  Please visit our desktop website to view your order items{" "}
+                </div>
+                <div
+                  className="indiv-order-product-row indiv-mobile-product-hide"
+                  style={{ border: "1px solid white" }}
+                >
                   <div className="indiv-order-product-name "> Name </div>
                   <div className="indiv-order-product-card-number">
                     Card Number
@@ -143,7 +154,10 @@ const ViewOrderPage = () => {
                 </div>
                 {cards?.map((card) => {
                   return (
-                    <div className="indiv-order-product-row mt-4 indiv-mobile-product-hide" key={card.player_name + card.card_number}>
+                    <div
+                      className="indiv-order-product-row mt-4 indiv-mobile-product-hide"
+                      key={card.player_name + card.card_number}
+                    >
                       <div className="indiv-order-product-name">
                         {card.player_name}
                       </div>
@@ -166,23 +180,37 @@ const ViewOrderPage = () => {
             </div>
 
             <div className="container-fluid indiv-order-options-info indiv-order-section mt-5">
-              <div  className="indiv-mobile-section-header">
+              <div className="indiv-mobile-section-header">
                 <span className="indiv-order-caption">
                   Submission Cost: &nbsp;
                 </span>
-                {order.submissionLevel.split("|")[1]} 
+                {order.submissionLevel.split("|")[1]}
               </div>
             </div>
 
+            <div>
+              <PDFDownloadLink
+                document={<Invoice order={order} />}
+                fileName="BlackJadedWolf_Invoice.pdf"
+              >
+                Download your invoice here!
+              </PDFDownloadLink>
+            </div>
+
             <div className="indiv-mobile-heading mt-5">
-                {isAdmin && (
-                  <div className="d-flex flex-column align-items-center justify-content-center">
-                    <Button onClick={() => {setShowDeleteModal(true);}} className="mt-3">
-                      <Trash style={{fontSize:'25px'}} />
-                    </Button>
-                  </div>
-                )}
-              </div>
+              {isAdmin && (
+                <div className="d-flex flex-column align-items-center justify-content-center">
+                  <Button
+                    onClick={() => {
+                      setShowDeleteModal(true);
+                    }}
+                    className="mt-3"
+                  >
+                    <Trash style={{ fontSize: "25px" }} />
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

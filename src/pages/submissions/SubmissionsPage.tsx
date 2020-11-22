@@ -96,9 +96,9 @@ const Submissions = () => {
         </div>
       ) : (
         <>
-          <p>View and download your invoice!</p>
-          <Link to={`/invoice/${orderID}`}>
-            <Button>View Invoice</Button>
+          <p>View and download your invoice on your order page!</p>
+          <Link to={`/orders/${orderID}`}>
+            <Button>View Order</Button>
           </Link>
         </>
       )} 

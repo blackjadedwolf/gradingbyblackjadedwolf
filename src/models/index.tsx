@@ -33,4 +33,5 @@ export interface Order {
   phoneNumber: string;
   cards: Card[];
   status: OrderStatus
+  dateCreated: string
 }
