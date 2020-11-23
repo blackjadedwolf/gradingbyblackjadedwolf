@@ -34,4 +34,5 @@ export interface Order {
   cards: Card[];
   status: OrderStatus
   dateCreated: string
+  notes?: string
 }

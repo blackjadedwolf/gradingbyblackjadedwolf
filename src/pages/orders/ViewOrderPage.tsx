@@ -67,7 +67,7 @@ const ViewOrderPage = () => {
                       as="select"
                       defaultValue={order.status}
                       onChange={(event) => {
-                        console.log("new status", event.target.value)
+                        console.log("new status", event.target.value);
                         let newStatus: OrderStatus;
 
                         switch (event.target.value) {
@@ -211,6 +211,25 @@ const ViewOrderPage = () => {
                   >
                     <Trash style={{ fontSize: "25px" }} />
                   </Button>
+                </div>
+              )}
+            </div>
+
+            <div>
+              {isAdmin && (
+                <div>
+                  <Form>
+                    <Form.Group>
+                      <Form.Label>Order Notes:</Form.Label>
+                    <Form.Control as="textarea" defaultValue={order.notes} onChange={event => {
+                      updateOrder({
+                        ...order,
+                        notes: event.target.value
+                      })
+                    }}/>
+                    </Form.Group>
+                    
+                  </Form>
                 </div>
               )}
             </div>
