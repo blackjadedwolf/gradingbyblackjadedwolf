@@ -108,7 +108,7 @@ const OrdersPage = () => {
                           }}
                         >
                           {Object.entries(OrderStatus).map((entry) => {
-                            return <option key= {entry[0]} value={entry[0]}>{entry[1]}</option>;
+                            return <option key= {entry[0]} value={entry[1]}>{entry[1]}</option>;
                           })}
                         </Form.Control>
                       </Form>
