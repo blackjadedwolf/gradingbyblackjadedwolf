@@ -67,6 +67,7 @@ const ViewOrderPage = () => {
                       as="select"
                       defaultValue={order.status}
                       onChange={(event) => {
+                        console.log("new status", event.target.value)
                         let newStatus: OrderStatus;
 
                         switch (event.target.value) {
@@ -99,7 +100,7 @@ const ViewOrderPage = () => {
                     >
                       {Object.entries(OrderStatus).map((entry) => {
                         return (
-                          <option key={entry[0]} value={entry[0]}>
+                          <option key={entry[0]} value={entry[1]}>
                             {entry[1]}
                           </option>
                         );
