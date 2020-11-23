@@ -61,9 +61,9 @@ const Header = () => {
               <li className="nav-item mx-0 mx-lg-1">
                 <Button
                   className="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                  id="custom-logout"
                   onClick={handleSignOut}
                 >
-                  {" "}
                   LOGOUT
                 </Button>
               </li>
@@ -73,7 +73,6 @@ const Header = () => {
                   className="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                   to="/login"
                 >
-                  {" "}
                   Login
                 </Link>
               </li>

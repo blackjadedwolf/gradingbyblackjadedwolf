@@ -10275,6 +10275,10 @@ form .row:first-child .floating-label-form-group {
 
 /* = = = = = = = = = = = FOOTER = = = = = = = = = = = */ 
 
+#custom-logout{
+  border:0px solid black !important;
+}
+
 .footer {
   padding-top: 5rem;
   padding-bottom: 5rem;
@@ -10294,6 +10298,7 @@ form .row:first-child .floating-label-form-group {
 .custom-header{
   color:#1EBC9B !important;
   font-size:1.2rem;
+  font-weight: normal;
 }
 
 .footer-btn{
@@ -10518,6 +10523,11 @@ form .row:first-child .floating-label-form-group {
 
 .order{ 
   flex:1;
+  color:white; 
+}
+
+.order:first-child:hover{
+  text-decoration: underline;
 }
 
 .order{
