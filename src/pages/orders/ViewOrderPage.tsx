@@ -1,8 +1,7 @@
-import { Button, Form, Modal, Table } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 import { useParams } from "react-router";
 import React, { useState } from "react";
 import { useUser, deleteOrder, useOrder, updateOrder } from "services/api";
-import { Link } from "react-router-dom";
 import { Trash } from "react-bootstrap-icons";
 import { OrderStatus } from "models";
 import { Invoice } from "./Invoice";

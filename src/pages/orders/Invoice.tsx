@@ -7,7 +7,6 @@ import {
   Document,
   Image,
   StyleSheet,
-  PDFDownloadLink,
 } from "@react-pdf/renderer";
 import { Order } from "../../models";
 let logo = require("../../assets/img/logo.png");

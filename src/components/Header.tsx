@@ -1,10 +1,10 @@
 import React from "react";
-import { Nav, Button, NavLink } from "react-bootstrap";
+import { Nav, Button } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import { signOut, useUser } from "services/api";
 
 const Header = () => {
-  const [user, userLoading, userError] = useUser();
+  const [user] = useUser();
 
   const handleSignOut = async () => {
     await signOut().then(() => {

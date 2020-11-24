@@ -4,10 +4,7 @@ import {
   Switch,
   Route,
   Redirect,
-  NavLink,
 } from "react-router-dom";
-
-import { signOut, useUser } from "services/api";
 
 import {
   Home as HomePage,

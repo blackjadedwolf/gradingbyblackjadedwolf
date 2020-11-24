@@ -370,8 +370,3 @@ export const CardEntryForm = (props: Props) => {
     </div>
   );
 };
-
-
-const MobileStyles = {
-  display: "flex"
-} as React.CSSProperties

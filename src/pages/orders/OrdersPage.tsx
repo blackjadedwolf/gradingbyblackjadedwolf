@@ -1,16 +1,13 @@
-import { Button, Form, Modal, Table } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import React, { useState } from "react";
-import { useOrders, useUser, deleteOrder, updateOrder } from "services/api";
+import { useOrders, useUser, updateOrder } from "services/api";
 import { Link } from "react-router-dom";
-import { Trash } from "react-bootstrap-icons";
 import { OrderStatus } from "models";
 
 const OrdersPage = () => {
   const [user] = useUser();
   const [orders, ordersLoading, ordersError] = useOrders();
   const [search, setSearch] = useState<string>();
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [orderID, setOrderID] = useState<string>();
 
   const isAdmin = user?.email === "blackjadedwolf@aol.com";
 
