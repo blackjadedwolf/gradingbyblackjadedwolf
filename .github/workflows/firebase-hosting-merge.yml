@@ -24,10 +24,10 @@ jobs:
         run: yarn install --frozen-lockfile && yarn build
       - name: "Deploy"
         uses: FirebaseExtended/action-hosting-deploy@v0
-          with:
-            repoToken: "${{ secrets.GITHUB_TOKEN }}"
-            firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_BLACKJADEDWOLF_78F1D }}"
-            channelId: live
-            projectId: blackjadedwolf-78f1d
-          env:
-            FIREBASE_CLI_PREVIEWS: hostingchannels
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_BLACKJADEDWOLF_78F1D }}"
+          channelId: live
+          projectId: blackjadedwolf-78f1d
+        env:
+          FIREBASE_CLI_PREVIEWS: hostingchannels
