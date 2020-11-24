@@ -14,13 +14,13 @@ jobs:
         uses: actions/checkout@v2
       - name: "Install Dependencies and Build"
         env:
-          REACT_APP_FIREBASE_APIKEY: "${{ secrets.FIREBASE_APIKEY}}"
-          REACT_APP_FIREBASE_AUTHDOMAIN: "${{ secrets.FIREBASE_AUTHDOMAIN}}"
-          REACT_APP_FIREBASE_DATABASEURL: "${{ secrets.FIREBASE_DATABASEURL}}"
-          REACT_APP_FIREBASE_PROJECTID: "${{ secrets.FIREBASE_PROJECTID}}"
-          REACT_APP_FIREBASE_STORAGEBUCKET: "${{ secrets.FIREBASE_STORAGEBUCKET}}"
-          REACT_APP_FIREBASE_MESSAGINGSENDERID: "${{ secrets.FIREBASE_MESSAGINGSENDERID}}"
-          REACT_APP_FIREBASE_APPID: "${{ secrets.FIREBASE_APPID}}"
+          REACT_APP_FIREBASE_APIKEY: ${{ secrets.FIREBASE_APIKEY}}
+          REACT_APP_FIREBASE_AUTHDOMAIN: ${{ secrets.FIREBASE_AUTHDOMAIN}}
+          REACT_APP_FIREBASE_DATABASEURL: ${{ secrets.FIREBASE_DATABASEURL}}
+          REACT_APP_FIREBASE_PROJECTID: ${{ secrets.FIREBASE_PROJECTID}}
+          REACT_APP_FIREBASE_STORAGEBUCKET: ${{ secrets.FIREBASE_STORAGEBUCKET}}
+          REACT_APP_FIREBASE_MESSAGINGSENDERID: ${{ secrets.FIREBASE_MESSAGINGSENDERID}}
+          REACT_APP_FIREBASE_APPID: ${{ secrets.FIREBASE_APPID}}
         run: yarn install --frozen-lockfile && yarn build
       - name: "Deploy"
         uses: FirebaseExtended/action-hosting-deploy@v0
