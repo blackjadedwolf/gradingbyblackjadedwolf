@@ -379,7 +379,7 @@ h6, .h6 {
 }
 
 .lead {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 300;
 }
 
@@ -9999,6 +9999,7 @@ h3 {
 #custom_heading{
   color: #1EBC9B !important;
   font-size: 1.5rem;
+  font-weight: 500;
 }
 
 @media (min-width: 992px) {
@@ -10309,6 +10310,10 @@ form .row:first-child .floating-label-form-group {
 .custom-about-btn{
   border: 2px solid #1EBC9B !important;
   color:white !important;
+  height: 50px;
+  display: flex;
+  align-items:center;
+  justify-content: center;
 }
 
 .custom-img{
@@ -10342,9 +10347,9 @@ form .row:first-child .floating-label-form-group {
 
 .submission-heading{
   font-family: "Montserrat";
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: #FFF952;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 @media (min-width: 992px) {
@@ -10378,14 +10383,15 @@ form .row:first-child .floating-label-form-group {
 
 .submission-row{
   font-family: "Montserrat";
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: white;
 }
 
 .submit-directive{
   font-family: "Montserrat";
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: white;
+  font-weight: 500 !important;
 }
 
 .btn-primary{
