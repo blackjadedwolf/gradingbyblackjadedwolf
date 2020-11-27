@@ -9,7 +9,8 @@ import {
   StyleSheet,
 } from "@react-pdf/renderer";
 import { Order } from "../../models";
-let logo = require("../../assets/img/logo.png");
+import logo from '../../assets/img/logo.png';
+import { logRoles } from "@testing-library/react";
 
 type Props = {
   order: Order;
@@ -30,14 +31,11 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   logo: {
-    width: 74,
-    height: 66,
-    marginLeft: "auto",
-    marginRight: "auto",
+    width: 200,
+    height: 150,
   },
   titleContainer: {
     flexDirection: "row",
-    marginTop: 24,
   },
   reportTitle: {
     color: "#61dafb",
@@ -57,10 +55,24 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     marginTop: 36,
+    display:"flex",
+    flexDirection:"row",
+    alignItems:'flex-start',
+    justifyContent:"space-between",
+    border:"1px solid black"
+  },
+  shipTo:{
+    marginTop: 5,
+    paddingBottom: 3,
+    fontFamily: "Helvetica-Oblique",
   },
   billTo: {
-    marginTop: 10,
+    marginTop: 14,
     paddingBottom: 3,
+    fontFamily: "Helvetica-Oblique",
+  },
+  orderDetails:{
+    marginTop:20,
     fontFamily: "Helvetica-Oblique",
   },
   tableContainer: {
@@ -130,8 +142,8 @@ const styles = StyleSheet.create({
 });
 
 export const Invoice = (props: Props) => {
-  const { order } = props;
 
+  const { order } = props;
   const { cards, email, firstName, lastName, phoneNumber } = order;
   // extract ID later
 
@@ -144,15 +156,33 @@ export const Invoice = (props: Props) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <Image style={styles.logo} src={logo} />
+
+        <View style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+          <Image style={styles.logo} src={'https://blackjadedwolf-78f1d.web.app/static/media/logo.84a3bdd2.png'} />
+        </View>
+        
         <View style={styles.titleContainer}>
-          <Text style={styles.reportTitle}>Invoice</Text>
+          <Text style={styles.reportTitle}>Customer Invoice</Text>
         </View>
-        <View style={styles.invoiceDateContainer}>
-          <Text style={styles.dateLabel}>Date: </Text>
-          <Text>{new Date().toISOString().slice(0, 10)}</Text>
-        </View>
+
+
         <View style={styles.headerContainer}>
+
+          <View style={styles.invoiceDateContainer}>
+            <Text style={styles.dateLabel}>Date: </Text>
+            <Text>{new Date().toISOString().slice(0, 10)}</Text>
+          </View>
+
+          <View>
+            <Text style={styles.shipTo}>Ship To:</Text>
+            <Text> BlackJadedWolf Inc </Text>
+            <Text> Flatbush Ave Unit 7  </Text>
+            <Text> Brooklyn NY 11217 </Text>
+          </View>
+
+        </View>
+
+        <View>
           <Text style={styles.billTo}>Bill To:</Text>
           <Text>
             {firstName} {lastName}
@@ -160,6 +190,18 @@ export const Invoice = (props: Props) => {
           <Text>{email}</Text>
           {phoneNumber ? <Text>{phoneNumber}</Text> : null}
         </View>
+
+        
+        <View>
+          <Text style={styles.orderDetails}>Order Details:</Text>
+          <Text> Order #: </Text>
+          <Text> Date: </Text>
+        </View>
+
+        <View>
+          <Text>  </Text>
+        </View> 
+
         <View style={styles.tableContainer}>
           {cards.map((card) => {
             return (

@@ -199,6 +199,26 @@ const ViewOrderPage = () => {
               </div>
             </div>
 
+
+            <div>
+              {isAdmin && (
+                <div>
+                  <Form style={{marginTop:"2rem"}}>
+                    <Form.Group>
+                      <Form.Label>Order Notes:</Form.Label>
+                    <Form.Control as="textarea" defaultValue={order.notes} onChange={event => {
+                      updateOrder({
+                        ...order,
+                        notes: event.target.value
+                      })
+                    }}/>
+                    </Form.Group>
+                    
+                  </Form>
+                </div>
+              )}
+            </div>
+
             <div className="indiv-mobile-heading mt-5">
               {isAdmin && (
                 <div className="d-flex flex-column align-items-center justify-content-center">
@@ -214,24 +234,7 @@ const ViewOrderPage = () => {
               )}
             </div>
 
-            <div>
-              {isAdmin && (
-                <div>
-                  <Form>
-                    <Form.Group>
-                      <Form.Label>Order Notes:</Form.Label>
-                    <Form.Control as="textarea" defaultValue={order.notes} onChange={event => {
-                      updateOrder({
-                        ...order,
-                        notes: event.target.value
-                      })
-                    }}/>
-                    </Form.Group>
-                    
-                  </Form>
-                </div>
-              )}
-            </div>
+
           </div>
         </div>
       )}

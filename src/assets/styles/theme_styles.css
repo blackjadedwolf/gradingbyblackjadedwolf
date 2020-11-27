@@ -10646,7 +10646,7 @@ form .row:first-child .floating-label-form-group {
   min-height: 16.2rem;
   position:relative;
   color:white;
- 
+  padding-bottom:3rem;
 }
 
 .indiv-order-section{
@@ -10717,8 +10717,4 @@ form .row:first-child .floating-label-form-group {
 
 .indiv-mobile-product-hide{
   display:none;
-}
-
-.indiv-order-form{
-  margin-top:1rem;
 }
