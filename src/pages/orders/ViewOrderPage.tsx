@@ -69,18 +69,25 @@ const ViewOrderPage = () => {
                         console.log("new status", event.target.value);
                         let newStatus: OrderStatus;
 
+                       
                         switch (event.target.value) {
-                          case OrderStatus.Completed.toString():
-                            newStatus = OrderStatus.Completed;
+                          case OrderStatus.OrderArrived.toString():
+                            newStatus = OrderStatus.OrderArrived;
+                            break;
+                          case OrderStatus.OrderReady.toString():
+                            newStatus = OrderStatus.OrderReady;
+                            break;
+                          case OrderStatus.Grading.toString():
+                            newStatus = OrderStatus.Grading;
+                            break;
+                          case OrderStatus.ShippedToGrader.toString():
+                            newStatus = OrderStatus.ShippedToGrader;
+                            break;
+                          case OrderStatus.Processing.toString():
+                            newStatus = OrderStatus.Processing;
                             break;
                           case OrderStatus.Received.toString():
                             newStatus = OrderStatus.Received;
-                            break;
-                          case OrderStatus.Shipping.toString():
-                            newStatus = OrderStatus.Shipping;
-                            break;
-                          case OrderStatus.UnderReview.toString():
-                            newStatus = OrderStatus.UnderReview;
                             break;
                           case OrderStatus.Waiting.toString():
                             newStatus = OrderStatus.Waiting;
@@ -89,7 +96,7 @@ const ViewOrderPage = () => {
                             throw new Error(
                               "invalid argument in order change switch statement"
                             );
-                        }
+                         }
 
                         updateOrder({
                           ...order,

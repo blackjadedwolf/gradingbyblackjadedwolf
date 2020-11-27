@@ -62,17 +62,17 @@ const styles = StyleSheet.create({
     border:"1px solid black"
   },
   shipTo:{
-    marginTop: 5,
+    marginTop: 2,
     paddingBottom: 3,
     fontFamily: "Helvetica-Oblique",
   },
   billTo: {
-    marginTop: 14,
+    marginTop: 30,
     paddingBottom: 3,
     fontFamily: "Helvetica-Oblique",
   },
   orderDetails:{
-    marginTop:20,
+    marginTop:40,
     fontFamily: "Helvetica-Oblique",
   },
   tableContainer: {
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   player_name: {
-    width: "30%",
+    width: "20%",
     borderRightColor: "#90e5fc",
     borderRightWidth: 1,
     textAlign: "left",
@@ -139,6 +139,9 @@ const styles = StyleSheet.create({
     textAlign: "right",
     paddingRight: 8,
   },
+  description:{
+    marginTop:"40"
+  }
 });
 
 export const Invoice = (props: Props) => {
@@ -194,7 +197,7 @@ export const Invoice = (props: Props) => {
         
         <View>
           <Text style={styles.orderDetails}>Order Details:</Text>
-          <Text> Order #: </Text>
+          <Text> Order #  </Text>
           <Text> Date: </Text>
         </View>
 
@@ -237,8 +240,8 @@ export const Invoice = (props: Props) => {
             );
           })}
         </View>
-        <View style={styles.row}>
-          <Text style={styles.description}>Total Value</Text>
+        <View style={[styles.row, styles.description]}>
+          <Text>Total Value</Text>
           <Text style={styles.total}> ${totalValue.toFixed(2)}</Text>
         </View>
       </Page>
