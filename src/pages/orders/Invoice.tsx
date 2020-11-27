@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   },
   tableContainer: {
     flexDirection: "row",
-    marginTop: 24,
+    marginTop: 20,
     borderWidth: 1,
     borderColor: "#bff0fd",
     width: "110%",
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     paddingLeft: "5px",
   },
   product: {
-    width: "15%",
+    width: "20%",
     borderRightColor: "#90e5fc",
     borderRightWidth: 1,
     textAlign: "left",
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   cardNumber: {
-    width: "15%",
+    width: "20%",
     borderRightColor: "#90e5fc",
     borderRightWidth: 1,
     textAlign: "left",
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
 export const Invoice = (props: Props) => {
 
   const { order } = props;
-  const { cards, email, firstName, lastName, phoneNumber } = order;
+  const { cards, email, firstName, lastName, phoneNumber, id} = order;
   // extract ID later
 
   const totalValue = cards
@@ -195,10 +195,8 @@ export const Invoice = (props: Props) => {
         </View>
 
         
-        <View>
-          <Text style={styles.orderDetails}>Order Details:</Text>
-          <Text> Order #  </Text>
-          <Text> Date: </Text>
+        <View style={{marginTop:"35"}}>
+          <Text> Order #: {id}  </Text>
         </View>
 
         <View>
@@ -240,10 +238,23 @@ export const Invoice = (props: Props) => {
             );
           })}
         </View>
+
         <View style={[styles.row, styles.description]}>
-          <Text>Total Value</Text>
+          <Text>Total Value: </Text>
           <Text style={styles.total}> ${totalValue.toFixed(2)}</Text>
         </View>
+
+        <View style={{marginTop:"40"}}>
+          <Text>
+            I agree not to submit any items with which bear evidence of trimming, recoloring, restoration or any other form of tampering,
+            or are of questionable authenticity. I agree that in the event PSA rejects any items for grading, PSA shall not refund the amount
+            paid by customer because the determination to reject an item requires a review by PSA's graders and authenticators. If items are 
+            submitted for services for which they do not qualify, I authorize PSA to correct the order and charge any additional authentication, 
+            grading, handling, and shipping fees that may apply. Turnaround time does not begin until order has been places into grading. 
+            Inability to follow the above terms and conditions will result in being banned from Grading by BlackJadedWolf Inc.
+          </Text>
+        </View>
+
       </Page>
     </Document>
   );
