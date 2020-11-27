@@ -1,10 +1,11 @@
 import { Card, Order, User, OrderStatus } from "../models";
-import { auth, firestore } from "./firebase";
+import { auth, firestore, storage } from "./firebase";
 import {
   useCollectionData,
   useDocumentData,
 } from "react-firebase-hooks/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
+import axios from "axios";
 
 /********
  **AUTH**
@@ -63,6 +64,20 @@ export const updateOrder = async (updatedOrder: Order) => {
     .doc(updatedOrder.id)
     .update(updatedOrder);
 };
+
+export const listOrderAttachments = async (orderID: string) => {
+  return await storage.ref(`/orders/${orderID}/attachments/`).listAll()
+}
+
+export const downloadAttachment = async(orderID: string, filename: string) => {
+  return await storage.ref(`/orders/${orderID}/attachments/${filename}`).getDownloadURL().then(async (url) => {
+    return await axios.get(url).then(value => {
+      console.log("download value", value)
+    }, error => {
+      console.log("download error", error)
+    })
+  })
+}
 
 export const getOrders = async () => {
   return await firestore

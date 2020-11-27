@@ -1,7 +1,13 @@
 import { Button, Form, Modal } from "react-bootstrap";
 import { useParams } from "react-router";
-import React, { useState } from "react";
-import { useUser, deleteOrder, useOrder, updateOrder } from "services/api";
+import React, { useEffect, useState } from "react";
+import {
+  useUser,
+  deleteOrder,
+  useOrder,
+  updateOrder,
+  listOrderAttachments,
+} from "services/api";
 import { Trash } from "react-bootstrap-icons";
 import { OrderStatus } from "models";
 import { Invoice } from "./Invoice";
@@ -15,11 +21,21 @@ const ViewOrderPage = () => {
   const { orderID } = useParams<RouteParams>();
   const [user] = useUser();
   const [order, orderLoading, orderError] = useOrder(orderID);
+  const [attachments, setAttachments] = useState<
+    firebase.storage.Reference[]
+  >();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const isAdmin = user?.email === "blackjadedwolf@aol.com";
   var cards = order?.cards;
+
+  useEffect(() => {
+    listOrderAttachments(orderID).then((attachmentsList) => {
+      console.log("attachmentsList: ", attachmentsList);
+      setAttachments(attachmentsList.items);
+    });
+  }, [orderID]);
 
   return (
     <>
@@ -188,16 +204,19 @@ const ViewOrderPage = () => {
               </div>
             </div>
 
-            <div className="container-fluid indiv-order-options-info indiv-order-section mt-5">
-              <div className="indiv-mobile-section-header">
-                <PDFDownloadLink
-                  document={<Invoice order={order} />}
-                  fileName="BlackJadedWolf_Invoice.pdf"
-                >
-                  Download your invoice here!
-                </PDFDownloadLink>
+            {/* Wait for attachments to be loaded, as re-rendering PDFDownloadLink causes problems */}
+            {attachments && (
+              <div className="container-fluid indiv-order-options-info indiv-order-section mt-5">
+                <div className="indiv-mobile-section-header">
+                  <PDFDownloadLink
+                    document={<Invoice order={order} />}
+                    fileName={`BlackJadedWolf_Invoice_${orderID}.pdf`}
+                  >
+                    Download your invoice here!
+                  </PDFDownloadLink>
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="indiv-mobile-heading mt-5">
               {isAdmin && (
@@ -214,24 +233,48 @@ const ViewOrderPage = () => {
               )}
             </div>
 
-            <div>
-              {isAdmin && (
-                <div>
-                  <Form>
-                    <Form.Group>
-                      <Form.Label>Order Notes:</Form.Label>
-                    <Form.Control as="textarea" defaultValue={order.notes} onChange={event => {
-                      updateOrder({
-                        ...order,
-                        notes: event.target.value
-                      })
-                    }}/>
-                    </Form.Group>
-                    
-                  </Form>
-                </div>
-              )}
-            </div>
+            {isAdmin && (
+              <div>
+                <Form.Group>
+                  <Form.File label="Upload Attachments" />
+                </Form.Group>
+              </div>
+            )}
+
+            {isAdmin && (
+              <div>
+                <Form>
+                  <Form.Group>
+                    <Form.Label>Order Notes:</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      defaultValue={order.notes}
+                      onChange={(event) => {
+                        updateOrder({
+                          ...order,
+                          notes: event.target.value,
+                        });
+                      }}
+                    />
+                  </Form.Group>
+                </Form>
+                {attachments?.map((attachment) => {
+                  return (
+                    <div key={attachment.fullPath}>
+                      {attachment.getDownloadURL().then(
+                        (url) => {
+                          return <a href={url}>Download</a>;
+                        },
+                        (error) => {
+                          console.log("error in render", error)
+                          return <p>{error.toString()}</p>;
+                        }
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       )}
