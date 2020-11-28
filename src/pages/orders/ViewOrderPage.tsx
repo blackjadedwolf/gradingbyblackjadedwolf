@@ -1,6 +1,7 @@
 import { Button, Form, Modal } from "react-bootstrap";
 import { useParams } from "react-router";
 import React, { useEffect, useState } from "react";
+import { useDownloadURL } from "react-firebase-hooks/storage";
 import {
   useUser,
   deleteOrder,
@@ -36,6 +37,41 @@ const ViewOrderPage = () => {
       setAttachments(attachmentsList.items);
     });
   }, [orderID]);
+
+  const AttachmentsDisplay = (props: {
+    attachments?: firebase.storage.Reference[];
+  }) => {
+    const { attachments } = props;
+
+    const AttachmentContainer = (props: {
+      attachment?: firebase.storage.Reference;
+    }) => {
+      const { attachment } = props;
+      const [url, urlLoading, urlError] = useDownloadURL(attachment);
+
+      return attachment ? (
+        <a href={url}>{attachment.name}</a>
+      ) : (
+        <p>No attachment</p>
+      );
+    };
+
+    return attachments ? (
+      <div>
+        <ul>
+          {attachments.map((attachment) => {
+            return (
+              <li key={attachment.name}>
+                <AttachmentContainer attachment={attachment} />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    ) : (
+      <p>No attachments for this order</p>
+    );
+  };
 
   return (
     <>
@@ -86,17 +122,23 @@ const ViewOrderPage = () => {
                         let newStatus: OrderStatus;
 
                         switch (event.target.value) {
-                          case OrderStatus.Completed.toString():
-                            newStatus = OrderStatus.Completed;
+                          case OrderStatus.OrderArrived.toString():
+                            newStatus = OrderStatus.OrderArrived;
+                            break;
+                          case OrderStatus.OrderReady.toString():
+                            newStatus = OrderStatus.OrderReady;
+                            break;
+                          case OrderStatus.Grading.toString():
+                            newStatus = OrderStatus.Grading;
+                            break;
+                          case OrderStatus.ShippedToGrader.toString():
+                            newStatus = OrderStatus.ShippedToGrader;
+                            break;
+                          case OrderStatus.Processing.toString():
+                            newStatus = OrderStatus.Processing;
                             break;
                           case OrderStatus.Received.toString():
                             newStatus = OrderStatus.Received;
-                            break;
-                          case OrderStatus.Shipping.toString():
-                            newStatus = OrderStatus.Shipping;
-                            break;
-                          case OrderStatus.UnderReview.toString():
-                            newStatus = OrderStatus.UnderReview;
                             break;
                           case OrderStatus.Waiting.toString():
                             newStatus = OrderStatus.Waiting;
@@ -218,26 +260,12 @@ const ViewOrderPage = () => {
               </div>
             )}
 
-            <div className="indiv-mobile-heading mt-5">
-              {isAdmin && (
-                <div className="d-flex flex-column align-items-center justify-content-center">
-                  <Button
-                    onClick={() => {
-                      setShowDeleteModal(true);
-                    }}
-                    className="mt-3"
-                  >
-                    <Trash style={{ fontSize: "25px" }} />
-                  </Button>
-                </div>
-              )}
-            </div>
-
             {isAdmin && (
               <div>
                 <Form.Group>
                   <Form.File label="Upload Attachments" />
                 </Form.Group>
+                <AttachmentsDisplay attachments={attachments} />
               </div>
             )}
 
@@ -258,23 +286,23 @@ const ViewOrderPage = () => {
                     />
                   </Form.Group>
                 </Form>
-                {attachments?.map((attachment) => {
-                  return (
-                    <div key={attachment.fullPath}>
-                      {attachment.getDownloadURL().then(
-                        (url) => {
-                          return <a href={url}>Download</a>;
-                        },
-                        (error) => {
-                          console.log("error in render", error)
-                          return <p>{error.toString()}</p>;
-                        }
-                      )}
-                    </div>
-                  );
-                })}
               </div>
             )}
+
+            <div className="indiv-mobile-heading mt-5">
+              {isAdmin && (
+                <div className="d-flex flex-column align-items-center justify-content-center">
+                  <Button
+                    onClick={() => {
+                      setShowDeleteModal(true);
+                    }}
+                    className="mt-3"
+                  >
+                    <Trash style={{ fontSize: "25px" }} />
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

@@ -17,11 +17,13 @@ export interface User {
 
 
 export enum OrderStatus {
-  Waiting = "Awaiting Cards",
-  Received = "Received",
-  UnderReview = "Under Review",
-  Shipping = "Shipping Back",
-  Completed = "Completed"
+  Waiting = "Awaiting Order",
+  Received = "Order Received",
+  Processing = "Processing",
+  ShippedToGrader = "Shipped to Grader",
+  Grading = "Being Graded",
+  OrderReady = "Order Ready",
+  OrderArrived = "Order Arrived",
 }
 
 export interface Order {

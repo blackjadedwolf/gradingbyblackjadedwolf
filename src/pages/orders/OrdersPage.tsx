@@ -67,7 +67,10 @@ const OrdersPage = () => {
                     <div className="order order-hide">{order.lastName}</div>
                     <div className="order order-hide">{order.firstName}</div>
                     <div className="order order-hide">{order.phoneNumber}</div>
-                    <div className="order order-hide"> {order.submissionLevel}</div>
+                    <div className="order order-hide">
+                      {" "}
+                      {order.submissionLevel}
+                    </div>
                     {isAdmin ? (
                       <Form className="order order-hide">
                         <Form.Control
@@ -77,17 +80,23 @@ const OrdersPage = () => {
                             let newStatus: OrderStatus;
 
                             switch (event.target.value) {
-                              case OrderStatus.Completed.toString():
-                                newStatus = OrderStatus.Completed;
+                              case OrderStatus.OrderArrived.toString():
+                                newStatus = OrderStatus.OrderArrived;
+                                break;
+                              case OrderStatus.OrderReady.toString():
+                                newStatus = OrderStatus.OrderReady;
+                                break;
+                              case OrderStatus.Grading.toString():
+                                newStatus = OrderStatus.Grading;
+                                break;
+                              case OrderStatus.ShippedToGrader.toString():
+                                newStatus = OrderStatus.ShippedToGrader;
+                                break;
+                              case OrderStatus.Processing.toString():
+                                newStatus = OrderStatus.Processing;
                                 break;
                               case OrderStatus.Received.toString():
                                 newStatus = OrderStatus.Received;
-                                break;
-                              case OrderStatus.Shipping.toString():
-                                newStatus = OrderStatus.Shipping;
-                                break;
-                              case OrderStatus.UnderReview.toString():
-                                newStatus = OrderStatus.UnderReview;
                                 break;
                               case OrderStatus.Waiting.toString():
                                 newStatus = OrderStatus.Waiting;
@@ -105,7 +114,11 @@ const OrdersPage = () => {
                           }}
                         >
                           {Object.entries(OrderStatus).map((entry) => {
-                            return <option key= {entry[0]} value={entry[1]}>{entry[1]}</option>;
+                            return (
+                              <option key={entry[0]} value={entry[1]}>
+                                {entry[1]}
+                              </option>
+                            );
                           })}
                         </Form.Control>
                       </Form>
