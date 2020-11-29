@@ -9,8 +9,6 @@ import {
   StyleSheet,
 } from "@react-pdf/renderer";
 import { Order } from "../../models";
-import logo from '../../assets/img/logo.png';
-import { logRoles } from "@testing-library/react";
 
 type Props = {
   order: Order;
