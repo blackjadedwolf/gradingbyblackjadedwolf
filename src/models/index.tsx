@@ -15,7 +15,6 @@ export interface User {
   phoneNumber: string;
 }
 
-
 export enum OrderStatus {
   Waiting = "Awaiting Order",
   Received = "Order Received",
@@ -34,7 +33,7 @@ export interface Order {
   email: string;
   phoneNumber: string;
   cards: Card[];
-  status: OrderStatus
-  dateCreated: string
-  notes?: string
+  status: OrderStatus;
+  dateCreated: string;
+  notes?: string;
 }

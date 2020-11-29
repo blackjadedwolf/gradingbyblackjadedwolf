@@ -1,18 +1,12 @@
 import { Button, Form, Modal } from "react-bootstrap";
 import { useParams } from "react-router";
-import React, { useEffect, useState } from "react";
-import { useDownloadURL } from "react-firebase-hooks/storage";
-import {
-  useUser,
-  deleteOrder,
-  useOrder,
-  updateOrder,
-  listOrderAttachments,
-} from "services/api";
+import React, { useState } from "react";
+import { useUser, deleteOrder, useOrder, updateOrder } from "services/api";
 import { Trash } from "react-bootstrap-icons";
 import { OrderStatus } from "models";
 import { Invoice } from "./Invoice";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import { UploadAndViewAttachments } from "./UploadAndViewAttachments";
 
 interface RouteParams {
   orderID: string;
@@ -22,56 +16,11 @@ const ViewOrderPage = () => {
   const { orderID } = useParams<RouteParams>();
   const [user] = useUser();
   const [order, orderLoading, orderError] = useOrder(orderID);
-  const [attachments, setAttachments] = useState<
-    firebase.storage.Reference[]
-  >();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const isAdmin = user?.email === "blackjadedwolf@aol.com";
   var cards = order?.cards;
-
-  useEffect(() => {
-    listOrderAttachments(orderID).then((attachmentsList) => {
-      console.log("attachmentsList: ", attachmentsList);
-      setAttachments(attachmentsList.items);
-    });
-  }, [orderID]);
-
-  const AttachmentsDisplay = (props: {
-    attachments?: firebase.storage.Reference[];
-  }) => {
-    const { attachments } = props;
-
-    const AttachmentContainer = (props: {
-      attachment?: firebase.storage.Reference;
-    }) => {
-      const { attachment } = props;
-      const [url, urlLoading, urlError] = useDownloadURL(attachment);
-
-      return attachment ? (
-        <a href={url}>{attachment.name}</a>
-      ) : (
-        <p>No attachment</p>
-      );
-    };
-
-    return attachments ? (
-      <div>
-        <ul>
-          {attachments.map((attachment) => {
-            return (
-              <li key={attachment.name}>
-                <AttachmentContainer attachment={attachment} />
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    ) : (
-      <p>No attachments for this order</p>
-    );
-  };
 
   return (
     <>
@@ -247,25 +196,20 @@ const ViewOrderPage = () => {
             </div>
 
             {/* Wait for attachments to be loaded, as re-rendering PDFDownloadLink causes problems */}
-            {attachments && (
-              <div className="container-fluid indiv-order-options-info indiv-order-section mt-5">
-                <div className="indiv-mobile-section-header">
-                  <PDFDownloadLink
-                    document={<Invoice order={order} />}
-                    fileName={`BlackJadedWolf_Invoice_${orderID}.pdf`}
-                  >
-                    Download your invoice here!
-                  </PDFDownloadLink>
-                </div>
+            <div className="container-fluid indiv-order-options-info indiv-order-section mt-5">
+              <div className="indiv-mobile-section-header">
+                <PDFDownloadLink
+                  document={<Invoice order={order} />}
+                  fileName={`BlackJadedWolf_Invoice_${orderID}.pdf`}
+                >
+                  Download your invoice here!
+                </PDFDownloadLink>
               </div>
-            )}
+            </div>
 
             {isAdmin && (
               <div>
-                <Form.Group>
-                  <Form.File label="Upload Attachments" />
-                </Form.Group>
-                <AttachmentsDisplay attachments={attachments} />
+                <UploadAndViewAttachments orderID={orderID} />
               </div>
             )}
 
