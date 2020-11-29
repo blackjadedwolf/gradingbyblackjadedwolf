@@ -6,6 +6,7 @@ import { Trash } from "react-bootstrap-icons";
 import { OrderStatus } from "models";
 import { Invoice } from "./Invoice";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import { UploadAndViewAttachments } from "./UploadAndViewAttachments";
 
 interface RouteParams {
   orderID: string;
@@ -69,7 +70,6 @@ const ViewOrderPage = () => {
                         console.log("new status", event.target.value);
                         let newStatus: OrderStatus;
 
-                       
                         switch (event.target.value) {
                           case OrderStatus.OrderArrived.toString():
                             newStatus = OrderStatus.OrderArrived;
@@ -96,7 +96,7 @@ const ViewOrderPage = () => {
                             throw new Error(
                               "invalid argument in order change switch statement"
                             );
-                         }
+                        }
 
                         updateOrder({
                           ...order,
@@ -195,36 +195,43 @@ const ViewOrderPage = () => {
               </div>
             </div>
 
+            {/* Wait for attachments to be loaded, as re-rendering PDFDownloadLink causes problems */}
             <div className="container-fluid indiv-order-options-info indiv-order-section mt-5">
               <div className="indiv-mobile-section-header">
                 <PDFDownloadLink
                   document={<Invoice order={order} />}
-                  fileName="BlackJadedWolf_Invoice.pdf"
+                  fileName={`BlackJadedWolf_Invoice_${orderID}.pdf`}
                 >
                   Download your invoice here!
                 </PDFDownloadLink>
               </div>
             </div>
 
+            {isAdmin && (
+              <div>
+                <UploadAndViewAttachments orderID={orderID} />
+              </div>
+            )}
 
-            <div>
-              {isAdmin && (
-                <div>
-                  <Form style={{marginTop:"2rem"}}>
-                    <Form.Group>
-                      <Form.Label>Order Notes:</Form.Label>
-                    <Form.Control as="textarea" defaultValue={order.notes} onChange={event => {
-                      updateOrder({
-                        ...order,
-                        notes: event.target.value
-                      })
-                    }}/>
-                    </Form.Group>
-                    
-                  </Form>
-                </div>
-              )}
-            </div>
+            {isAdmin && (
+              <div>
+                <Form>
+                  <Form.Group>
+                    <Form.Label>Order Notes:</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      defaultValue={order.notes}
+                      onChange={(event) => {
+                        updateOrder({
+                          ...order,
+                          notes: event.target.value,
+                        });
+                      }}
+                    />
+                  </Form.Group>
+                </Form>
+              </div>
+            )}
 
             <div className="indiv-mobile-heading mt-5">
               {isAdmin && (
@@ -240,8 +247,6 @@ const ViewOrderPage = () => {
                 </div>
               )}
             </div>
-
-
           </div>
         </div>
       )}

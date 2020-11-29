@@ -67,7 +67,10 @@ const OrdersPage = () => {
                     <div className="order order-hide">{order.lastName}</div>
                     <div className="order order-hide">{order.firstName}</div>
                     <div className="order order-hide">{order.phoneNumber}</div>
-                    <div className="order order-hide"> {order.submissionLevel}</div>
+                    <div className="order order-hide">
+                      {" "}
+                      {order.submissionLevel}
+                    </div>
                     {isAdmin ? (
                       <Form className="order order-hide">
                         <Form.Control
@@ -102,7 +105,7 @@ const OrdersPage = () => {
                                 throw new Error(
                                   "invalid argument in order change switch statement"
                                 );
-                             }
+                            }
 
                             updateOrder({
                               ...order,
@@ -111,7 +114,11 @@ const OrdersPage = () => {
                           }}
                         >
                           {Object.entries(OrderStatus).map((entry) => {
-                            return <option key= {entry[0]} value={entry[1]}>{entry[1]}</option>;
+                            return (
+                              <option key={entry[0]} value={entry[1]}>
+                                {entry[1]}
+                              </option>
+                            );
                           })}
                         </Form.Control>
                       </Form>
