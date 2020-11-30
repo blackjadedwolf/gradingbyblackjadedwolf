@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
 export const Invoice = (props: Props) => {
 
   const { order } = props;
-  const { cards, email, firstName, lastName, phoneNumber, id} = order;
+  const { cards, email, firstName, lastName, phoneNumber, id, submissionLevel} = order;
   // extract ID later
 
   const totalValue = cards
@@ -195,6 +195,7 @@ export const Invoice = (props: Props) => {
         
         <View style={{marginTop:"35"}}>
           <Text> Order #: {id}  </Text>
+          <Text> Submission Level: {submissionLevel} </Text>
         </View>
 
         <View>
