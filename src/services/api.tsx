@@ -91,6 +91,10 @@ export const downloadAttachment = async (orderID: string, filename: string) => {
     });
 };
 
+export const deleteAttachment = async (attachment: firebase.storage.Reference) => {
+  return await attachment.delete()
+}
+
 export const getOrders = async () => {
   return await firestore
     .collection("orders")

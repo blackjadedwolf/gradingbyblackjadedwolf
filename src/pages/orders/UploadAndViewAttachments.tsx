@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Form } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
+import { Trash } from "react-bootstrap-icons";
 import { useDownloadURL } from "react-firebase-hooks/storage";
-import { listOrderAttachments, uploadAttachment } from "services/api";
+import {
+  deleteAttachment,
+  listOrderAttachments,
+  uploadAttachment,
+} from "services/api";
 
-export const UploadAndViewAttachments = (props: {
-  orderID: string;
-}) => {
+export const UploadAndViewAttachments = (props: { orderID: string }) => {
   const { orderID } = props;
 
   const [attachments, setAttachments] = useState<
@@ -16,7 +19,6 @@ export const UploadAndViewAttachments = (props: {
 
   useEffect(() => {
     listOrderAttachments(orderID).then((attachmentsList) => {
-      console.log("attachmentsList: ", attachmentsList);
       setAttachments(attachmentsList.items);
     });
   }, [orderID, refreshFlag]);
@@ -28,6 +30,58 @@ export const UploadAndViewAttachments = (props: {
         setRefreshFlag(!refreshFlag);
       });
     }
+  };
+
+  const AttachmentContainer = (props: {
+    attachment?: firebase.storage.Reference;
+  }) => {
+    const { attachment } = props;
+    const [url] = useDownloadURL(attachment);
+  
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+  
+    return (
+      <>
+        {" "}
+        <Modal show={showDeleteModal}>
+          <Modal.Header>
+            <Modal.Title>Confirm your choice</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>This will permanently delete the attachment!</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+              Cancel
+            </Button>
+            <Button
+              variant="danger"
+              onClick={() => {
+                deleteAttachment(attachment!);
+                setShowDeleteModal(false);
+                setRefreshFlag(!refreshFlag)
+              }}
+            >
+              Delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        {attachment ? (
+          <p>
+            <a href={url} download>
+              {attachment.name}
+            </a>
+            <Button
+              onClick={() => {
+                setShowDeleteModal(true);
+              }}
+            >
+              <Trash />
+            </Button>
+          </p>
+        ) : (
+          <p>No attachment</p>
+        )}
+      </>
+    );
   };
 
   return (
@@ -51,18 +105,5 @@ export const UploadAndViewAttachments = (props: {
         <p>No attachments for this order</p>
       )}
     </>
-  );
-};
-
-const AttachmentContainer = (props: {
-  attachment?: firebase.storage.Reference;
-}) => {
-  const { attachment } = props;
-  const [url] = useDownloadURL(attachment);
-
-  return attachment ? (
-    <a href={url} download>{attachment.name}</a>
-  ) : (
-    <p>No attachment</p>
   );
 };

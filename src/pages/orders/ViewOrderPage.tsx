@@ -32,7 +32,7 @@ const ViewOrderPage = () => {
             <Modal.Header>
               <Modal.Title>Confirm your choice</Modal.Title>
             </Modal.Header>
-            <Modal.Body>This will permanently delete the unit!</Modal.Body>
+            <Modal.Body>This will permanently delete the order!</Modal.Body>
             <Modal.Footer>
               <Button
                 variant="secondary"
