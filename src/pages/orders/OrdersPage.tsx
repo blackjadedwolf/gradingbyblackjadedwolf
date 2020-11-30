@@ -5,9 +5,15 @@ import { Link } from "react-router-dom";
 import { OrderStatus } from "models";
 
 const OrdersPage = () => {
+  enum SearchTypes {
+    Email = "email",
+    LastName = "lastName",
+    Order = "id",
+  }
   const [user] = useUser();
   const [orders, ordersLoading, ordersError] = useOrders();
-  const [search, setSearch] = useState<string>();
+  const [searchType, setSearchType] = useState<SearchTypes>(SearchTypes.Email);
+  const [searchTerm, setSearchTerm] = useState<string>();
 
   const isAdmin = user?.email === "blackjadedwolf@aol.com";
 
@@ -16,8 +22,19 @@ const OrdersPage = () => {
     : orders?.filter((order) => order.email === user?.email);
 
   userOrders =
-    isAdmin && search
-      ? userOrders?.filter((order) => order.email.includes(search))
+    isAdmin && searchTerm
+      ? userOrders?.filter((order) => {
+          switch (searchType) {
+            case SearchTypes.Email:
+              return order.email.toLowerCase().includes(searchTerm.toLowerCase());
+            case SearchTypes.LastName:
+              return order.lastName.toLowerCase().includes(searchTerm.toLowerCase());
+            case SearchTypes.Order:
+              return order.id!.toLowerCase().includes(searchTerm.toLowerCase());
+            default:
+              throw new Error("Invalid search type");
+          }
+        })
       : userOrders;
 
   return (
@@ -29,10 +46,45 @@ const OrdersPage = () => {
           <Form.Group>
             <Form.Control
               required
-              placeholder="Searh By Email"
+              as="select"
+              onChange={(event) => {
+                let newSearchType: SearchTypes;
+
+                switch (event.target.value) {
+                  case SearchTypes.Email.toString():
+                    newSearchType = SearchTypes.Email;
+                    break;
+                  case SearchTypes.LastName.toString():
+                    newSearchType = SearchTypes.LastName;
+                    break;
+                  case SearchTypes.Order.toString():
+                    newSearchType = SearchTypes.Order;
+                    break;
+                  default:
+                    throw new Error(
+                      "invalid argument in search type change switch statement"
+                    );
+                }
+
+                setSearchType(newSearchType);
+              }}
+            >
+              {Object.entries(SearchTypes).map((entry) => {
+                return (
+                  <option key={entry[0]} value={entry[1]}>
+                    {entry[0]}
+                  </option>
+                );
+              })}
+            </Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Control
+              required
+              placeholder={`Search By ${searchType}`}
               style={{ width: "15rem" }}
               onChange={(event) => {
-                setSearch(event.target.value);
+                setSearchTerm(event.target.value);
               }}
             />
           </Form.Group>
