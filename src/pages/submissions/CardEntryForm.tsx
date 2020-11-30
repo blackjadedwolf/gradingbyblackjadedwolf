@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Modal, Form, Button, Col } from "react-bootstrap";
 
-import { Card } from "models";
+import { Card, SubmissionLevel } from "models";
 import { saveOrder, useUser } from "services/api";
 import { PlusCircle, Trash } from "react-bootstrap-icons";
 // import "./CardEntryForm.css";
@@ -21,7 +21,7 @@ export const CardEntryForm = (props: Props) => {
   const [lastName, setLastName] = useState<string>();
   const [email, setEmail] = useState<string | undefined>(defaultEmail);
   const [phoneNumber, setPhoneNumber] = useState<string>();
-  const [submissionLevel, setSubmissionLevel] = useState<string>();
+  const [submissionLevel, setSubmissionLevel] = useState<SubmissionLevel>();
   const [cards, setCards] = useState<Card[]>();
 
   const [quantity, setQuantity] = useState<number>();
@@ -45,23 +45,23 @@ export const CardEntryForm = (props: Props) => {
       !submissionLevel ||
       !cards
     ) {
-      if(!firstName) {
-        console.log("no first name")
+      if (!firstName) {
+        console.log("no first name");
       }
-      if(!lastName) {
-        console.log("no last name")
+      if (!lastName) {
+        console.log("no last name");
       }
-      if(!email) {
-        console.log("no email")
+      if (!email) {
+        console.log("no email");
       }
-      if(!phoneNumber) {
-        console.log("no number")
+      if (!phoneNumber) {
+        console.log("no number");
       }
-      if(!submissionLevel) {
-        console.log("no level")
+      if (!submissionLevel) {
+        console.log("no level");
       }
-      if(!cards) {
-        console.log("no cards")
+      if (!cards) {
+        console.log("no cards");
       }
     } else {
       await saveOrder(submissionLevel, cards, {
@@ -87,13 +87,22 @@ export const CardEntryForm = (props: Props) => {
           <Modal.Title>Terms & Conditions</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          I agree not to submit any items with which bear evidence of trimming, recoloring, restoration or any other form of tampering, or are of questionable authenticity. <br></br><br></br>
-
-          I agree that in the event PSA rejects any items for grading, PSA shall not refund the amount paid by customer because the determination to reject an item requires a review by PSA's graders and authenticators. <br></br><br></br>
-
-          If items are submitted for services for which they do not qualify, I authorize PSA to correct the order and charge any additional authentication, grading, handling, and shipping fees that may apply. Turnaround time does not begin until order has been places into grading. <br></br><br></br>
-
-          Inability to follow the above terms and conditions will result in being banned from Grading by BlackJadedWolf Inc.
+          I agree not to submit any items with which bear evidence of trimming,
+          recoloring, restoration or any other form of tampering, or are of
+          questionable authenticity. <br></br>
+          <br></br>I agree that in the event PSA rejects any items for grading,
+          PSA shall not refund the amount paid by customer because the
+          determination to reject an item requires a review by PSA's graders and
+          authenticators. <br></br>
+          <br></br>
+          If items are submitted for services for which they do not qualify, I
+          authorize PSA to correct the order and charge any additional
+          authentication, grading, handling, and shipping fees that may apply.
+          Turnaround time does not begin until order has been places into
+          grading. <br></br>
+          <br></br>
+          Inability to follow the above terms and conditions will result in
+          being banned from Grading by BlackJadedWolf Inc.
         </Modal.Body>
         <Modal.Footer>
           <Button
@@ -183,14 +192,42 @@ export const CardEntryForm = (props: Props) => {
             as="select"
             placeholder="Submission Level"
             onChange={(event) => {
-              setSubmissionLevel(event.target.value);
+              let subLevel: SubmissionLevel;
+
+              switch(event.target.value) {
+                case SubmissionLevel.Standard5.toString():
+                  subLevel = SubmissionLevel.Standard5;
+                  break;
+                case SubmissionLevel.Standard10.toString():
+                  subLevel = SubmissionLevel.Standard10;
+                  break;
+                case SubmissionLevel.Standard20.toString():
+                  subLevel = SubmissionLevel.Standard20;
+                  break;
+                case SubmissionLevel.BulkBefore1971.toString():
+                  subLevel = SubmissionLevel.BulkBefore1971;
+                  break;
+                case SubmissionLevel.Bulk1971to2016.toString():
+                  subLevel = SubmissionLevel.Bulk1971to2016;
+                  break;
+                case SubmissionLevel.BulkAfter2017.toString():
+                  subLevel = SubmissionLevel.BulkAfter2017;
+                  break;    
+                default:
+                  throw new Error("Invalid argument in submission level selection switch statement")
+              }
+
+              setSubmissionLevel(subLevel);
             }}
           >
-            <option value="none" selected disabled hidden>Please choose a submission level</option>
-            <option>20 Day | $25.00</option>
-            <option>10 Day | $50.00</option>
-            <option>5 Day | $80.00</option>
-            <option>Bulk</option>
+             <option value="none" selected disabled hidden>Please choose a submission level</option>
+            {Object.entries(SubmissionLevel).map((entry) => {
+              return (
+                <option key={entry[0]} value={entry[1]}>
+                  {entry[1]}
+                </option>
+              );
+            })}
           </Form.Control>
           <Form.Control.Feedback type="valid">
             Looks good!
@@ -199,7 +236,7 @@ export const CardEntryForm = (props: Props) => {
             Please choose a submission level
           </Form.Control.Feedback>
         </Form.Group>
-        <Form.Row className="test" style={{marginTop:"2rem"}}>
+        <Form.Row className="test" style={{ marginTop: "2rem" }}>
           <Col>
             <Form.Control
               required
@@ -302,14 +339,14 @@ export const CardEntryForm = (props: Props) => {
                 }
               }}
             >
-              <PlusCircle style={{color:"white"}} />
+              <PlusCircle style={{ color: "white" }} />
             </Button>
           </Col>
         </Form.Row>
         {cards &&
           cards.map((card) => {
             return (
-              <Form.Row style={{marginTop:"2rem", display:"flex"}}>
+              <Form.Row style={{ marginTop: "2rem", display: "flex" }}>
                 <Col>
                   <Form.Control readOnly placeholder={String(card.quantity)} />
                 </Col>
@@ -350,21 +387,43 @@ export const CardEntryForm = (props: Props) => {
             );
           })}
         <Form.Check
-          style={{marginTop:"1.5rem", color:"white", fontFamily:"Montserrat", fontSize:"1rem", fontWeight:"bolder"}}
+          style={{
+            marginTop: "1.5rem",
+            color: "white",
+            fontFamily: "Montserrat",
+            fontSize: "1rem",
+            fontWeight: "bolder",
+          }}
           required
           type="checkbox"
           label="I agree to the following terms"
         />
-        <div style={{marginTop:"1.5rem", display:"flex", alignItems:"center", justifyContent:"center"}}>
+        <div
+          style={{
+            marginTop: "1.5rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Button
-          style={{marginRight:"2rem", border:"2px solid #1EBC9B !important", backgroundColor:"black"}}
+            style={{
+              marginRight: "2rem",
+              border: "2px solid #1EBC9B !important",
+              backgroundColor: "black",
+            }}
             onClick={() => {
               setShowModal(true);
             }}
           >
             Terms
           </Button>
-          <Button type="submit" style={{border:"2px solid #1EBC9B", backgroundColor:"black"}}>Submit</Button>
+          <Button
+            type="submit"
+            style={{ border: "2px solid #1EBC9B", backgroundColor: "black" }}
+          >
+            Submit
+          </Button>
         </div>
       </Form>
     </div>

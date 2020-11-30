@@ -1,4 +1,4 @@
-import { Card, Order, User, OrderStatus } from "../models";
+import { Card, Order, User, OrderStatus, SubmissionLevel } from "../models";
 import { auth, firestore, storage } from "./firebase";
 import {
   useCollectionData,
@@ -40,7 +40,7 @@ export const resetPassword = async (email: string) => {
  ********/
 
 export const saveOrder = async (
-  submissionLevel: string,
+  submissionLevel: SubmissionLevel,
   cards: Card[],
   userDetails: User
 ) => {

@@ -2,7 +2,6 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { useParams } from "react-router";
 import React, { useState } from "react";
 import { useUser, deleteOrder, useOrder, updateOrder } from "services/api";
-import { Trash } from "react-bootstrap-icons";
 import { OrderStatus } from "models";
 import { Invoice } from "./Invoice";
 import { PDFDownloadLink } from "@react-pdf/renderer";
@@ -67,7 +66,6 @@ const ViewOrderPage = () => {
                       as="select"
                       defaultValue={order.status}
                       onChange={(event) => {
-                        console.log("new status", event.target.value);
                         let newStatus: OrderStatus;
 
                         switch (event.target.value) {
