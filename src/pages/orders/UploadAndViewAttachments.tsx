@@ -65,7 +65,7 @@ export const UploadAndViewAttachments = (props: { orderID: string }) => {
           </Modal.Footer>
         </Modal>
         {attachment ? (
-          <p>
+          <div style={{ display:"flex", alignItems:'center', justifyContent:'center', flexDirection:"column"}}>
             <a href={url} download>
               {attachment.name}
             </a>
@@ -76,7 +76,7 @@ export const UploadAndViewAttachments = (props: { orderID: string }) => {
             >
               <Trash />
             </Button>
-          </p>
+          </div>
         ) : (
           <p>No attachment</p>
         )}
@@ -87,19 +87,20 @@ export const UploadAndViewAttachments = (props: { orderID: string }) => {
   return (
     <>
       <Form.Group>
-        <Form.File label="Upload Attachments" onChange={handleInputChange} />
+        <Button style={{width:"12rem", height:"2.2rem"}}>
+          <Form.Label style={{marginTop:"0.3rem"}}> Upload Attachment </Form.Label>
+        </Button>
+        <Form.File onChange={handleInputChange} />
       </Form.Group>
       {attachments ? (
-        <div>
-          <ul>
-            {attachments.map((attachment) => {
-              return (
-                <li key={attachment.name}>
-                  <AttachmentContainer attachment={attachment} />
-                </li>
-              );
-            })}
-          </ul>
+        <div className="attachment-module">
+          {attachments.map((attachment) => {
+            return (
+              <div key={attachment.name} className="attachment-text">
+                <AttachmentContainer attachment={attachment} />
+              </div>
+            );
+          })}
         </div>
       ) : (
         <p>No attachments for this order</p>

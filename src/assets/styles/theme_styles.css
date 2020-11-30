@@ -10724,3 +10724,25 @@ form .row:first-child .floating-label-form-group {
 .indiv-mobile-product-hide{
   display:none;
 }
+
+.attachment-module{
+  display:flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.attachment-text:not(:first-child){
+  margin-left:2rem;
+}
+
+input[type='file'] {
+  width:13rem;
+  height:3rem;
+  font-size:0.83rem;
+  margin-top:-2rem;
+  opacity:0;
+}
+
+.custom-download-invoice:hover{
+  text-decoration: none;
+}

@@ -199,25 +199,30 @@ const ViewOrderPage = () => {
             <div className="container-fluid indiv-order-options-info indiv-order-section mt-5">
               <div className="indiv-mobile-section-header">
                 <PDFDownloadLink
+                  className="custom-download-invoice"
                   document={<Invoice order={order} />}
                   fileName={`BlackJadedWolf_Invoice_${orderID}.pdf`}
                 >
-                  Download your invoice here!
+                  <Button>
+                   Download Invoice 
+                  </Button>
                 </PDFDownloadLink>
               </div>
             </div>
 
             {isAdmin && (
-              <div>
-                <UploadAndViewAttachments orderID={orderID} />
+              <div className="container-fluid indiv-order-options-info indiv-order-section mt-5">
+                <div>
+                  <UploadAndViewAttachments orderID={orderID} />
+                </div>
               </div>
             )}
 
             {isAdmin && (
-              <div>
+              <div className="container-fluid indiv-order-options-info indiv-order-section mt-5">
                 <Form>
                   <Form.Group>
-                    <Form.Label>Order Notes:</Form.Label>
+                    <Form.Label>Order Notes</Form.Label>
                     <Form.Control
                       as="textarea"
                       defaultValue={order.notes}
@@ -235,14 +240,14 @@ const ViewOrderPage = () => {
 
             <div className="indiv-mobile-heading mt-5">
               {isAdmin && (
-                <div className="d-flex flex-column align-items-center justify-content-center">
+                <div className="d-flex flex-column align-items-center justify-content-center">                  
                   <Button
                     onClick={() => {
                       setShowDeleteModal(true);
                     }}
                     className="mt-3"
                   >
-                    <Trash style={{ fontSize: "25px" }} />
+                    Delete Order
                   </Button>
                 </div>
               )}
