@@ -126,6 +126,7 @@ const OrdersPage = () => {
                     {isAdmin ? (
                       <Form className="order order-hide">
                         <Form.Control
+                          style={{width:"12.5rem"}}
                           as="select"
                           defaultValue={order.status}
                           onChange={(event) => {
