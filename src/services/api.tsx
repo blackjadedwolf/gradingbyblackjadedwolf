@@ -66,14 +66,30 @@ export const updateOrder = async (updatedOrder: Order) => {
 };
 
 export const uploadAttachment = async (orderID: string, file: File) => {
+  const metadata = {
+    customMetadata: {
+      'userViewable': 'false'
+    }
+  }
+  
   return await storage
     .ref(`/orders/${orderID}/attachments/${file.name}`)
-    .put(file);
+    .put(file, metadata)
 };
 
 export const listOrderAttachments = async (orderID: string) => {
   return await storage.ref(`/orders/${orderID}/attachments/`).listAll();
 };
+
+export const setAttachmentViewability = async(viewable: boolean, attachment: firebase.storage.Reference) => {
+  const newMetadata = {
+    customMetadata: {
+      'userViewable': String(viewable)
+    }
+  }
+
+  return await attachment.updateMetadata(newMetadata)
+}
 
 export const downloadAttachment = async (orderID: string, filename: string) => {
   return await storage

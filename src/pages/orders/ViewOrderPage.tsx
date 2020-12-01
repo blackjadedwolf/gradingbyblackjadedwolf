@@ -201,20 +201,16 @@ const ViewOrderPage = () => {
                   document={<Invoice order={order} />}
                   fileName={`BlackJadedWolf_Invoice_${orderID}.pdf`}
                 >
-                  <Button>
-                   Download Invoice 
-                  </Button>
+                  <Button>Download Invoice</Button>
                 </PDFDownloadLink>
               </div>
             </div>
 
-            {isAdmin && (
-              <div className="container-fluid indiv-order-options-info indiv-order-section mt-5">
-                <div>
-                  <UploadAndViewAttachments orderID={orderID} />
-                </div>
+            <div className="container-fluid indiv-order-options-info indiv-order-section mt-5">
+              <div>
+                <UploadAndViewAttachments isAdmin={isAdmin} orderID={orderID} />
               </div>
-            )}
+            </div>
 
             {isAdmin && (
               <div className="container-fluid indiv-order-options-info indiv-order-section mt-5">
@@ -238,7 +234,7 @@ const ViewOrderPage = () => {
 
             <div className="indiv-mobile-heading mt-5">
               {isAdmin && (
-                <div className="d-flex flex-column align-items-center justify-content-center">                  
+                <div className="d-flex flex-column align-items-center justify-content-center">
                   <Button
                     onClick={() => {
                       setShowDeleteModal(true);
