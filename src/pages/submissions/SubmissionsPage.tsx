@@ -13,22 +13,6 @@ const Submissions = () => {
   return (
     <div className="submission-wrap">
 
-      <div className="submission-partners">
-
-        <div className="container submission-row-wrap submission-img-wrap">
-          <div className="submission-row">
-            <img className='submission-partner-img' src={psaLogo} alt="" />
-          </div>
-
-          <div className="submission-row">
-            <img className='submission-partner-img' src={beckettLogo} alt="" />
-          </div>
-
-        </div>
-
-      </div>
-
-
       <div className="submission-description mt-2 pt-5">
 
         <div className="submission-heading text-center text-uppercase"> Standard Submissions </div>
@@ -102,6 +86,18 @@ const Submissions = () => {
           </Link>
         </>
       )} 
+
+      <div className="submission-partners">
+        <div className="container submission-row-wrap submission-img-wrap">
+          <div className="submission-row">
+            <img className='submission-partner-img' src={psaLogo} alt="" />
+          </div>
+          <div className="submission-row">
+            <img className='submission-partner-img' src={beckettLogo} alt="" />
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 };
