@@ -27,8 +27,7 @@ const PasswordReset = () => {
     };
 
     return (
-      <>
-        <Form name="resetPassword" onSubmit={onSubmit}>
+        <Form name="resetPassword" onSubmit={onSubmit} className="form">
           <Form.Group controlId="email">
             <Form.Label>Email</Form.Label>
             <Form.Control
@@ -65,7 +64,6 @@ const PasswordReset = () => {
             </Col>
           </Row>
         </Form>
-      </>
     );
   };
 

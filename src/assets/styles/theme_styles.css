@@ -10491,7 +10491,7 @@ form .row:first-child .floating-label-form-group {
 }
 
 .orders-wrap{
-  background: linear-gradient(black, #052922);
+  background: linear-gradient(black, #052922, black);
   display:flex;
   align-items:center;
   justify-content:center;

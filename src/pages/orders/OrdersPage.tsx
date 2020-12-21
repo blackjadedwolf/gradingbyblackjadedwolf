@@ -194,7 +194,6 @@ const OrdersPage = () => {
 export default OrdersPage;
 
 const PageStyles = {
- // backgroundColor: "black",
   color: "white",
   minHeight: "37.5rem",
   width: "90rem",
