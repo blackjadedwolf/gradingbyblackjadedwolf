@@ -1,5 +1,9 @@
 import React from "react";
 import logo from "../../assets/img/logo.png";
+import card1 from "../../assets/img/card_1.jpeg";
+import card2 from "../../assets/img/card_2.jpeg";
+import card3 from "../../assets/img/card_3.jpg";
+import card4 from "../../assets/img/card_4.jpg";
 
 const Home = () => {
   return (
@@ -47,9 +51,18 @@ const Home = () => {
         className="page-section bg-primary text-white mb-0"
         id="custom-about"
       ></section>
-      <div id="background"></div>
-      <div id="midground"></div>
-      <div id="foreground"></div>
+      <div className="floating card1">
+        <img style={{height: '200px'}} alt="floating card" src={card1}/>
+      </div>
+      <div className="floating card2">
+        <img style={{height: '200px'}} alt="floating card" src={card2}/>
+      </div>
+      <div className="floating card3">
+        <img style={{height: '200px'}} alt="floating card" src={card3}/>
+      </div>
+      <div className="floating card4">
+        <img style={{height: '200px'}} alt="floating card" src={card4}/>
+      </div>
     </>
   );
 };

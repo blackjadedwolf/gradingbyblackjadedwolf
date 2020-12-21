@@ -10746,49 +10746,45 @@ input[type='file'] {
   text-decoration: none;
 }
 
-/* = = = = = = = = = = = HOME PAGE ANIMATION = = = = = = = = = = = */
+/* = = = = = = = = = = = CARD ANIMATION = = = = = = = = = = = */
 
-@keyframes STAR-MOVE {
-  from {
-      background-position: 5% 5%;
-  }
-  to {
-      background-position: 1300% 600%;
-  }
-}
-
-#background {
-  background: black url(../img/background.png) repeat 5% 5%;
+.floating {   
+  animation-name: floating; 
+  animation-duration: 3s; 
+  animation-iteration-count: infinite; 
+  animation-timing-function: ease-in-out; 
+  margin-left: 30px; 
+  margin-top: 5px;
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 0;
+} 
 
-  animation-name: STAR-MOVE;
-  animation-duration: 200s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+.card1 {
+  top: 20%;
+  left: 5%;
 }
 
-#midground {
-  background: url(../img/midground.png) repeat 20% 20%;
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 200;
-
-  animation-name: STAR-MOVE;
-  animation-duration: 150s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+.card2 {
+  top: 30%;
+  left: 20%;
 }
 
-#foreground {
-  background: url(../img/foreground.png) repeat 35% 35%;
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 300;
-  
-  animation-name: STAR-MOVE;
-  animation-duration: 100s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+.card3 {
+  top: 30%;
+  left: 65%;
 }
+
+.card4 {
+  top: 20%;
+  left: 80%;
+}
+
+.card5 {
+  top: 60%;
+  left: 40%;
+}
+
+@keyframes floating { 
+  0% { transform: translate(0,  0px); } 
+  50%  { transform: translate(0, 15px); } 
+  100%   { transform: translate(0, -0px); }     
+} 
