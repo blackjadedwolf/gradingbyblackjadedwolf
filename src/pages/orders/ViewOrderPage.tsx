@@ -147,7 +147,7 @@ const ViewOrderPage = () => {
                 </div>
                 <div
                   className="indiv-order-product-row indiv-mobile-product-hide"
-                  style={{ border: "1px solid white" }}
+                  style={{ backgroundColor: "#052922" }}
                 >
                   <div className="indiv-order-product-name "> Name </div>
                   <div className="indiv-order-product-card-number">

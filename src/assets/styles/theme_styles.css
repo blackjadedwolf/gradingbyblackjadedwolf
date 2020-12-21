@@ -10339,7 +10339,7 @@ form .row:first-child .floating-label-form-group {
 
 .submission-wrap{
   margin-top:70px;
-  background-color: black;
+  background: linear-gradient(black, #052922, black);
 }
 
 .submission-description{
@@ -10478,7 +10478,6 @@ form .row:first-child .floating-label-form-group {
 /* = = = = = = = = = = = ORDERS = = = = = = = = = = = */
 
 .orders-header{
-  color:black;
   margin-top:6.5rem;
   display:flex;
   align-items:center;
@@ -10486,14 +10485,13 @@ form .row:first-child .floating-label-form-group {
   font-family: "Montserrat";
   font-size: 1.3rem;
   font-weight: 600;
-  background-color:black;
   color:white;
   padding-bottom:1rem;
   padding-top:1rem;
 }
 
 .orders-wrap{
-  background-color:black;
+  background: linear-gradient(black, #052922);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -10508,6 +10506,7 @@ form .row:first-child .floating-label-form-group {
   width: calc(100vw-1rem) !important;
   padding-left:1rem;
   padding-right:1rem;
+  background-color: #0C5B4C;
 }
 
 .table-heading{
@@ -10516,7 +10515,7 @@ form .row:first-child .floating-label-form-group {
   border-bottom:0px solid black !important;
   font-family: "Montserrat";
   font-size: 1rem; 
-  color:#1EBC9B;
+  color: white;
 }
 
 .table-row{
@@ -10745,4 +10744,51 @@ input[type='file'] {
 
 .custom-download-invoice:hover{
   text-decoration: none;
+}
+
+/* = = = = = = = = = = = HOME PAGE ANIMATION = = = = = = = = = = = */
+
+@keyframes STAR-MOVE {
+  from {
+      background-position: 5% 5%;
+  }
+  to {
+      background-position: 1300% 600%;
+  }
+}
+
+#background {
+  background: black url(../img/background.png) repeat 5% 5%;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+
+  animation-name: STAR-MOVE;
+  animation-duration: 200s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+#midground {
+  background: url(../img/midground.png) repeat 20% 20%;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 200;
+
+  animation-name: STAR-MOVE;
+  animation-duration: 150s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+#foreground {
+  background: url(../img/foreground.png) repeat 35% 35%;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 300;
+  
+  animation-name: STAR-MOVE;
+  animation-duration: 100s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }

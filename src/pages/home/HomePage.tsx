@@ -9,6 +9,7 @@ const Home = () => {
         id="custom_masthead"
       >
         <div
+          style={{zIndex:1000}}
           className="container d-flex align-items-center flex-column"
           id="custom_img_wrap"
         >
@@ -46,6 +47,9 @@ const Home = () => {
         className="page-section bg-primary text-white mb-0"
         id="custom-about"
       ></section>
+      <div id="background"></div>
+      <div id="midground"></div>
+      <div id="foreground"></div>
     </>
   );
 };
