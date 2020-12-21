@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Modal, Form, Button, Col } from "react-bootstrap";
-import { Card, SubmissionLevel } from "models";
+import { Modal, Form, Button, Col, Card } from "react-bootstrap";
+import { SubmittedCard, SubmissionLevel } from "models";
 import { saveOrder, useUser } from "services/api";
 import { PlusCircle, Trash } from "react-bootstrap-icons";
 import "./CardEntryForm.css";
@@ -20,9 +20,9 @@ export const CardEntryForm = (props: Props) => {
   const [email, setEmail] = useState<string | undefined>(defaultEmail);
   const [phoneNumber, setPhoneNumber] = useState<string>();
   const [submissionLevel, setSubmissionLevel] = useState<SubmissionLevel>();
-  const [cards, setCards] = useState<Card[]>();
+  const [cards, setCards] = useState<SubmittedCard[]>();
 
-  const [quantity, setQuantity] = useState<number>();
+  const [quantity, setQuantity] = useState<number | null>();
   const [playerName, setPlayerName] = useState<string>();
   const [year, setYear] = useState<string>();
   const [brand, setBrand] = useState<string>();
@@ -304,6 +304,7 @@ export const CardEntryForm = (props: Props) => {
             />
             </Col>
             </Form.Row>
+            {/* TODO: clear input fields onClick (setting to undefined isn't working) */}
             <Button
               className="add-card"
               onClick={() => {
@@ -318,7 +319,7 @@ export const CardEntryForm = (props: Props) => {
                 ) {
                   console.log("empty field in card");
                 } else {
-                  const newCard: Card = {
+                  const newCard: SubmittedCard = {
                     quantity: quantity,
                     player_name: playerName,
                     year: Number(year),
@@ -332,60 +333,56 @@ export const CardEntryForm = (props: Props) => {
                   } else {
                     setCards([newCard]);
                   }
-
-                  setQuantity(undefined);
-                  setPlayerName(undefined);
-                  setYear(undefined);
-                  setBrand(undefined);
-                  setCardNumber(undefined);
-                  setProduct(undefined);
-                  setEstimatedValue(undefined);
                 }
               }}
             >
-              <PlusCircle style={{ color: "white" }} />
+              <PlusCircle style={{ color: "white", paddingRight: "5px" }} /> 
+              Add Card
             </Button>
         {cards &&
           cards.map((card) => {
             return (
-              <Form.Row style={{ marginTop: "2rem", display: "flex" }}>
-                <Col>
-                  <Form.Control readOnly placeholder={String(card.quantity)} />
-                </Col>
-                <Col>
-                  <Form.Control readOnly placeholder={card.player_name} />
-                </Col>
-                <Col>
-                  <Form.Control readOnly placeholder={String(card.year)} />
-                </Col>
-                <Col>
-                  <Form.Control readOnly placeholder={card.brand} />
-                </Col>
-                <Col>
-                  <Form.Control
-                    readOnly
-                    placeholder={String(card.card_number)}
-                  />
-                </Col>
-                <Col>
-                  <Form.Control readOnly placeholder={card.product} />
-                </Col>
-                <Col>
-                  <Form.Control
-                    readOnly
-                    placeholder={String(card.estimated_value)}
-                  />
-                </Col>
-                <Col>
-                  <Button
+              <Card style={{ marginBottom: "2rem"}}>
+                <Card.Body>
+                  <div className="card-row">
+                    <div className="card-col">
+                      <span><strong>Quantity</strong></span>
+                      <span>{String(card.quantity)}</span>
+                    </div>
+                    <div className="card-col">
+                      <span><strong>Player</strong></span>
+                      <span>{String(card.player_name)}</span>
+                    </div>
+                    <div className="card-col">
+                      <span><strong>Year</strong></span>
+                      <span>{String(card.year)}</span>
+                    </div>
+                    <div className="card-col">
+                      <span><strong>Brand</strong></span>
+                      <span>{String(card.brand)}</span>
+                    </div>
+                    <div className="card-col">
+                      <span><strong>Card Number</strong></span>
+                      <span>{String(card.card_number)}</span>
+                    </div>
+                    <div className="card-col">
+                      <span><strong>Product</strong></span>
+                      <span>{String(card.product)}</span>
+                    </div>
+                    <div className="card-col">
+                      <span><strong>Estimated Value</strong></span>
+                      <span>{String(card.estimated_value)}</span>
+                    </div>
+                    <Button
                     onClick={() => {
                       setCards(cards.filter((c) => c !== card));
                     }}
-                  >
+                    >
                     <Trash />
                   </Button>
-                </Col>
-              </Form.Row>
+                  </div>
+                </Card.Body>
+              </Card>
             );
           })}
         <Form.Check

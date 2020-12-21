@@ -1,4 +1,4 @@
-export interface Card {
+export interface SubmittedCard {
   quantity: number;
   player_name: string;
   year: number;
@@ -41,7 +41,7 @@ export interface Order {
   lastName: string;
   email: string;
   phoneNumber: string;
-  cards: Card[];
+  cards: SubmittedCard[];
   status: OrderStatus;
   dateCreated: string;
   notes?: string;
