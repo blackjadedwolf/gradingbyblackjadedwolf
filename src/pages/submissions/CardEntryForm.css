@@ -1,5 +1,15 @@
-.form{
-    width: 1300px;
+.form-group-1{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    margin-bottom: 2.5rem;
+}
+
+.add-card{
+    margin: 0 auto;
+    margin-top: 2rem;
 }
 
 .contentWrap{

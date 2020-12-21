@@ -3,7 +3,7 @@ import { Modal, Form, Button, Col } from "react-bootstrap";
 import { Card, SubmissionLevel } from "models";
 import { saveOrder, useUser } from "services/api";
 import { PlusCircle, Trash } from "react-bootstrap-icons";
-//import "./CardEntryForm.css";
+import "./CardEntryForm.css";
 
 type Props = {
   setOrderID: React.Dispatch<React.SetStateAction<string | undefined>>;
@@ -119,6 +119,7 @@ export const CardEntryForm = (props: Props) => {
         autoComplete="off"
         className="form"
       >
+        <div className="form-group-1">
         <Form.Group controlId="firstName">
           <Form.Control
             required
@@ -184,6 +185,9 @@ export const CardEntryForm = (props: Props) => {
             Please enter your phone number
           </Form.Control.Feedback>
         </Form.Group>
+        </div>
+        <Form.Row>
+        <Col>
         <Form.Group controlId="submissionLevel">
           <Form.Control
             required
@@ -233,8 +237,8 @@ export const CardEntryForm = (props: Props) => {
             Please choose a submission level
           </Form.Control.Feedback>
         </Form.Group>
-        <Form.Row className="test" style={{ marginTop: "2rem" }}>
-          <Col>
+        </Col>
+        <Col>
             <Form.Control
               required
               placeholder="Quantity"
@@ -242,8 +246,8 @@ export const CardEntryForm = (props: Props) => {
                 setQuantity(Number(event.target.value));
               }}
             />
-          </Col>
-          <Col>
+            </Col>
+            <Col>
             <Form.Control
               required
               placeholder="Player Name"
@@ -251,8 +255,8 @@ export const CardEntryForm = (props: Props) => {
                 setPlayerName(event.target.value);
               }}
             />
-          </Col>
-          <Col>
+            </Col>
+            <Col>
             <Form.Control
               required
               placeholder="Year"
@@ -260,8 +264,10 @@ export const CardEntryForm = (props: Props) => {
                 setYear(event.target.value);
               }}
             />
-          </Col>
-          <Col>
+            </Col>
+            </Form.Row>
+            <Form.Row>
+            <Col>
             <Form.Control
               required
               placeholder="Brand"
@@ -269,8 +275,8 @@ export const CardEntryForm = (props: Props) => {
                 setBrand(event.target.value);
               }}
             />
-          </Col>
-          <Col>
+            </Col>
+            <Col>
             <Form.Control
               required
               placeholder="Card Number"
@@ -278,8 +284,8 @@ export const CardEntryForm = (props: Props) => {
                 setCardNumber(event.target.value);
               }}
             />
-          </Col>
-          <Col>
+            </Col>
+            <Col>
             <Form.Control
               required
               placeholder="Product"
@@ -287,8 +293,8 @@ export const CardEntryForm = (props: Props) => {
                 setProduct(event.target.value);
               }}
             />
-          </Col>
-          <Col>
+            </Col>
+            <Col>
             <Form.Control
               required
               placeholder="Estimated Value"
@@ -296,9 +302,10 @@ export const CardEntryForm = (props: Props) => {
                 setEstimatedValue(event.target.value);
               }}
             />
-          </Col>
-          <Col>
+            </Col>
+            </Form.Row>
             <Button
+              className="add-card"
               onClick={() => {
                 if (
                   !quantity ||
@@ -338,8 +345,6 @@ export const CardEntryForm = (props: Props) => {
             >
               <PlusCircle style={{ color: "white" }} />
             </Button>
-          </Col>
-        </Form.Row>
         {cards &&
           cards.map((card) => {
             return (

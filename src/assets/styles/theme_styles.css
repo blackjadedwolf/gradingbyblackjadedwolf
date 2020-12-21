@@ -10452,7 +10452,6 @@ form .row:first-child .floating-label-form-group {
   }
   
   .form-row .form-control{
-    width: 8rem !important;
     margin-top:0rem;
     justify-content: space-around;
   }
