@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-
 import { Modal, Form, Button, Col } from "react-bootstrap";
-
 import { Card, SubmissionLevel } from "models";
 import { saveOrder, useUser } from "services/api";
 import { PlusCircle, Trash } from "react-bootstrap-icons";
-// import "./CardEntryForm.css";
+//import "./CardEntryForm.css";
 
 type Props = {
   setOrderID: React.Dispatch<React.SetStateAction<string | undefined>>;
@@ -216,7 +214,6 @@ export const CardEntryForm = (props: Props) => {
                 default:
                   throw new Error("Invalid argument in submission level selection switch statement")
               }
-
               setSubmissionLevel(subLevel);
             }}
           >
