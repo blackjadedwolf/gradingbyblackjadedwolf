@@ -22,10 +22,10 @@ const LoginPage = () => {
   return (
     <>
       <Form className="login-form" onSubmit={onSubmit} style={FormStyles}>
-        <div className="login-header">
+        <div className="login-header" style={{zIndex: 5000}}>
           Log In To Your Account
         </div>
-        <Form.Group controlId="email">
+        <Form.Group controlId="email" style={{zIndex: 5000}}>
           <Form.Control
             required
             style={{width:"20rem", marginTop:"2rem"}}
@@ -40,7 +40,7 @@ const LoginPage = () => {
             Please enter your email
           </Form.Control.Feedback>
         </Form.Group>
-        <Form.Group controlId="password">
+        <Form.Group controlId="password" style={{zIndex: 5000}}>
           <Form.Control
             required
             style={{width:"20rem"}}
@@ -76,6 +76,9 @@ const LoginPage = () => {
           </Row>
         </div>
       </Form>
+      <div id="background"></div>
+      <div id="midground"></div>
+      <div id="foreground"></div>
     </>
   );
 };
@@ -96,6 +99,7 @@ const BtnWrap = {
   display:"flex",
   marginTop:"1rem",
   alignItems:"center",
-  justifyContent:"center"
+  justifyContent:"center",
+  zIndex:5000
 } as React.CSSProperties
 
