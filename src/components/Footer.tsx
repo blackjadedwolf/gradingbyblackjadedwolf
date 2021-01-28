@@ -9,9 +9,9 @@ const Footer = () => {
           <div className="col-lg-4 mb-5 mb-lg-0">
             <h4 className="text-uppercase mb-4 custom-header">Contact</h4>
             <p className="lead mb-0" style={{fontSize:"1rem"}}>
-              blackjadedwolf@aol.com
+              gradingbyblackjadedwolf@gmail.com
               <br />
-              123-456-7890
+              347-589-5251
             </p>
           </div>
           <div className="col-lg-4 mb-5 mb-lg-0">

@@ -92,9 +92,6 @@ const Submissions = () => {
           <div className="submission-row">
             <img className='submission-partner-img' src={psaLogo} alt="" />
           </div>
-          <div className="submission-row">
-            <img className='submission-partner-img' src={beckettLogo} alt="" />
-          </div>
         </div>
       </div>
 

@@ -18,7 +18,7 @@ const ViewOrderPage = () => {
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const isAdmin = user?.email === "blackjadedwolf@aol.com";
+  const isAdmin = user?.email === "gradingbyblackjadedwolf@gmail.com";
   var cards = order?.cards;
 
   return (

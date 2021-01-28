@@ -15,7 +15,7 @@ const OrdersPage = () => {
   const [searchType, setSearchType] = useState<SearchTypes>(SearchTypes.Email);
   const [searchTerm, setSearchTerm] = useState<string>();
 
-  const isAdmin = user?.email === "blackjadedwolf@aol.com";
+  const isAdmin = user?.email === "gradingbyblackjadedwolf@gmail.com";
 
   let userOrders = isAdmin
     ? orders
