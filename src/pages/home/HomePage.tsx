@@ -1,9 +1,9 @@
 import React from "react";
 import logo from "../../assets/img/logo.png";
-import card1 from "../../assets/img/card_1.jpeg";
-import card2 from "../../assets/img/card_2.jpeg";
-import card3 from "../../assets/img/card_3.jpg";
-import card4 from "../../assets/img/card_4.jpg";
+// import card1 from "../../assets/img/card_1.jpeg";
+// import card2 from "../../assets/img/card_2.jpeg";
+// import card3 from "../../assets/img/card_3.jpg";
+// import card4 from "../../assets/img/card_4.jpg";
 
 const Home = () => {
   return (

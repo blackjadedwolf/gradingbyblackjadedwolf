@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { CardEntryForm } from "./CardEntryForm";
 import psaLogo from '../../assets/img/psa-logo.png';
-import beckettLogo from '../../assets/img/beckett-logo.png';
 import bulk_pdf from "../../assets/bulk.pdf";
 import submission_pdf from "../../assets/submission.pdf";
 

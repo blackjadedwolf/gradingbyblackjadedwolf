@@ -2,11 +2,11 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import React, { useState } from "react";
 import { login } from "services/api";
 import { Link } from "react-router-dom";
-import card1 from "../../assets/img/card_1.jpeg";
-import card2 from "../../assets/img/card_2.jpeg";
-import card3 from "../../assets/img/card_3.jpg";
-import card4 from "../../assets/img/card_4.jpg";
-import card5 from "../../assets/img/card_5.jpg";
+// import card1 from "../../assets/img/card_1.jpeg";
+// import card2 from "../../assets/img/card_2.jpeg";
+// import card3 from "../../assets/img/card_3.jpg";
+// import card4 from "../../assets/img/card_4.jpg";
+// import card5 from "../../assets/img/card_5.jpg";
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>();
