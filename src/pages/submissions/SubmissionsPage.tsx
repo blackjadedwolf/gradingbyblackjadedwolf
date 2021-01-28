@@ -49,17 +49,17 @@ const Submissions = () => {
 
         <div className="container submission-row-wrap pt">
           <div className="submission-row">
-            <div className="submission-days text-center"> 2017-Present | 45 Day Subs <br></br> $15.00 </div> 
+            <div className="submission-days text-center"> 2018-Present | 45 Day Subs <br></br> $15.00 </div> 
             <div className="submission-price text-center"> Max DV $199.00  </div>
           </div>
 
           <div className="submission-row">
-            <div className="submission-days text-center"> 1971-2016 | 45 Day Subs <br></br> $12.00 </div> 
+            <div className="submission-days text-center"> 1972-2017 | 45 Day Subs <br></br> $12.00 </div> 
             <div className="submission-price text-center"> Max DV $199.00  </div>
           </div>
 
           <div className="submission-row">
-            <div className="submission-days text-center"> Before 1971 |  45 Day Subs <br></br> $12.00 </div> 
+            <div className="submission-days text-center"> Before 1972 |  45 Day Subs <br></br> $12.00 </div> 
             <div className="submission-price text-center"> Max DV $199.00  </div>
           </div>
 

@@ -51,6 +51,7 @@ const Home = () => {
         className="page-section bg-primary text-white mb-0"
         id="custom-about"
       ></section>
+      {/*
       <div className="floating card1">
         <img style={{height: '200px'}} alt="floating card" src={card1}/>
       </div>
@@ -63,6 +64,7 @@ const Home = () => {
       <div className="floating card4">
         <img style={{height: '200px'}} alt="floating card" src={card4}/>
       </div>
+      */}
     </>
   );
 };

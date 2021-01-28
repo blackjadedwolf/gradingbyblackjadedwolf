@@ -81,6 +81,7 @@ const LoginPage = () => {
           </Row>
         </div>
       </Form>
+      {/*
       <div className="floating card1">
         <img style={{height: '200px'}} alt="floating card" src={card1}/>
       </div>
@@ -96,6 +97,7 @@ const LoginPage = () => {
       <div className="floating card5">
         <img style={{height: '200px'}} alt="floating card" src={card5}/>
       </div>
+      */}
     </>
   );
 };
