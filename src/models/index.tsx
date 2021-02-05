@@ -36,6 +36,7 @@ export enum SubmissionLevel {
 
 export interface Order {
   id?: string;
+  psa_id?: number;
   submissionLevel: SubmissionLevel;
   firstName: string;
   lastName: string;

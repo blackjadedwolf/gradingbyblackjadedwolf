@@ -1,14 +1,15 @@
-import { Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import React, { useState } from "react";
 import { useOrders, useUser, updateOrder } from "services/api";
 import { Link } from "react-router-dom";
-import { OrderStatus } from "models";
+import { Order, OrderStatus } from "models";
 
 const OrdersPage = () => {
   enum SearchTypes {
     Email = "email",
     LastName = "lastName",
     Order = "id",
+    PSAID = "psaid"
   }
   const [user] = useUser();
   const [orders, ordersLoading, ordersError] = useOrders();
@@ -26,16 +27,47 @@ const OrdersPage = () => {
       ? userOrders?.filter((order) => {
           switch (searchType) {
             case SearchTypes.Email:
-              return order.email.toLowerCase().includes(searchTerm.toLowerCase());
+              return order.email
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase());
             case SearchTypes.LastName:
-              return order.lastName.toLowerCase().includes(searchTerm.toLowerCase());
+              return order.lastName
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase());
             case SearchTypes.Order:
               return order.id!.toLowerCase().includes(searchTerm.toLowerCase());
+            case SearchTypes.PSAID:
+              return String(order.psa_id) === searchTerm
             default:
               throw new Error("Invalid search type");
           }
         })
       : userOrders;
+
+  const PSAIDForm = (props: { order: Order }) => {
+    const { order } = props;
+    const [ID, setID] = useState<number | undefined>(order.psa_id);
+    return (
+      <Form>
+        <Form.Control
+          defaultValue={ID}
+          onChange={(event) => {
+            setID(Number(event.target.value));
+          }}
+        />
+        <Button
+          onClick={() => {
+            updateOrder({
+              ...order,
+              psa_id: ID,
+            });
+          }}
+        >
+          Add PSA ID
+        </Button>
+      </Form>
+    );
+  };
 
   return (
     <div className="orders-wrap">
@@ -59,6 +91,9 @@ const OrdersPage = () => {
                     break;
                   case SearchTypes.Order.toString():
                     newSearchType = SearchTypes.Order;
+                    break;
+                  case SearchTypes.PSAID.toString():
+                    newSearchType = SearchTypes.PSAID;
                     break;
                   default:
                     throw new Error(
@@ -101,6 +136,7 @@ const OrdersPage = () => {
           <div className="table-heading order-hide">First Name</div>
           <div className="table-heading order-hide">Phone Number</div>
           <div className="table-heading order-hide">Submission Level</div>
+          <div className="table-heading order-hide">PSA ID</div>
           <div className="table-heading order-hide">Order Status</div>
         </div>
         {!ordersLoading ? (
@@ -123,10 +159,19 @@ const OrdersPage = () => {
                       {" "}
                       {order.submissionLevel}
                     </div>
+                    {isAdmin && (
+                      <div className="order order-hide">
+                        {order.psa_id ? (
+                          order.psa_id
+                        ) : (
+                          <PSAIDForm order={order} />
+                        )}
+                      </div>
+                    )}
                     {isAdmin ? (
                       <Form className="order order-hide">
                         <Form.Control
-                          style={{width:"12.5rem"}}
+                          style={{ width: "12.5rem" }}
                           as="select"
                           defaultValue={order.status}
                           onChange={(event) => {
