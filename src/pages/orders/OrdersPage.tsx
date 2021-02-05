@@ -20,7 +20,7 @@ const OrdersPage = () => {
 
   let userOrders = isAdmin
     ? orders
-    : orders?.filter((order) => order.email === user?.email);
+    : orders?.filter((order) => order.email.toLowerCase() === user?.email?.toLowerCase());
 
   userOrders =
     isAdmin && searchTerm
