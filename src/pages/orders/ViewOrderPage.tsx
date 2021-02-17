@@ -155,7 +155,7 @@ const ViewOrderPage = () => {
                   </div>
                   <div className="indiv-order-product-brand"> Brand </div>
                   <div className="indiv-order-product-quantity"> Quantity </div>
-                  <div className="indiv-order-product-price"> Value </div>
+                  <div className="indiv-order-product-price"> Declared Value </div>
                 </div>
                 {cards?.map((card) => {
                   return (

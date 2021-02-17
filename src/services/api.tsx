@@ -1,4 +1,10 @@
-import { SubmittedCard, Order, User, OrderStatus, SubmissionLevel } from "../models";
+import {
+  SubmittedCard,
+  Order,
+  User,
+  OrderStatus,
+  SubmissionLevel,
+} from "../models";
 import { auth, firestore, storage } from "./firebase";
 import {
   useCollectionData,
@@ -10,6 +16,9 @@ import axios from "axios";
 /********
  **AUTH**
  ********/
+
+const ordersCollection =
+  process.env.NODE_ENV === "development" ? "devOrders" : "orders";
 
 export const useUser = () => {
   return useAuthState(auth);
@@ -55,12 +64,12 @@ export const saveOrder = async (
     dateCreated: new Date(Date.now()).toISOString(),
   };
 
-  return await firestore.collection("orders").add(order);
+  return await firestore.collection(ordersCollection).add(order);
 };
 
 export const updateOrder = async (updatedOrder: Order) => {
   return await firestore
-    .collection("orders")
+    .collection(ordersCollection)
     .doc(updatedOrder.id)
     .update(updatedOrder);
 };
@@ -68,28 +77,31 @@ export const updateOrder = async (updatedOrder: Order) => {
 export const uploadAttachment = async (orderID: string, file: File) => {
   const metadata = {
     customMetadata: {
-      'userViewable': 'false'
-    }
-  }
-  
+      userViewable: "false",
+    },
+  };
+
   return await storage
     .ref(`/orders/${orderID}/attachments/${file.name}`)
-    .put(file, metadata)
+    .put(file, metadata);
 };
 
 export const listOrderAttachments = async (orderID: string) => {
   return await storage.ref(`/orders/${orderID}/attachments/`).listAll();
 };
 
-export const setAttachmentViewability = async(viewable: boolean, attachment: firebase.storage.Reference) => {
+export const setAttachmentViewability = async (
+  viewable: boolean,
+  attachment: firebase.storage.Reference
+) => {
   const newMetadata = {
     customMetadata: {
-      'userViewable': String(viewable)
-    }
-  }
+      userViewable: String(viewable),
+    },
+  };
 
-  return await attachment.updateMetadata(newMetadata)
-}
+  return await attachment.updateMetadata(newMetadata);
+};
 
 export const downloadAttachment = async (orderID: string, filename: string) => {
   return await storage
@@ -107,13 +119,15 @@ export const downloadAttachment = async (orderID: string, filename: string) => {
     });
 };
 
-export const deleteAttachment = async (attachment: firebase.storage.Reference) => {
-  return await attachment.delete()
-}
+export const deleteAttachment = async (
+  attachment: firebase.storage.Reference
+) => {
+  return await attachment.delete();
+};
 
 export const getOrders = async () => {
   return await firestore
-    .collection("orders")
+    .collection(ordersCollection)
     .get()
     .then((querySnapshot) => {
       let orders: Order[] = [];
@@ -128,14 +142,14 @@ export const getOrders = async () => {
 };
 
 export const useOrders = () => {
-  return useCollectionData<Order>(firestore.collection("orders"), {
+  return useCollectionData<Order>(firestore.collection(ordersCollection), {
     idField: "id",
   });
 };
 
 export const getOrder = async (orderID: string) => {
   return await firestore
-    .collection("orders")
+    .collection(ordersCollection)
     .doc(orderID)
     .get()
     .then((doc) => {
@@ -150,11 +164,14 @@ export const getOrder = async (orderID: string) => {
 };
 
 export const useOrder = (orderID: string) => {
-  return useDocumentData<Order>(firestore.collection("orders").doc(orderID), {
-    idField: "id",
-  });
+  return useDocumentData<Order>(
+    firestore.collection(ordersCollection).doc(orderID),
+    {
+      idField: "id",
+    }
+  );
 };
 
 export const deleteOrder = async (orderID: string) => {
-  return await firestore.collection("orders").doc(orderID).delete();
+  return await firestore.collection(ordersCollection).doc(orderID).delete();
 };

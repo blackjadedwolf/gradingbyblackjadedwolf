@@ -219,7 +219,7 @@ export const Invoice = (props: Props) => {
                   <Text style={styles.product}>Product</Text>
                   {/* <Text>{card.product}</Text> */}
                   <Text style={styles.cardNumber}>Number</Text>
-                  <Text style={styles.cardValue}>Value</Text>
+                  <Text style={styles.cardValue}>Declared Value</Text>
                 </View>
                 <View style={styles.row}>
                   <Text style={styles.qty}>{card.quantity}</Text>
