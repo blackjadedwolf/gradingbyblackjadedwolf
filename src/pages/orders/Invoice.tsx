@@ -176,8 +176,8 @@ export const Invoice = (props: Props) => {
 
           <View>
             <Text style={styles.shipTo}>Ship To:</Text>
-            <Text> BlackJadedWolf Inc </Text>
-            <Text> Flatbush Ave Unit 7  </Text>
+            <Text> BlackJadedWolf Inc / Sharon Chiong </Text>
+            <Text> 315 Flatbush Ave #527  </Text>
             <Text> Brooklyn NY 11217 </Text>
           </View>
 
