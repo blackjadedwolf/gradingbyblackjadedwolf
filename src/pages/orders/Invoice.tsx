@@ -245,12 +245,16 @@ export const Invoice = (props: Props) => {
 
         <View style={{marginTop:"40"}}>
           <Text>
-            I agree not to submit any items with which bear evidence of trimming, recoloring, restoration or any other form of tampering,
-            or are of questionable authenticity. I agree that in the event PSA rejects any items for grading, PSA shall not refund the amount
-            paid by customer because the determination to reject an item requires a review by PSA's graders and authenticators. If items are 
-            submitted for services for which they do not qualify, I authorize PSA to correct the order and charge any additional authentication, 
-            grading, handling, and shipping fees that may apply. Turnaround time does not begin until order has been places into grading. 
-            Inability to follow the above terms and conditions will result in being banned from Grading by BlackJadedWolf Inc.
+          I agree not to submit any items with which bear evidence of trimming, recoloring, restoration or any other form of tampering,
+          or are of questionable authenticity. I agree that in the event PSA rejects any items for grading, PSA shall not refund the 
+          amount paid by customer because the determination to reject an item requires a review by PSA's graders and authenticators. If 
+          items are submitted for services for which they do not qualify, I authorize PSA to correct the order and charge any additional 
+          authentication, grading, handling, and shipping fees that may apply. Turnaround time does not begin until order has been places 
+          into grading. Inability to follow the above terms and conditions will result in being banned from Grading by BlackJadedWolf Inc. 
+          
+          *Blackjadedwolf Inc & GradingByBlackjadedwolf Inc is not liable for items that are lost or damaged in transit. It is your 
+          responsibility to pack and secure items safely. Please fully Insure and Acquire Adult Signature Confirmation to all packages 
+          shipped to our Office. 
           </Text>
         </View>
 
