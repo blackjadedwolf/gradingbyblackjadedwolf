@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import {
   Home as HomePage,
@@ -13,17 +8,14 @@ import {
   Register as RegisterPage,
   PasswordReset as PasswordResetPage,
   Orders as OrdersPage,
-  ViewOrder as ViewOrderPage
+  ViewOrder as ViewOrderPage,
+  SubmissionMaintenance as SubmissionMaintenancePage,
 } from "pages";
 
-import {
-  PublicRoute,
-  PrivateRoute,
-  Header,
-  Footer,
-} from "components";
+import { PublicRoute, PrivateRoute, Header, Footer } from "components";
 
 const App = () => {
+  const maintenanceMode = true;
 
   return (
     <BrowserRouter>
@@ -34,9 +26,19 @@ const App = () => {
           <PublicRoute exact path="/login" component={LoginPage} />
           <PublicRoute exact path="/register" component={RegisterPage} />
           <Route exact path="/passwordreset" component={PasswordResetPage} />
-          <Route exact path="/submit" component={SubmissionsPage} />
+          <Route
+            exact
+            path="/submit"
+            component={
+              maintenanceMode ? SubmissionMaintenancePage : SubmissionsPage
+            }
+          />
           <PrivateRoute exact path="/orders" component={OrdersPage} />
-          <PrivateRoute exact path="/orders/:orderID" component={ViewOrderPage} />
+          <PrivateRoute
+            exact
+            path="/orders/:orderID"
+            component={ViewOrderPage}
+          />
           <Route exact path="*">
             <Redirect to="/" />
           </Route>
