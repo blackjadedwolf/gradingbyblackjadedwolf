@@ -9,18 +9,22 @@ const OrdersPage = () => {
     Email = "email",
     LastName = "lastName",
     Order = "id",
-    PSAID = "psaid"
+    PSAID = "psaid",
   }
   const [user] = useUser();
   const [orders, ordersLoading, ordersError] = useOrders();
   const [searchType, setSearchType] = useState<SearchTypes>(SearchTypes.Email);
   const [searchTerm, setSearchTerm] = useState<string>();
 
-  const isAdmin = user?.email === "gradingbyblackjadedwolf@gmail.com";
+  const isAdmin =
+    user?.email === "gradingbyblackjadedwolf@gmail.com" ||
+    (process.env.NODE_ENV === "development" && user?.email === "test@test.com");
 
   let userOrders = isAdmin
     ? orders
-    : orders?.filter((order) => order.email.toLowerCase() === user?.email?.toLowerCase());
+    : orders?.filter(
+        (order) => order.email.toLowerCase() === user?.email?.toLowerCase()
+      );
 
   userOrders =
     isAdmin && searchTerm
@@ -37,7 +41,7 @@ const OrdersPage = () => {
             case SearchTypes.Order:
               return order.id!.toLowerCase().includes(searchTerm.toLowerCase());
             case SearchTypes.PSAID:
-              return String(order.psa_id) === searchTerm
+              return String(order.psa_id) === searchTerm;
             default:
               throw new Error("Invalid search type");
           }
@@ -201,7 +205,7 @@ const OrdersPage = () => {
                                 break;
                               case OrderStatus.MailedOut.toString():
                                 newStatus = OrderStatus.MailedOut;
-                              break;
+                                break;
                               default:
                                 throw new Error(
                                   "invalid argument in order change switch statement"

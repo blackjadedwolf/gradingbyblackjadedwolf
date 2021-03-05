@@ -19,7 +19,10 @@ const App = () => {
   const maintenanceMode = true;
 
   const [user] = useUser();
-  const isAdmin = user?.email === "gradingbyblackjadedwolf@gmail.com";
+  const isAdmin =
+    user?.email === "gradingbyblackjadedwolf@gmail.com" ||
+    (process.env.NODE_ENV === "development" && user?.email === "test@test.com");
+  
 
   return (
     <BrowserRouter>
@@ -34,7 +37,9 @@ const App = () => {
             exact
             path="/submit"
             component={
-              (!isAdmin && maintenanceMode) ? SubmissionMaintenancePage : SubmissionsPage
+              !isAdmin && maintenanceMode
+                ? SubmissionMaintenancePage
+                : SubmissionsPage
             }
           />
           <PrivateRoute exact path="/orders" component={OrdersPage} />

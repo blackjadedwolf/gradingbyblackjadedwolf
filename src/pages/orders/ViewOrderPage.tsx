@@ -18,7 +18,9 @@ const ViewOrderPage = () => {
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const isAdmin = user?.email === "gradingbyblackjadedwolf@gmail.com";
+  const isAdmin =
+    user?.email === "gradingbyblackjadedwolf@gmail.com" ||
+    (process.env.NODE_ENV === "development" && user?.email === "test@test.com");
   var cards = order?.cards;
 
   return (
@@ -92,7 +94,7 @@ const ViewOrderPage = () => {
                             break;
                           case OrderStatus.MailedOut.toString():
                             newStatus = OrderStatus.MailedOut;
-                          break;
+                            break;
                           default:
                             throw new Error(
                               "invalid argument in order change switch statement"
@@ -158,7 +160,10 @@ const ViewOrderPage = () => {
                   </div>
                   <div className="indiv-order-product-brand"> Brand </div>
                   <div className="indiv-order-product-quantity"> Quantity </div>
-                  <div className="indiv-order-product-price"> Declared Value </div>
+                  <div className="indiv-order-product-price">
+                    {" "}
+                    Declared Value{" "}
+                  </div>
                 </div>
                 {cards?.map((card) => {
                   return (
