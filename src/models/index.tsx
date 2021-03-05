@@ -23,6 +23,7 @@ export enum OrderStatus {
   Grading = "Being Graded",
   OrderReady = "Order Ready",
   OrderArrived = "Order Arrived",
+  MailedOut = "Order Mailed"
 }
 
 export enum SubmissionLevel {

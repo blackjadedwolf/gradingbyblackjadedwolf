@@ -90,6 +90,9 @@ const ViewOrderPage = () => {
                           case OrderStatus.Waiting.toString():
                             newStatus = OrderStatus.Waiting;
                             break;
+                          case OrderStatus.MailedOut.toString():
+                            newStatus = OrderStatus.MailedOut;
+                          break;
                           default:
                             throw new Error(
                               "invalid argument in order change switch statement"
