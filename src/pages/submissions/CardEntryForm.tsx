@@ -1,26 +1,47 @@
 import React, { useState } from "react";
 import { Modal, Form, Button, Col, Card } from "react-bootstrap";
-import { SubmittedCard, SubmissionLevel } from "models";
-import { saveOrder, useUser } from "services/api";
+import { SubmittedCard, SubmissionLevel, Order } from "models";
+import { saveOrder, updateOrder, useUser } from "services/api";
 import { PlusCircle, Trash } from "react-bootstrap-icons";
 import "./CardEntryForm.css";
 
-type Props = {
-  setOrderID: React.Dispatch<React.SetStateAction<string | undefined>>;
-};
+type Props =
+  | {
+      setOrderID: React.Dispatch<React.SetStateAction<string | undefined>>;
+    }
+  | {
+      initialOrder: Order;
+      setShowEditModal: React.Dispatch<React.SetStateAction<boolean>>;
+    };
 
 export const CardEntryForm = (props: Props) => {
+  const { setOrderID, initialOrder, setShowEditModal } = { ...props };
+
   const [user] = useUser();
 
   // some magic to whittle down the types from string | null | undefined to string | undefined
   const defaultEmail = user ? (user.email ? user.email : undefined) : undefined;
 
-  const [firstName, setFirstName] = useState<string>();
-  const [lastName, setLastName] = useState<string>();
-  const [email, setEmail] = useState<string | undefined>(defaultEmail);
-  const [phoneNumber, setPhoneNumber] = useState<string>();
-  const [submissionLevel, setSubmissionLevel] = useState<SubmissionLevel>();
-  const [cards, setCards] = useState<SubmittedCard[]>();
+  const [firstName, setFirstName] = useState<string | undefined>(
+    initialOrder?.firstName
+  );
+  const [lastName, setLastName] = useState<string | undefined>(
+    initialOrder?.lastName
+  );
+  const [email, setEmail] = useState<string | undefined>(
+    initialOrder?.email ?? defaultEmail
+  );
+  const [phoneNumber, setPhoneNumber] = useState<string | undefined>(
+    initialOrder?.phoneNumber
+  );
+  const [submissionLevel, setSubmissionLevel] = useState<
+    SubmissionLevel | undefined
+  >(initialOrder?.submissionLevel);
+  const [cards, setCards] = useState<SubmittedCard[] | undefined>(
+    initialOrder?.cards
+  );
+
+  const [psaID, setPSAID] = useState<number | undefined>(initialOrder?.psa_id);
 
   const [quantity, setQuantity] = useState<number | null>();
   const [playerName, setPlayerName] = useState<string | null>();
@@ -30,88 +51,131 @@ export const CardEntryForm = (props: Props) => {
   const [product, setProduct] = useState<string | null>();
   const [estimatedValue, setEstimatedValue] = useState<string | null>();
 
-  const [showModal, setShowModal] = useState(false);
-  const { setOrderID } = { ...props };
+  const [showTermsModal, setShowTermsModal] = useState(false);
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (
-      !firstName ||
-      !lastName ||
-      !email ||
-      !phoneNumber ||
-      !submissionLevel ||
-      !cards
-    ) {
-      if (!firstName) {
-        console.log("no first name");
+    if (setOrderID) {
+      if (
+        !firstName ||
+        !lastName ||
+        !email ||
+        !phoneNumber ||
+        !submissionLevel ||
+        !cards
+      ) {
+        if (!firstName) {
+          console.log("no first name");
+        }
+        if (!lastName) {
+          console.log("no last name");
+        }
+        if (!email) {
+          console.log("no email");
+        }
+        if (!phoneNumber) {
+          console.log("no number");
+        }
+        if (!submissionLevel) {
+          console.log("no level");
+        }
+        if (!cards) {
+          console.log("no cards");
+        }
+      } else {
+        await saveOrder(submissionLevel, cards, {
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+          phoneNumber: phoneNumber,
+        }).then((orderDoc) => {
+          setOrderID(orderDoc.id);
+        });
       }
-      if (!lastName) {
-        console.log("no last name");
+    } else if (initialOrder && setShowEditModal) {
+      if (
+        !firstName ||
+        !lastName ||
+        !email ||
+        !phoneNumber ||
+        !submissionLevel ||
+        !cards
+      ) {
+        if (!firstName) {
+          console.log("no first name");
+        }
+        if (!lastName) {
+          console.log("no last name");
+        }
+        if (!email) {
+          console.log("no email");
+        }
+        if (!phoneNumber) {
+          console.log("no number");
+        }
+        if (!submissionLevel) {
+          console.log("no level");
+        }
+        if (!cards) {
+          console.log("no cards");
+        }
+      } else {
+        await updateOrder({
+          ...initialOrder,
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          phoneNumber: phoneNumber,
+          submissionLevel: submissionLevel,
+          cards: cards,
+          // Use fancy ES6 to include psa_id if it is set, or not include it if not to prevent crash
+          ...(psaID && { psa_id: psaID }),
+        }).then(() => {
+          setShowEditModal(false);
+        });
       }
-      if (!email) {
-        console.log("no email");
-      }
-      if (!phoneNumber) {
-        console.log("no number");
-      }
-      if (!submissionLevel) {
-        console.log("no level");
-      }
-      if (!cards) {
-        console.log("no cards");
-      }
-    } else {
-      await saveOrder(submissionLevel, cards, {
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        phoneNumber: phoneNumber,
-      }).then((orderDoc) => {
-        setOrderID(orderDoc.id);
-      });
     }
   };
 
   return (
     <div className="mt-5 pb-5">
       <Modal
-        show={showModal}
+        show={showTermsModal}
         onHide={() => {
-          setShowModal(false);
+          setShowTermsModal(false);
         }}
       >
         <Modal.Header closeButton>
           <Modal.Title>Terms & Conditions</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        I agree not to submit any items with which bear evidence of trimming,
-        recoloring, restoration or any other form of tampering, or are of 
-        questionable authenticity. <br></br>
-        <br></br>I agree that in the event PSA rejects any items for grading, 
-        PSA shall not refund the amount paid by customer because the 
-        determination to reject an item requires a review by PSA's graders 
-        and authenticators. <br></br>
-        <br></br>
-        If items are submitted for services for which they do not qualify, I 
-        authorize PSA to correct the order and charge any additional 
-        authentication, grading, handling, and shipping fees that may apply.
-        Turnaround time does not begin until order has been places into 
-        grading. <br></br>
-        <br></br>
-        Inability to follow the above terms and conditions will result in 
-        being banned from Grading by BlackJadedWolf Inc. <br></br>
-        <br></br>
-        *Blackjadedwolf Inc & GradingByBlackjadedwolf Inc is not liable for items
-        that are lost or damaged in transit. It is your responsibility to pack and 
-        secure items safely. Please fully Insure and Acquire Adult Signature 
-        Confirmation to all packages shipped to our Office.
+          I agree not to submit any items with which bear evidence of trimming,
+          recoloring, restoration or any other form of tampering, or are of
+          questionable authenticity. <br></br>
+          <br></br>I agree that in the event PSA rejects any items for grading,
+          PSA shall not refund the amount paid by customer because the
+          determination to reject an item requires a review by PSA's graders and
+          authenticators. <br></br>
+          <br></br>
+          If items are submitted for services for which they do not qualify, I
+          authorize PSA to correct the order and charge any additional
+          authentication, grading, handling, and shipping fees that may apply.
+          Turnaround time does not begin until order has been places into
+          grading. <br></br>
+          <br></br>
+          Inability to follow the above terms and conditions will result in
+          being banned from Grading by BlackJadedWolf Inc. <br></br>
+          <br></br>
+          *Blackjadedwolf Inc & GradingByBlackjadedwolf Inc is not liable for
+          items that are lost or damaged in transit. It is your responsibility
+          to pack and secure items safely. Please fully Insure and Acquire Adult
+          Signature Confirmation to all packages shipped to our Office.
         </Modal.Body>
         <Modal.Footer>
           <Button
             variant="secondary"
             onClick={() => {
-              setShowModal(false);
+              setShowTermsModal(false);
             }}
           >
             Close
@@ -130,6 +194,7 @@ export const CardEntryForm = (props: Props) => {
               required
               type="text"
               placeholder="First Name"
+              defaultValue={initialOrder?.firstName}
               onChange={(event) => {
                 setFirstName(event.target.value);
               }}
@@ -146,6 +211,7 @@ export const CardEntryForm = (props: Props) => {
               required
               type="text"
               placeholder="Last Name"
+              defaultValue={initialOrder?.lastName}
               onChange={(event) => {
                 setLastName(event.target.value);
               }}
@@ -162,6 +228,7 @@ export const CardEntryForm = (props: Props) => {
               required
               type="email"
               placeholder="Email"
+              defaultValue={initialOrder?.email}
               value={email}
               onChange={(event) => {
                 setEmail(event.target.value);
@@ -179,6 +246,7 @@ export const CardEntryForm = (props: Props) => {
               required
               type="text"
               placeholder="Phone #"
+              defaultValue={initialOrder?.phoneNumber}
               onChange={(event) => {
                 setPhoneNumber(event.target.value);
               }}
@@ -195,6 +263,7 @@ export const CardEntryForm = (props: Props) => {
               required
               as="select"
               placeholder="Submission Level"
+              defaultValue={initialOrder?.submissionLevel}
               onChange={(event) => {
                 let subLevel: SubmissionLevel;
 
@@ -243,6 +312,19 @@ export const CardEntryForm = (props: Props) => {
               Please choose a submission level
             </Form.Control.Feedback>
           </Form.Group>
+          {/* Only show PSA ID Entry if coming from edit order page */}
+          {initialOrder && (
+            <Form.Group controlId="psaID">
+              <Form.Control
+                type="text"
+                placeholder="PSA ID"
+                defaultValue={initialOrder?.psa_id}
+                onChange={(event) => {
+                  setPSAID(Number(event.target.value));
+                }}
+              />
+            </Form.Group>
+          )}
         </div>
         <Form.Row>
           <Col>
@@ -440,7 +522,7 @@ export const CardEntryForm = (props: Props) => {
               backgroundColor: "black",
             }}
             onClick={() => {
-              setShowModal(true);
+              setShowTermsModal(true);
             }}
           >
             Terms

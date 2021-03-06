@@ -6,6 +6,7 @@ import { OrderStatus } from "models";
 import { Invoice } from "./Invoice";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { UploadAndViewAttachments } from "./UploadAndViewAttachments";
+import { CardEntryForm } from "pages/submissions/CardEntryForm";
 
 interface RouteParams {
   orderID: string;
@@ -17,6 +18,7 @@ const ViewOrderPage = () => {
   const [order, orderLoading, orderError] = useOrder(orderID);
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const isAdmin =
     user?.email === "gradingbyblackjadedwolf@gmail.com" ||
@@ -29,7 +31,12 @@ const ViewOrderPage = () => {
       {orderLoading && <p>Loading order...</p>}
       {order && (
         <div className="indiv-order-page-wrap pt-5">
-          <Modal show={showDeleteModal}>
+          <Modal
+            show={showDeleteModal}
+            onHide={() => {
+              setShowDeleteModal(false);
+            }}
+          >
             <Modal.Header>
               <Modal.Title>Confirm your choice</Modal.Title>
             </Modal.Header>
@@ -53,12 +60,45 @@ const ViewOrderPage = () => {
               </Button>
             </Modal.Footer>
           </Modal>
+          <Modal
+            size="lg"
+            show={showEditModal}
+            onHide={() => {
+              setShowEditModal(false);
+            }}
+          >
+            <Modal.Header>
+              <Modal.Title>Edit Order</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <CardEntryForm
+                initialOrder={order}
+                setShowEditModal={setShowEditModal}
+              />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="secondary"
+                onClick={() => setShowEditModal(false)}
+              >
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
           <div className="container indiv-order-data-wrap pt-5">
             <div className="container-fluid indiv-order-header indiv-order-section">
               <div className="indiv-mobile-heading">
                 <span className="indiv-order-caption"> Order #: &nbsp; </span>
                 {order.id}
               </div>
+
+              {/* Only display PSA ID to Admin */}
+              {isAdmin && (
+                <div className="indiv-mobile-heading">
+                  <span className="indiv-order-caption"> PSA ID: &nbsp; </span>
+                  {order.psa_id ?? "Not set yet"}
+                </div>
+              )}
 
               <div className="indiv-mobile-heading">
                 <span className="indiv-order-caption"> Status: &nbsp; </span>
@@ -240,8 +280,9 @@ const ViewOrderPage = () => {
               </div>
             )}
 
-            <div className="indiv-mobile-heading mt-5">
-              {isAdmin && (
+            {/* Only allow admin to edit or delete order */}
+            {isAdmin && (
+              <div className="indiv-mobile-heading mt-5">
                 <div className="d-flex flex-column align-items-center justify-content-center">
                   <Button
                     onClick={() => {
@@ -251,9 +292,17 @@ const ViewOrderPage = () => {
                   >
                     Delete Order
                   </Button>
+                  <Button
+                    onClick={() => {
+                      setShowEditModal(true);
+                    }}
+                    className="mt-3"
+                  >
+                    Edit Order
+                  </Button>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       )}

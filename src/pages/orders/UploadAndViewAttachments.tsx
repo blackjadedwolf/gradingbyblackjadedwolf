@@ -55,7 +55,7 @@ export const UploadAndViewAttachments = (props: {
 
     return isAdmin ? (
       <>
-        <Modal show={showDeleteModal}>
+        <Modal show={showDeleteModal} onHide={() => {setShowDeleteModal(false)}}>
           <Modal.Header>
             <Modal.Title>Confirm your choice</Modal.Title>
           </Modal.Header>
