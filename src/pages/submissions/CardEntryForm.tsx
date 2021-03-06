@@ -4,6 +4,7 @@ import { SubmittedCard, SubmissionLevel, Order } from "models";
 import { saveOrder, updateOrder, useUser } from "services/api";
 import { PlusCircle, Trash } from "react-bootstrap-icons";
 import "./CardEntryForm.css";
+import { parse } from "path";
 
 type Props =
   | {
@@ -42,7 +43,6 @@ export const CardEntryForm = (props: Props) => {
   );
 
   const [psaID, setPSAID] = useState<number | undefined>(initialOrder?.psa_id);
-
   const [quantity, setQuantity] = useState<number | null>();
   const [playerName, setPlayerName] = useState<string | null>();
   const [year, setYear] = useState<string | null>();
@@ -50,8 +50,44 @@ export const CardEntryForm = (props: Props) => {
   const [cardNumber, setCardNumber] = useState<string | null>();
   const [product, setProduct] = useState<string | null>();
   const [estimatedValue, setEstimatedValue] = useState<string | null>();
-
   const [showTermsModal, setShowTermsModal] = useState(false);
+
+
+  const getDVFromSubmissionLevel = () => {
+    var subLevel = submissionLevel;
+    switch (subLevel) {
+      case SubmissionLevel.Standard5:
+        return 2499;
+        break;
+      case SubmissionLevel.Standard10:
+        return 999;
+        break;
+      case SubmissionLevel.Standard20:
+        return 499;
+        break;
+      case SubmissionLevel.BulkBefore1971:
+        return 199;
+        break;
+      case SubmissionLevel.Bulk1971to2016:
+        return 199;
+        break;
+      case SubmissionLevel.BulkAfter2017:
+        return 199;
+        break;
+      default:
+        return 0;
+    }
+  }
+
+  const validateCardValueInput = (input: string) => {
+    var inputPrice = 0;
+    var maxPrice = 0;
+    if(! (estimatedValue === null || estimatedValue === undefined)){
+      inputPrice = parseInt(input, 10);
+      maxPrice = getDVFromSubmissionLevel();
+    }
+    return (inputPrice > maxPrice ? false : true)
+  }
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -390,7 +426,11 @@ export const CardEntryForm = (props: Props) => {
               placeholder="Declared Value"
               value={estimatedValue ? estimatedValue : ""}
               onChange={(event) => {
-                setEstimatedValue(event.target.value);
+                var isValidPrice = validateCardValueInput(event.target.value);
+                isValidPrice ? setEstimatedValue(event.target.value) : 
+                (
+                  alert("Card declared value should not exceed maximum declared value of this submission type")
+                )
               }}
             />
           </Col>
