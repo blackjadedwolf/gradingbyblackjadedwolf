@@ -37,9 +37,12 @@ const App = () => {
             exact
             path="/submit"
             component={
-              !isAdmin && maintenanceMode
+              /*{ !isAdmin && maintenanceMode
                 ? SubmissionMaintenancePage
                 : SubmissionsPage
+              }*/
+              // UNCOMMENT ABOVE AFTER FINSIHING DEV WORK
+              SubmissionsPage
             }
           />
           <PrivateRoute exact path="/orders" component={OrdersPage} />

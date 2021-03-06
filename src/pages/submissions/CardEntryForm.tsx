@@ -326,6 +326,8 @@ export const CardEntryForm = (props: Props) => {
             </Form.Group>
           )}
         </div>
+        {submissionLevel ?
+        <>
         <Form.Row>
           <Col>
             <Form.Control
@@ -393,7 +395,6 @@ export const CardEntryForm = (props: Props) => {
             />
           </Col>
         </Form.Row>
-        {/* TODO: clear input fields onClick (setting to undefined isn't working) */}
         <Button
           className="add-card"
           onClick={() => {
@@ -432,7 +433,7 @@ export const CardEntryForm = (props: Props) => {
             }
           }}
         >
-          <PlusCircle style={{ color: "white", paddingRight: "5px" }} />
+        <PlusCircle style={{ color: "white", paddingRight: "5px" }} />
           Add Card
         </Button>
         {cards &&
@@ -495,45 +496,46 @@ export const CardEntryForm = (props: Props) => {
               </Card>
             );
           })}
-        <Form.Check
-          style={{
-            marginTop: "1.5rem",
-            color: "white",
-            fontFamily: "Montserrat",
-            fontSize: "1rem",
-            fontWeight: "bolder",
-          }}
-          required
-          type="checkbox"
-          label="I agree to the following terms"
-        />
-        <div
-          style={{
-            marginTop: "1.5rem",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Button
+          <Form.Check
             style={{
-              marginRight: "2rem",
-              border: "2px solid #1EBC9B !important",
-              backgroundColor: "black",
+              marginTop: "1.5rem",
+              color: "white",
+              fontFamily: "Montserrat",
+              fontSize: "1rem",
+              fontWeight: "bolder",
             }}
-            onClick={() => {
-              setShowTermsModal(true);
+            required
+            type="checkbox"
+            label="I agree to the following terms"
+          />
+          <div
+            style={{
+              marginTop: "1.5rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            Terms
-          </Button>
-          <Button
-            type="submit"
-            style={{ border: "2px solid #1EBC9B", backgroundColor: "black" }}
-          >
-            Submit
-          </Button>
-        </div>
+            <Button
+              style={{
+                marginRight: "2rem",
+                border: "2px solid #1EBC9B !important",
+                backgroundColor: "black",
+              }}
+              onClick={() => {
+                setShowTermsModal(true);
+              }}
+            >
+              Terms
+            </Button>
+            <Button
+              type="submit"
+              style={{ border: "2px solid #1EBC9B", backgroundColor: "black" }}
+            >
+              Submit
+            </Button>
+          </div>
+        </> : null }
       </Form>
     </div>
   );
