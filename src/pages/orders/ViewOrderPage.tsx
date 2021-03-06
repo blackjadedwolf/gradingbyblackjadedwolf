@@ -235,7 +235,7 @@ const ViewOrderPage = () => {
             <div className="container-fluid indiv-order-options-info indiv-order-section mt-5">
               <div className="indiv-mobile-section-header">
                 <span className="indiv-order-caption">
-                  Submission Cost: &nbsp;
+                  Submission Level: &nbsp;
                 </span>
                 {order.submissionLevel.split("|")[1]}
               </div>
