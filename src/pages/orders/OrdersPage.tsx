@@ -140,7 +140,7 @@ const OrdersPage = () => {
           <div className="table-heading order-hide">First Name</div>
           <div className="table-heading order-hide">Phone Number</div>
           <div className="table-heading order-hide">Submission Level</div>
-          <div className="table-heading order-hide">PSA ID</div>
+          {isAdmin && <div className="table-heading order-hide">PSA ID</div>}
           <div className="table-heading order-hide">Order Status</div>
         </div>
         {!ordersLoading ? (
