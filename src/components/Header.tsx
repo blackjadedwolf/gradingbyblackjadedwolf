@@ -6,6 +6,10 @@ import { signOut, useUser } from "services/api";
 const Header = () => {
   const [user] = useUser();
 
+  const isAdmin =
+  user?.email === "gradingbyblackjadedwolf@gmail.com" ||
+  (process.env.NODE_ENV === "development" && user?.email === "test@test.com");
+
   const handleSignOut = async () => {
     await signOut().then(() => {
       console.log("signed out");
@@ -58,6 +62,17 @@ const Header = () => {
           {" "}Orders{" "}
         </NavLink>
       </li>
+      {!isAdmin?
+      <li className="nav-item mx-0 mx-lg-1">
+        <NavLink 
+          exact 
+          activeClassName="active"
+          className="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+          to="/orders"
+        >
+          {" "}Profile{" "}
+        </NavLink>
+      </li> : null}
       {user ? (
       <li className="nav-item mx-0 mx-lg-1">
         <Button
