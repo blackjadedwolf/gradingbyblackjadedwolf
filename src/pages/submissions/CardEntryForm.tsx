@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Form, Button, Col, Card } from "react-bootstrap";
 import { SubmittedCard, SubmissionLevel, Order } from "models";
-import {
-  saveOrder,
-  updateOrder,
-  useUser,
-  useUserProfile,
-} from "services/api";
+import { saveOrder, updateOrder, useUser, useUserProfile } from "services/api";
 import { PlusCircle, Trash } from "react-bootstrap-icons";
 import "./CardEntryForm.css";
 
@@ -23,9 +18,7 @@ export const CardEntryForm = (props: Props) => {
   const { setOrderID, initialOrder, setShowEditModal } = { ...props };
 
   const [user] = useUser();
-  const [userProfile] = useUserProfile(
-    user?.email ?? undefined
-  );
+  const [userProfile] = useUserProfile();
 
   const [firstName, setFirstName] = useState<string | undefined>(
     initialOrder?.firstName ?? userProfile?.firstName
@@ -34,7 +27,7 @@ export const CardEntryForm = (props: Props) => {
     initialOrder?.lastName ?? userProfile?.lastName
   );
   const [email, setEmail] = useState<string | undefined>(
-    initialOrder?.email ?? user?.email ?? undefined
+    initialOrder?.email ?? user?.email
   );
   const [phoneNumber, setPhoneNumber] = useState<string | undefined>(
     initialOrder?.phoneNumber ?? userProfile?.phoneNumber
@@ -129,8 +122,6 @@ export const CardEntryForm = (props: Props) => {
       alert("Missing info in form!");
     }
   };
-
-  console.log("user: ", user?.email);
 
   return (
     <div className="mt-5 pb-5">

@@ -8,7 +8,6 @@ const Header = () => {
 
   const handleSignOut = async () => {
     await signOut().then(() => {
-      console.log("signed out");
       return <Redirect to="/login" />;
     });
   };

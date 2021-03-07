@@ -58,7 +58,7 @@ export const resetPassword = async (email: string) => {
 };
 
 export const createUserProfile = async (user: User) => {
-  return await firestore.collection(userDocCollection).add({
+  return await firestore.collection(userDocCollection).doc(user.email).set({
     id: user.id,
     email: user.email,
     firstName: user.firstName,
@@ -78,26 +78,27 @@ export const updateUserProfile = async (updatedUser: User) => {
     });
 };
 
-export const useUserProfile = (email: string | undefined) => {
+export const useUserProfile = () => {
+  const [user] = useUser();
   return useDocumentData<Pick<User, "firstName" | "lastName" | "phoneNumber" | "id">>(
-    firestore.collection(userDocCollection).doc(email ?? "doesnot@exist.com"),
+    firestore.collection(userDocCollection).doc(user?.email ?? "doesnot@exist.com"),
     {
       idField: "id",
     }
   );
 };
 
-export const getUserProfile = async (email: string) => {
-  return await firestore.collection(userDocCollection).doc(email).get().then(profileDoc => {
-    if(profileDoc.exists) {
-      let profile = profileDoc.data() as User;
-      profile.email = profileDoc.id;
-      return profile;
-    } else {
-      return undefined;
-    }
-  })
-}
+// export const getUserProfile = async (email: string) => {
+//   return await firestore.collection(userDocCollection).doc(email).get().then(profileDoc => {
+//     if(profileDoc.exists) {
+//       let profile = profileDoc.data() as User;
+//       profile.email = profileDoc.id;
+//       return profile;
+//     } else {
+//       return undefined;
+//     }
+//   })
+// }
 
 /********
  **CRUD**

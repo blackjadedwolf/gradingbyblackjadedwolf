@@ -13,9 +13,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState<string>();
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    if (!email || !password) {
-      console.log("empty values from required inputs");
-    } else {
+    if (email && password) {
       login(email, password).catch((error) => {
         alert(error);
       });

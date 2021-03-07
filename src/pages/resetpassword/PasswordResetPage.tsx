@@ -10,9 +10,7 @@ const PasswordReset = () => {
     const [email, setEmail] = useState<string>();
 
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-      if (!email) {
-        console.log("no email from required form");
-      } else {
+      if (email) {
         resetPassword(email).then(
           () => {
             setSent(true);
