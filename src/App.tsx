@@ -16,13 +16,13 @@ import { PublicRoute, PrivateRoute, Header, Footer } from "components";
 import { useUser } from "services/api";
 
 const App = () => {
-  const maintenanceMode = true;
+  const maintenanceMode = process.env.NODE_ENV !== "development";
 
   const [user] = useUser();
+
   const isAdmin =
     user?.email === "gradingbyblackjadedwolf@gmail.com" ||
     (process.env.NODE_ENV === "development" && user?.email === "test@test.com");
-  
 
   return (
     <BrowserRouter>
@@ -37,12 +37,9 @@ const App = () => {
             exact
             path="/submit"
             component={
-              /*{ !isAdmin && maintenanceMode
+              (!isAdmin && maintenanceMode)
                 ? SubmissionMaintenancePage
                 : SubmissionsPage
-              }*/
-              // UNCOMMENT ABOVE AFTER FINSIHING DEV WORK
-              SubmissionsPage
             }
           />
           <PrivateRoute exact path="/orders" component={OrdersPage} />

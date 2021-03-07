@@ -13,12 +13,15 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import axios from "axios";
 
+const ordersCollection =
+  process.env.NODE_ENV === "development" ? "devOrders" : "orders";
+
+const userDocCollection =
+  process.env.NODE_ENV === "development" ? "devUserDocs" : "userDocs";
+
 /********
  **AUTH**
  ********/
-
-const ordersCollection =
-  process.env.NODE_ENV === "development" ? "devOrders" : "orders";
 
 export const useUser = () => {
   return useAuthState(auth);
@@ -28,8 +31,18 @@ export const login = async (email: string, password: string) => {
   return await auth.signInWithEmailAndPassword(email, password);
 };
 
-export const register = async (email: string, password: string) => {
-  return await auth.createUserWithEmailAndPassword(email, password);
+export const register = async (user: User & { password: string }) => {
+  return await auth
+    .createUserWithEmailAndPassword(user.email, user.password)
+    .then(async (userDoc) => {
+      return await createUserProfile({
+        id: userDoc.user!.uid,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phoneNumber: user.phoneNumber,
+      });
+    });
 };
 
 export const signOut = async () => {
@@ -43,6 +56,48 @@ export const resetPassword = async (email: string) => {
     throw new Error("Error while sending password reset email");
   });
 };
+
+export const createUserProfile = async (user: User) => {
+  return await firestore.collection(userDocCollection).add({
+    id: user.id,
+    email: user.email,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    phoneNumber: user.phoneNumber,
+  });
+};
+
+export const updateUserProfile = async (updatedUser: User) => {
+  return await firestore
+    .collection(userDocCollection)
+    .doc(updatedUser.email)
+    .update({
+      firstname: updatedUser.firstName,
+      lastName: updatedUser.lastName,
+      phoneNumber: updatedUser.phoneNumber,
+    });
+};
+
+export const useUserProfile = (email: string | undefined) => {
+  return useDocumentData<Pick<User, "firstName" | "lastName" | "phoneNumber" | "id">>(
+    firestore.collection(userDocCollection).doc(email ?? "doesnot@exist.com"),
+    {
+      idField: "id",
+    }
+  );
+};
+
+export const getUserProfile = async (email: string) => {
+  return await firestore.collection(userDocCollection).doc(email).get().then(profileDoc => {
+    if(profileDoc.exists) {
+      let profile = profileDoc.data() as User;
+      profile.email = profileDoc.id;
+      return profile;
+    } else {
+      return undefined;
+    }
+  })
+}
 
 /********
  **CRUD**

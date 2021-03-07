@@ -23,7 +23,7 @@ const ViewOrderPage = () => {
   const isAdmin =
     user?.email === "gradingbyblackjadedwolf@gmail.com" ||
     (process.env.NODE_ENV === "development" && user?.email === "test@test.com");
-  var cards = order?.cards;
+  let cards = order?.cards;
 
   return (
     <>

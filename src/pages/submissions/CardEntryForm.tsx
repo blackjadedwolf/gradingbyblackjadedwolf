@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { Modal, Form, Button, Col, Card } from "react-bootstrap";
 import { SubmittedCard, SubmissionLevel, Order } from "models";
-import { saveOrder, updateOrder, useUser } from "services/api";
+import {
+  saveOrder,
+  updateOrder,
+  useUser,
+  useUserProfile,
+} from "services/api";
 import { PlusCircle, Trash } from "react-bootstrap-icons";
 import "./CardEntryForm.css";
-import { parse } from "path";
 
 type Props =
   | {
@@ -19,21 +23,21 @@ export const CardEntryForm = (props: Props) => {
   const { setOrderID, initialOrder, setShowEditModal } = { ...props };
 
   const [user] = useUser();
-
-  // some magic to whittle down the types from string | null | undefined to string | undefined
-  const defaultEmail = user ? (user.email ? user.email : undefined) : undefined;
+  const [userProfile] = useUserProfile(
+    user?.email ?? undefined
+  );
 
   const [firstName, setFirstName] = useState<string | undefined>(
-    initialOrder?.firstName
+    initialOrder?.firstName ?? userProfile?.firstName
   );
   const [lastName, setLastName] = useState<string | undefined>(
-    initialOrder?.lastName
+    initialOrder?.lastName ?? userProfile?.lastName
   );
   const [email, setEmail] = useState<string | undefined>(
-    initialOrder?.email ?? defaultEmail
+    initialOrder?.email ?? user?.email ?? undefined
   );
   const [phoneNumber, setPhoneNumber] = useState<string | undefined>(
-    initialOrder?.phoneNumber
+    initialOrder?.phoneNumber ?? userProfile?.phoneNumber
   );
   const [submissionLevel, setSubmissionLevel] = useState<
     SubmissionLevel | undefined
@@ -43,6 +47,7 @@ export const CardEntryForm = (props: Props) => {
   );
 
   const [psaID, setPSAID] = useState<number | undefined>(initialOrder?.psa_id);
+
   const [quantity, setQuantity] = useState<number | null>();
   const [playerName, setPlayerName] = useState<string | null>();
   const [year, setYear] = useState<string | null>();
@@ -52,73 +57,49 @@ export const CardEntryForm = (props: Props) => {
   const [estimatedValue, setEstimatedValue] = useState<string | null>();
   const [showTermsModal, setShowTermsModal] = useState(false);
 
-
   const getDVFromSubmissionLevel = () => {
-    var subLevel = submissionLevel;
+    let subLevel = submissionLevel;
     switch (subLevel) {
       case SubmissionLevel.Standard5:
         return 2499;
-        break;
       case SubmissionLevel.Standard10:
         return 999;
-        break;
       case SubmissionLevel.Standard20:
         return 499;
-        break;
       case SubmissionLevel.BulkBefore1971:
         return 199;
-        break;
       case SubmissionLevel.Bulk1971to2016:
         return 199;
-        break;
       case SubmissionLevel.BulkAfter2017:
         return 199;
-        break;
       default:
         return 0;
     }
-  }
+  };
 
   const validateCardValueInput = (input: string) => {
-    var inputPrice = 0;
-    var maxPrice = 0;
-    if(! (estimatedValue === null || estimatedValue === undefined)){
+    let inputPrice = 0;
+    let maxPrice = 0;
+    if (!(estimatedValue === null || estimatedValue === undefined)) {
       inputPrice = parseInt(input, 10);
       maxPrice = getDVFromSubmissionLevel();
     }
-    return (inputPrice > maxPrice ? false : true)
-  }
+    return inputPrice > maxPrice ? false : true;
+  };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (setOrderID) {
-      if (
-        !firstName ||
-        !lastName ||
-        !email ||
-        !phoneNumber ||
-        !submissionLevel ||
-        !cards
-      ) {
-        if (!firstName) {
-          console.log("no first name");
-        }
-        if (!lastName) {
-          console.log("no last name");
-        }
-        if (!email) {
-          console.log("no email");
-        }
-        if (!phoneNumber) {
-          console.log("no number");
-        }
-        if (!submissionLevel) {
-          console.log("no level");
-        }
-        if (!cards) {
-          console.log("no cards");
-        }
-      } else {
+    // Make sure all fields are set
+    if (
+      firstName &&
+      lastName &&
+      email &&
+      phoneNumber &&
+      submissionLevel &&
+      cards
+    ) {
+      // setOrderID is set when being called from submissions page
+      if (setOrderID) {
         await saveOrder(submissionLevel, cards, {
           email: email,
           firstName: firstName,
@@ -128,34 +109,8 @@ export const CardEntryForm = (props: Props) => {
           setOrderID(orderDoc.id);
         });
       }
-    } else if (initialOrder && setShowEditModal) {
-      if (
-        !firstName ||
-        !lastName ||
-        !email ||
-        !phoneNumber ||
-        !submissionLevel ||
-        !cards
-      ) {
-        if (!firstName) {
-          console.log("no first name");
-        }
-        if (!lastName) {
-          console.log("no last name");
-        }
-        if (!email) {
-          console.log("no email");
-        }
-        if (!phoneNumber) {
-          console.log("no number");
-        }
-        if (!submissionLevel) {
-          console.log("no level");
-        }
-        if (!cards) {
-          console.log("no cards");
-        }
-      } else {
+      // initialOrder and setShowEditModal are set when being called from edit modal on order page
+      else if (initialOrder && setShowEditModal) {
         await updateOrder({
           ...initialOrder,
           firstName: firstName,
@@ -164,14 +119,18 @@ export const CardEntryForm = (props: Props) => {
           phoneNumber: phoneNumber,
           submissionLevel: submissionLevel,
           cards: cards,
-          // Use fancy ES6 to include psa_id if it is set, or not include it if not to prevent crash
+          // Include psa_id if it is set, or not include it in the update if not to prevent crash
           ...(psaID && { psa_id: psaID }),
         }).then(() => {
           setShowEditModal(false);
         });
       }
+    } else {
+      alert("Missing info in form!");
     }
   };
+
+  console.log("user: ", user?.email);
 
   return (
     <div className="mt-5 pb-5">
@@ -218,6 +177,7 @@ export const CardEntryForm = (props: Props) => {
           </Button>
         </Modal.Footer>
       </Modal>
+      <p>User profile: {userProfile?.id}</p>
       <Form
         name="dynamic_card_entry_form"
         onSubmit={onSubmit}
@@ -230,7 +190,7 @@ export const CardEntryForm = (props: Props) => {
               required
               type="text"
               placeholder="First Name"
-              defaultValue={initialOrder?.firstName}
+              value={firstName}
               onChange={(event) => {
                 setFirstName(event.target.value);
               }}
@@ -247,7 +207,7 @@ export const CardEntryForm = (props: Props) => {
               required
               type="text"
               placeholder="Last Name"
-              defaultValue={initialOrder?.lastName}
+              value={lastName}
               onChange={(event) => {
                 setLastName(event.target.value);
               }}
@@ -264,7 +224,6 @@ export const CardEntryForm = (props: Props) => {
               required
               type="email"
               placeholder="Email"
-              defaultValue={initialOrder?.email}
               value={email}
               onChange={(event) => {
                 setEmail(event.target.value);
@@ -282,7 +241,7 @@ export const CardEntryForm = (props: Props) => {
               required
               type="text"
               placeholder="Phone #"
-              defaultValue={initialOrder?.phoneNumber}
+              value={phoneNumber}
               onChange={(event) => {
                 setPhoneNumber(event.target.value);
               }}
@@ -299,7 +258,7 @@ export const CardEntryForm = (props: Props) => {
               required
               as="select"
               placeholder="Submission Level"
-              defaultValue={initialOrder?.submissionLevel}
+              value={submissionLevel}
               onChange={(event) => {
                 let subLevel: SubmissionLevel;
 
@@ -354,7 +313,7 @@ export const CardEntryForm = (props: Props) => {
               <Form.Control
                 type="text"
                 placeholder="PSA ID"
-                defaultValue={initialOrder?.psa_id}
+                value={psaID}
                 onChange={(event) => {
                   setPSAID(Number(event.target.value));
                 }}
@@ -362,220 +321,227 @@ export const CardEntryForm = (props: Props) => {
             </Form.Group>
           )}
         </div>
-        {submissionLevel ?
-        <>
-        <Form.Row>
-          <Col>
-            <Form.Control
-              placeholder="Quantity"
-              value={quantity ? String(quantity) : ""}
-              onChange={(event) => {
-                setQuantity(Number(event.target.value));
-              }}
-            />
-          </Col>
-          <Col>
-            <Form.Control
-              placeholder="Player Name"
-              value={playerName ? playerName : ""}
-              onChange={(event) => {
-                setPlayerName(event.target.value);
-              }}
-            />
-          </Col>
-          <Col>
-            <Form.Control
-              placeholder="Year"
-              value={year ? year : ""}
-              onChange={(event) => {
-                setYear(event.target.value);
-              }}
-            />
-          </Col>
-        </Form.Row>
-        <Form.Row>
-          <Col>
-            <Form.Control
-              placeholder="Brand"
-              value={brand ? brand : ""}
-              onChange={(event) => {
-                setBrand(event.target.value);
-              }}
-            />
-          </Col>
-          <Col>
-            <Form.Control
-              placeholder="Card Number"
-              value={cardNumber ? cardNumber : ""}
-              onChange={(event) => {
-                setCardNumber(event.target.value);
-              }}
-            />
-          </Col>
-          <Col>
-            <Form.Control
-              placeholder="Product"
-              value={product ? product : ""}
-              onChange={(event) => {
-                setProduct(event.target.value);
-              }}
-            />
-          </Col>
-          <Col>
-            <Form.Control
-              placeholder="Declared Value"
-              value={estimatedValue ? estimatedValue : ""}
-              onChange={(event) => {
-                var isValidPrice = validateCardValueInput(event.target.value);
-                isValidPrice ? setEstimatedValue(event.target.value) : 
-                (
-                  alert("Card declared value should not exceed maximum declared value of this submission type")
-                )
-              }}
-            />
-          </Col>
-        </Form.Row>
-        <Button
-          className="add-card"
-          onClick={() => {
-            if (
-              !quantity ||
-              !playerName ||
-              !year ||
-              !brand ||
-              !cardNumber ||
-              !product ||
-              !estimatedValue
-            ) {
-              alert("Please fill out all fields before adding card!");
-            } else {
-              const newCard: SubmittedCard = {
-                quantity: quantity,
-                player_name: playerName,
-                year: Number(year),
-                brand: brand,
-                product: product,
-                card_number: Number(cardNumber),
-                estimated_value: Number(estimatedValue),
-              };
-              if (cards) {
-                setCards([...cards, newCard]);
-              } else {
-                setCards([newCard]);
-              }
-              setQuantity(null);
-              setPlayerName(null);
-              setYear(null);
-              setBrand(null);
-              setCardNumber(null);
-              setProduct(null);
-              setEstimatedValue(null);
-            }
-          }}
-        >
-        <PlusCircle style={{ color: "white", paddingRight: "5px" }} />
-          Add Card
-        </Button>
-        {cards &&
-          cards.map((card) => {
-            return (
-              <Card style={{ marginBottom: "2rem" }}>
-                <Card.Body>
-                  <div className="card-row">
-                    <div className="card-col">
-                      <span>
-                        <strong>Quantity</strong>
-                      </span>
-                      <span>{String(card.quantity)}</span>
-                    </div>
-                    <div className="card-col">
-                      <span>
-                        <strong>Player</strong>
-                      </span>
-                      <span>{String(card.player_name)}</span>
-                    </div>
-                    <div className="card-col">
-                      <span>
-                        <strong>Year</strong>
-                      </span>
-                      <span>{String(card.year)}</span>
-                    </div>
-                    <div className="card-col">
-                      <span>
-                        <strong>Brand</strong>
-                      </span>
-                      <span>{String(card.brand)}</span>
-                    </div>
-                    <div className="card-col">
-                      <span>
-                        <strong>Card Number</strong>
-                      </span>
-                      <span>{String(card.card_number)}</span>
-                    </div>
-                    <div className="card-col">
-                      <span>
-                        <strong>Product</strong>
-                      </span>
-                      <span>{String(card.product)}</span>
-                    </div>
-                    <div className="card-col">
-                      <span>
-                        <strong>Declared Value</strong>
-                      </span>
-                      <span>{String(card.estimated_value)}</span>
-                    </div>
-                    <Button
-                      onClick={() => {
-                        setCards(cards.filter((c) => c !== card));
-                      }}
-                    >
-                      <Trash />
-                    </Button>
-                  </div>
-                </Card.Body>
-              </Card>
-            );
-          })}
-          <Form.Check
-            style={{
-              marginTop: "1.5rem",
-              color: "white",
-              fontFamily: "Montserrat",
-              fontSize: "1rem",
-              fontWeight: "bolder",
-            }}
-            required
-            type="checkbox"
-            label="I agree to the following terms"
-          />
-          <div
-            style={{
-              marginTop: "1.5rem",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
+        {submissionLevel && (
+          <>
+            <Form.Row>
+              <Col>
+                <Form.Control
+                  placeholder="Quantity"
+                  value={quantity ? String(quantity) : ""}
+                  onChange={(event) => {
+                    setQuantity(Number(event.target.value));
+                  }}
+                />
+              </Col>
+              <Col>
+                <Form.Control
+                  placeholder="Player Name"
+                  value={playerName ? playerName : ""}
+                  onChange={(event) => {
+                    setPlayerName(event.target.value);
+                  }}
+                />
+              </Col>
+              <Col>
+                <Form.Control
+                  placeholder="Year"
+                  value={year ? year : ""}
+                  onChange={(event) => {
+                    setYear(event.target.value);
+                  }}
+                />
+              </Col>
+            </Form.Row>
+            <Form.Row>
+              <Col>
+                <Form.Control
+                  placeholder="Brand"
+                  value={brand ? brand : ""}
+                  onChange={(event) => {
+                    setBrand(event.target.value);
+                  }}
+                />
+              </Col>
+              <Col>
+                <Form.Control
+                  placeholder="Card Number"
+                  value={cardNumber ? cardNumber : ""}
+                  onChange={(event) => {
+                    setCardNumber(event.target.value);
+                  }}
+                />
+              </Col>
+              <Col>
+                <Form.Control
+                  placeholder="Product"
+                  value={product ? product : ""}
+                  onChange={(event) => {
+                    setProduct(event.target.value);
+                  }}
+                />
+              </Col>
+              <Col>
+                <Form.Control
+                  placeholder="Declared Value"
+                  value={estimatedValue ? estimatedValue : ""}
+                  onChange={(event) => {
+                    let isValidPrice = validateCardValueInput(
+                      event.target.value
+                    );
+                    isValidPrice
+                      ? setEstimatedValue(event.target.value)
+                      : alert(
+                          "Card declared value should not exceed maximum declared value of this submission type"
+                        );
+                  }}
+                />
+              </Col>
+            </Form.Row>
             <Button
-              style={{
-                marginRight: "2rem",
-                border: "2px solid #1EBC9B !important",
-                backgroundColor: "black",
-              }}
+              className="add-card"
               onClick={() => {
-                setShowTermsModal(true);
+                if (
+                  !quantity ||
+                  !playerName ||
+                  !year ||
+                  !brand ||
+                  !cardNumber ||
+                  !product ||
+                  !estimatedValue
+                ) {
+                  alert("Please fill out all fields before adding card!");
+                } else {
+                  const newCard: SubmittedCard = {
+                    quantity: quantity,
+                    player_name: playerName,
+                    year: Number(year),
+                    brand: brand,
+                    product: product,
+                    card_number: Number(cardNumber),
+                    estimated_value: Number(estimatedValue),
+                  };
+                  if (cards) {
+                    setCards([...cards, newCard]);
+                  } else {
+                    setCards([newCard]);
+                  }
+                  setQuantity(null);
+                  setPlayerName(null);
+                  setYear(null);
+                  setBrand(null);
+                  setCardNumber(null);
+                  setProduct(null);
+                  setEstimatedValue(null);
+                }
               }}
             >
-              Terms
+              <PlusCircle style={{ color: "white", paddingRight: "5px" }} />
+              Add Card
             </Button>
-            <Button
-              type="submit"
-              style={{ border: "2px solid #1EBC9B", backgroundColor: "black" }}
+            {cards &&
+              cards.map((card) => {
+                return (
+                  <Card style={{ marginBottom: "2rem" }}>
+                    <Card.Body>
+                      <div className="card-row">
+                        <div className="card-col">
+                          <span>
+                            <strong>Quantity</strong>
+                          </span>
+                          <span>{String(card.quantity)}</span>
+                        </div>
+                        <div className="card-col">
+                          <span>
+                            <strong>Player</strong>
+                          </span>
+                          <span>{String(card.player_name)}</span>
+                        </div>
+                        <div className="card-col">
+                          <span>
+                            <strong>Year</strong>
+                          </span>
+                          <span>{String(card.year)}</span>
+                        </div>
+                        <div className="card-col">
+                          <span>
+                            <strong>Brand</strong>
+                          </span>
+                          <span>{String(card.brand)}</span>
+                        </div>
+                        <div className="card-col">
+                          <span>
+                            <strong>Card Number</strong>
+                          </span>
+                          <span>{String(card.card_number)}</span>
+                        </div>
+                        <div className="card-col">
+                          <span>
+                            <strong>Product</strong>
+                          </span>
+                          <span>{String(card.product)}</span>
+                        </div>
+                        <div className="card-col">
+                          <span>
+                            <strong>Declared Value</strong>
+                          </span>
+                          <span>{String(card.estimated_value)}</span>
+                        </div>
+                        <Button
+                          onClick={() => {
+                            setCards(cards.filter((c) => c !== card));
+                          }}
+                        >
+                          <Trash />
+                        </Button>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                );
+              })}
+            <Form.Check
+              style={{
+                marginTop: "1.5rem",
+                color: "white",
+                fontFamily: "Montserrat",
+                fontSize: "1rem",
+                fontWeight: "bolder",
+              }}
+              required
+              type="checkbox"
+              label="I agree to the following terms"
+            />
+            <div
+              style={{
+                marginTop: "1.5rem",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              Submit
-            </Button>
-          </div>
-        </> : null }
+              <Button
+                style={{
+                  marginRight: "2rem",
+                  border: "2px solid #1EBC9B !important",
+                  backgroundColor: "black",
+                }}
+                onClick={() => {
+                  setShowTermsModal(true);
+                }}
+              >
+                Terms
+              </Button>
+              <Button
+                type="submit"
+                style={{
+                  border: "2px solid #1EBC9B",
+                  backgroundColor: "black",
+                }}
+              >
+                Submit
+              </Button>
+            </div>
+          </>
+        )}
       </Form>
     </div>
   );
