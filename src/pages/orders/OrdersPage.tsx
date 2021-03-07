@@ -40,7 +40,7 @@ const OrdersPage = () => {
             case SearchTypes.Order:
               return order.id!.toLowerCase().includes(searchTerm.toLowerCase());
             case SearchTypes.PSAID:
-              return String(order.psa_id) === searchTerm;
+              return String(order.psa_id).includes(searchTerm);
             default:
               throw new Error("Invalid search type");
           }
