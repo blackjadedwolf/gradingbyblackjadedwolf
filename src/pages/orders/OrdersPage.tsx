@@ -2,6 +2,8 @@ import { Form } from "react-bootstrap";
 import React, { useState } from "react";
 import { useOrders, useUser } from "services/api";
 import { Link } from "react-router-dom";
+import { OrderStatus } from "models";
+import { updateOrder } from "services/api";
 
 const OrdersPage = () => {
   enum SearchTypes {
@@ -161,62 +163,61 @@ const OrdersPage = () => {
                       </div>
                     )}
                     {isAdmin ? (
-                      <div className="order order-hide">{order.status}</div>
+                      <Form className="order order-hide">
+                        <Form.Control
+                          style={{ width: "12.5rem" }}
+                          as="select"
+                          defaultValue={order.status}
+                          onChange={(event) => {
+                            let newStatus: OrderStatus;
+
+                            switch (event.target.value) {
+                              case OrderStatus.OrderArrived.toString():
+                                newStatus = OrderStatus.OrderArrived;
+                                break;
+                              case OrderStatus.OrderReady.toString():
+                                newStatus = OrderStatus.OrderReady;
+                                break;
+                              case OrderStatus.Grading.toString():
+                                newStatus = OrderStatus.Grading;
+                                break;
+                              case OrderStatus.ShippedToGrader.toString():
+                                newStatus = OrderStatus.ShippedToGrader;
+                                break;
+                              case OrderStatus.Processing.toString():
+                                newStatus = OrderStatus.Processing;
+                                break;
+                              case OrderStatus.Received.toString():
+                                newStatus = OrderStatus.Received;
+                                break;
+                              case OrderStatus.Waiting.toString():
+                                newStatus = OrderStatus.Waiting;
+                                break;
+                              case OrderStatus.MailedOut.toString():
+                                newStatus = OrderStatus.MailedOut;
+                                break;
+                              default:
+                                throw new Error(
+                                  "invalid argument in order change switch statement"
+                                );
+                            }
+
+                            updateOrder({
+                              ...order,
+                              status: newStatus,
+                            });
+                          }}
+                        >
+                          {Object.entries(OrderStatus).map((entry) => {
+                            return (
+                              <option key={entry[0]} value={entry[1]}>
+                                {entry[1]}
+                              </option>
+                            );
+                          })}
+                        </Form.Control>
+                      </Form>
                     ) : (
-                      // <Form className="order order-hide">
-                      //   <Form.Control
-                      //     style={{ width: "12.5rem" }}
-                      //     as="select"
-                      //     defaultValue={order.status}
-                      //     onChange={(event) => {
-                      //       let newStatus: OrderStatus;
-
-                      //       switch (event.target.value) {
-                      //         case OrderStatus.OrderArrived.toString():
-                      //           newStatus = OrderStatus.OrderArrived;
-                      //           break;
-                      //         case OrderStatus.OrderReady.toString():
-                      //           newStatus = OrderStatus.OrderReady;
-                      //           break;
-                      //         case OrderStatus.Grading.toString():
-                      //           newStatus = OrderStatus.Grading;
-                      //           break;
-                      //         case OrderStatus.ShippedToGrader.toString():
-                      //           newStatus = OrderStatus.ShippedToGrader;
-                      //           break;
-                      //         case OrderStatus.Processing.toString():
-                      //           newStatus = OrderStatus.Processing;
-                      //           break;
-                      //         case OrderStatus.Received.toString():
-                      //           newStatus = OrderStatus.Received;
-                      //           break;
-                      //         case OrderStatus.Waiting.toString():
-                      //           newStatus = OrderStatus.Waiting;
-                      //           break;
-                      //         case OrderStatus.MailedOut.toString():
-                      //           newStatus = OrderStatus.MailedOut;
-                      //           break;
-                      //         default:
-                      //           throw new Error(
-                      //             "invalid argument in order change switch statement"
-                      //           );
-                      //       }
-
-                      //       updateOrder({
-                      //         ...order,
-                      //         status: newStatus,
-                      //       });
-                      //     }}
-                      //   >
-                      //     {Object.entries(OrderStatus).map((entry) => {
-                      //       return (
-                      //         <option key={entry[0]} value={entry[1]}>
-                      //           {entry[1]}
-                      //         </option>
-                      //       );
-                      //     })}
-                      //   </Form.Control>
-                      // </Form>
                       <div className="order order-hide">{order.status}</div>
                     )}
                   </div>
