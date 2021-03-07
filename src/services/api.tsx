@@ -80,11 +80,8 @@ export const updateUserProfile = async (updatedUser: User) => {
 
 export const useUserProfile = () => {
   const [user] = useUser();
-  return useDocumentData<Pick<User, "firstName" | "lastName" | "phoneNumber" | "id">>(
-    firestore.collection(userDocCollection).doc(user?.email ?? "doesnot@exist.com"),
-    {
-      idField: "id",
-    }
+  return useDocumentData<User>(
+    firestore.collection(userDocCollection).doc(user?.email ?? "doesnot@exist.com")
   );
 };
 

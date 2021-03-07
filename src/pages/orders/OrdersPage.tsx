@@ -135,10 +135,11 @@ const OrdersPage = () => {
       >
         <div className="container-fluid table-headings">
           <div className="table-heading">Order #</div>
-          <div className="table-heading order-hide">Email</div>
-          <div className="table-heading order-hide">Last Name</div>
-          <div className="table-heading order-hide">First Name</div>
-          <div className="table-heading order-hide">Phone Number</div>
+          {isAdmin && <div className="table-heading order-hide">Email</div>}
+          {isAdmin && <div className="table-heading order-hide">Last Name</div>}
+          {isAdmin && <div className="table-heading order-hide">First Name</div>}
+          {isAdmin && <div className="table-heading order-hide">Phone Number</div>}
+          <div className="table-heading order-hide">Date Submitted</div>
           <div className="table-heading order-hide">Submission Level</div>
           {isAdmin && <div className="table-heading order-hide">PSA ID</div>}
           <div className="table-heading order-hide">Order Status</div>
@@ -155,10 +156,11 @@ const OrdersPage = () => {
                     <Link className="order" to={`/orders/${order.id}`}>
                       {order.id}
                     </Link>
-                    <div className="order order-hide">{order.email}</div>
-                    <div className="order order-hide">{order.lastName}</div>
-                    <div className="order order-hide">{order.firstName}</div>
-                    <div className="order order-hide">{order.phoneNumber}</div>
+                    {isAdmin && <div className="order order-hide">{order.email}</div>}
+                    {isAdmin && <div className="order order-hide">{order.lastName}</div>}
+                    {isAdmin && <div className="order order-hide">{order.firstName}</div>}
+                    {isAdmin && <div className="order order-hide">{order.phoneNumber}</div>}
+                    <div className="order order-hide">{new Date(order.dateCreated).toDateString()}</div>
                     <div className="order order-hide">
                       {" "}
                       {order.submissionLevel}
