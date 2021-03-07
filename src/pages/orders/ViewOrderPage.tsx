@@ -23,7 +23,7 @@ const ViewOrderPage = () => {
   const isAdmin =
     user?.email === "gradingbyblackjadedwolf@gmail.com" ||
     (process.env.NODE_ENV === "development" && user?.email === "test@test.com");
-  var cards = order?.cards;
+  let cards = order?.cards;
 
   return (
     <>
@@ -96,7 +96,18 @@ const ViewOrderPage = () => {
               {isAdmin && (
                 <div className="indiv-mobile-heading">
                   <span className="indiv-order-caption"> PSA ID: &nbsp; </span>
-                  {order.psa_id ?? "Not set yet"}
+                  {/* <PSAIDForm order={order} /> */}
+                  <Form>
+                    <Form.Control
+                      defaultValue={order.psa_id}
+                      onChange={(event) => {
+                        updateOrder({
+                          ...order,
+                          psa_id: Number(event.target.value),
+                        });
+                      }}
+                    />
+                  </Form>
                 </div>
               )}
 

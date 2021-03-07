@@ -1,8 +1,7 @@
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import React, { useState } from "react";
-import { useOrders, useUser, updateOrder } from "services/api";
+import { useOrders, useUser } from "services/api";
 import { Link } from "react-router-dom";
-import { Order, OrderStatus } from "models";
 
 const OrdersPage = () => {
   enum SearchTypes {
@@ -41,37 +40,12 @@ const OrdersPage = () => {
             case SearchTypes.Order:
               return order.id!.toLowerCase().includes(searchTerm.toLowerCase());
             case SearchTypes.PSAID:
-              return String(order.psa_id) === searchTerm;
+              return String(order.psa_id).includes(searchTerm);
             default:
               throw new Error("Invalid search type");
           }
         })
       : userOrders;
-
-  const PSAIDForm = (props: { order: Order }) => {
-    const { order } = props;
-    const [ID, setID] = useState<number | undefined>(order.psa_id);
-    return (
-      <Form>
-        <Form.Control
-          defaultValue={ID}
-          onChange={(event) => {
-            setID(Number(event.target.value));
-          }}
-        />
-        <Button
-          onClick={() => {
-            updateOrder({
-              ...order,
-              psa_id: ID,
-            });
-          }}
-        >
-          Add PSA ID
-        </Button>
-      </Form>
-    );
-  };
 
   return (
     <div className="orders-wrap">
@@ -135,10 +109,15 @@ const OrdersPage = () => {
       >
         <div className="container-fluid table-headings">
           <div className="table-heading">Order #</div>
-          <div className="table-heading order-hide">Email</div>
-          <div className="table-heading order-hide">Last Name</div>
-          <div className="table-heading order-hide">First Name</div>
-          <div className="table-heading order-hide">Phone Number</div>
+          {isAdmin && <div className="table-heading order-hide">Email</div>}
+          {isAdmin && <div className="table-heading order-hide">Last Name</div>}
+          {isAdmin && (
+            <div className="table-heading order-hide">First Name</div>
+          )}
+          {isAdmin && (
+            <div className="table-heading order-hide">Phone Number</div>
+          )}
+          <div className="table-heading order-hide">Date Submitted</div>
           <div className="table-heading order-hide">Submission Level</div>
           {isAdmin && <div className="table-heading order-hide">PSA ID</div>}
           <div className="table-heading order-hide">Order Status</div>
@@ -155,79 +134,89 @@ const OrdersPage = () => {
                     <Link className="order" to={`/orders/${order.id}`}>
                       {order.id}
                     </Link>
-                    <div className="order order-hide">{order.email}</div>
-                    <div className="order order-hide">{order.lastName}</div>
-                    <div className="order order-hide">{order.firstName}</div>
-                    <div className="order order-hide">{order.phoneNumber}</div>
+                    {isAdmin && (
+                      <div className="order order-hide">{order.email}</div>
+                    )}
+                    {isAdmin && (
+                      <div className="order order-hide">{order.lastName}</div>
+                    )}
+                    {isAdmin && (
+                      <div className="order order-hide">{order.firstName}</div>
+                    )}
+                    {isAdmin && (
+                      <div className="order order-hide">
+                        {order.phoneNumber}
+                      </div>
+                    )}
+                    <div className="order order-hide">
+                      {new Date(order.dateCreated).toDateString()}
+                    </div>
                     <div className="order order-hide">
                       {" "}
                       {order.submissionLevel}
                     </div>
                     {isAdmin && (
                       <div className="order order-hide">
-                        {order.psa_id ? (
-                          order.psa_id
-                        ) : (
-                          <PSAIDForm order={order} />
-                        )}
+                        {order.psa_id ?? <p>No ID yet</p>}
                       </div>
                     )}
                     {isAdmin ? (
-                      <Form className="order order-hide">
-                        <Form.Control
-                          style={{ width: "12.5rem" }}
-                          as="select"
-                          defaultValue={order.status}
-                          onChange={(event) => {
-                            let newStatus: OrderStatus;
-
-                            switch (event.target.value) {
-                              case OrderStatus.OrderArrived.toString():
-                                newStatus = OrderStatus.OrderArrived;
-                                break;
-                              case OrderStatus.OrderReady.toString():
-                                newStatus = OrderStatus.OrderReady;
-                                break;
-                              case OrderStatus.Grading.toString():
-                                newStatus = OrderStatus.Grading;
-                                break;
-                              case OrderStatus.ShippedToGrader.toString():
-                                newStatus = OrderStatus.ShippedToGrader;
-                                break;
-                              case OrderStatus.Processing.toString():
-                                newStatus = OrderStatus.Processing;
-                                break;
-                              case OrderStatus.Received.toString():
-                                newStatus = OrderStatus.Received;
-                                break;
-                              case OrderStatus.Waiting.toString():
-                                newStatus = OrderStatus.Waiting;
-                                break;
-                              case OrderStatus.MailedOut.toString():
-                                newStatus = OrderStatus.MailedOut;
-                                break;
-                              default:
-                                throw new Error(
-                                  "invalid argument in order change switch statement"
-                                );
-                            }
-
-                            updateOrder({
-                              ...order,
-                              status: newStatus,
-                            });
-                          }}
-                        >
-                          {Object.entries(OrderStatus).map((entry) => {
-                            return (
-                              <option key={entry[0]} value={entry[1]}>
-                                {entry[1]}
-                              </option>
-                            );
-                          })}
-                        </Form.Control>
-                      </Form>
+                      <div className="order order-hide">{order.status}</div>
                     ) : (
+                      // <Form className="order order-hide">
+                      //   <Form.Control
+                      //     style={{ width: "12.5rem" }}
+                      //     as="select"
+                      //     defaultValue={order.status}
+                      //     onChange={(event) => {
+                      //       let newStatus: OrderStatus;
+
+                      //       switch (event.target.value) {
+                      //         case OrderStatus.OrderArrived.toString():
+                      //           newStatus = OrderStatus.OrderArrived;
+                      //           break;
+                      //         case OrderStatus.OrderReady.toString():
+                      //           newStatus = OrderStatus.OrderReady;
+                      //           break;
+                      //         case OrderStatus.Grading.toString():
+                      //           newStatus = OrderStatus.Grading;
+                      //           break;
+                      //         case OrderStatus.ShippedToGrader.toString():
+                      //           newStatus = OrderStatus.ShippedToGrader;
+                      //           break;
+                      //         case OrderStatus.Processing.toString():
+                      //           newStatus = OrderStatus.Processing;
+                      //           break;
+                      //         case OrderStatus.Received.toString():
+                      //           newStatus = OrderStatus.Received;
+                      //           break;
+                      //         case OrderStatus.Waiting.toString():
+                      //           newStatus = OrderStatus.Waiting;
+                      //           break;
+                      //         case OrderStatus.MailedOut.toString():
+                      //           newStatus = OrderStatus.MailedOut;
+                      //           break;
+                      //         default:
+                      //           throw new Error(
+                      //             "invalid argument in order change switch statement"
+                      //           );
+                      //       }
+
+                      //       updateOrder({
+                      //         ...order,
+                      //         status: newStatus,
+                      //       });
+                      //     }}
+                      //   >
+                      //     {Object.entries(OrderStatus).map((entry) => {
+                      //       return (
+                      //         <option key={entry[0]} value={entry[1]}>
+                      //           {entry[1]}
+                      //         </option>
+                      //       );
+                      //     })}
+                      //   </Form.Control>
+                      // </Form>
                       <div className="order order-hide">{order.status}</div>
                     )}
                   </div>
