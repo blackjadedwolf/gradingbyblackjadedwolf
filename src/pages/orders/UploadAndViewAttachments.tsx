@@ -16,7 +16,7 @@ export const UploadAndViewAttachments = (props: {
   const { orderID, isAdmin } = props;
 
   const [attachments, setAttachments] = useState<
-    firebase.storage.Reference[]
+    firebase.default.storage.Reference[]
   >();
 
   const [refreshFlag, setRefreshFlag] = useState(false);
@@ -37,7 +37,7 @@ export const UploadAndViewAttachments = (props: {
   };
 
   const AttachmentContainer = (props: {
-    attachment: firebase.storage.Reference;
+    attachment: firebase.default.storage.Reference;
     isAdmin: boolean;
   }) => {
     const { attachment } = props;

@@ -147,7 +147,7 @@ export const listOrderAttachments = async (orderID: string) => {
 
 export const setAttachmentViewability = async (
   viewable: boolean,
-  attachment: firebase.storage.Reference
+  attachment: firebase.default.storage.Reference
 ) => {
   const newMetadata = {
     customMetadata: {
@@ -175,7 +175,7 @@ export const downloadAttachment = async (orderID: string, filename: string) => {
 };
 
 export const deleteAttachment = async (
-  attachment: firebase.storage.Reference
+  attachment: firebase.default.storage.Reference
 ) => {
   return await attachment.delete();
 };
