@@ -10,6 +10,7 @@ import {
   Orders as OrdersPage,
   ViewOrder as ViewOrderPage,
   SubmissionMaintenance as SubmissionMaintenancePage,
+  Profile as ProfilePage
 } from "pages";
 
 import { PublicRoute, PrivateRoute, Header, Footer } from "components";
@@ -43,6 +44,7 @@ const App = () => {
             }
           />
           <PrivateRoute exact path="/orders" component={OrdersPage} />
+          <PrivateRoute exact path="/profile" component={ProfilePage} />
           <PrivateRoute
             exact
             path="/orders/:orderID"
