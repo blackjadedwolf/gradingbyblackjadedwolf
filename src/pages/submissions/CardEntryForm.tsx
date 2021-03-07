@@ -98,8 +98,8 @@ export const CardEntryForm = (props: Props) => {
           firstName: firstName,
           lastName: lastName,
           phoneNumber: phoneNumber,
-        }).then((orderDoc) => {
-          setOrderID(orderDoc.id);
+        }).then((orderID) => {
+          setOrderID(orderID);
         });
       }
       // initialOrder and setShowEditModal are set when being called from edit modal on order page

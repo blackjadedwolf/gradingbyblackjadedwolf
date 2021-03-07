@@ -12,6 +12,8 @@ import {
 } from "react-firebase-hooks/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import axios from "axios";
+import cuid from "cuid";
+import { FileEarmarkPost } from "react-bootstrap-icons";
 
 const ordersCollection =
   process.env.NODE_ENV === "development" ? "devOrders" : "orders";
@@ -101,6 +103,16 @@ export const useUserProfile = () => {
  **CRUD**
  ********/
 
+const generateUniqueOrderID = async (): Promise<string> => {  
+  const ID = cuid.slug();
+  const order = await firestore.collection(ordersCollection).doc(ID).get();
+  if(order.exists) {
+    return await generateUniqueOrderID();
+  } else {
+    return ID;
+  }
+}
+
 export const saveOrder = async (
   submissionLevel: SubmissionLevel,
   cards: SubmittedCard[],
@@ -116,8 +128,12 @@ export const saveOrder = async (
     status: OrderStatus.Waiting,
     dateCreated: new Date(Date.now()).toISOString(),
   };
+  
+  const ID = await generateUniqueOrderID();
 
-  return await firestore.collection(ordersCollection).add(order);
+  return await firestore.collection(ordersCollection).doc(ID).set(order).then(() => {
+    return ID;
+  });
 };
 
 export const updateOrder = async (updatedOrder: Order) => {
