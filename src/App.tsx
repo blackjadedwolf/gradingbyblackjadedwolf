@@ -10,16 +10,17 @@ import {
   Orders as OrdersPage,
   ViewOrder as ViewOrderPage,
   SubmissionMaintenance as SubmissionMaintenancePage,
-  Profile as ProfilePage
+  Profile as ProfilePage,
 } from "pages";
 
 import { PublicRoute, PrivateRoute, Header, Footer } from "components";
-import { useUser } from "services/api";
+import { useUser, useUserProfile } from "services/api";
 
 const App = () => {
   const maintenanceMode = process.env.NODE_ENV !== "development";
 
   const [user] = useUser();
+  const [userProfile] = useUserProfile();
 
   const isAdmin =
     user?.email === "gradingbyblackjadedwolf@gmail.com" ||
@@ -28,23 +29,23 @@ const App = () => {
   return (
     <BrowserRouter>
       <div className="App">
-        <Header />
+        <Header user={user} />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <PublicRoute exact path="/login" component={LoginPage} />
           <PublicRoute exact path="/register" component={RegisterPage} />
           <Route exact path="/passwordreset" component={PasswordResetPage} />
-          <Route
-            exact
-            path="/submit"
-            component={
-              (!isAdmin && maintenanceMode)
-                ? SubmissionMaintenancePage
-                : SubmissionsPage
-            }
-          />
+          <Route exact path="/submit">
+            {!isAdmin && maintenanceMode ? (
+              <SubmissionMaintenancePage />
+            ) : (
+              <SubmissionsPage user={user} userProfile={userProfile} isAdmin={isAdmin}/>
+            )}
+          </Route>
           <PrivateRoute exact path="/orders" component={OrdersPage} />
-          <PrivateRoute exact path="/profile" component={ProfilePage} />
+          <PrivateRoute exact path="/profile">
+            <ProfilePage user={user} userProfile={userProfile} />
+          </PrivateRoute>
           <PrivateRoute
             exact
             path="/orders/:orderID"

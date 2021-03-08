@@ -1,36 +1,47 @@
 import React, { useState } from "react";
 import { Modal, Form, Button, Col, Card } from "react-bootstrap";
-import { SubmittedCard, SubmissionLevel, Order } from "models";
-import { saveOrder, updateOrder, useUser, useUserProfile } from "services/api";
+import { SubmittedCard, SubmissionLevel, Order, User } from "models";
+import { saveOrder, updateOrder } from "services/api";
 import { PlusCircle, Trash } from "react-bootstrap-icons";
 import "./CardEntryForm.css";
 
-type Props =
+type Props = {
+  user?: firebase.default.User;
+  userProfile?: Partial<User>;
+  isAdmin: boolean;
+} & (
   | {
       setOrderID: React.Dispatch<React.SetStateAction<string | undefined>>;
     }
   | {
       initialOrder: Order;
       setShowEditModal: React.Dispatch<React.SetStateAction<boolean>>;
-    };
+    }
+);
 
 export const CardEntryForm = (props: Props) => {
-  const { setOrderID, initialOrder, setShowEditModal } = { ...props };
-
-  const [user] = useUser();
-  const [userProfile] = useUserProfile();
+  const {
+    setOrderID,
+    initialOrder,
+    setShowEditModal,
+    user,
+    userProfile,
+    isAdmin,
+  } = {
+    ...props,
+  };
 
   const [firstName, setFirstName] = useState<string | undefined>(
-    initialOrder?.firstName ?? userProfile?.firstName
+    initialOrder?.firstName ?? (!isAdmin ? userProfile?.firstName : undefined)
   );
   const [lastName, setLastName] = useState<string | undefined>(
-    initialOrder?.lastName ?? userProfile?.lastName
+    initialOrder?.lastName ?? (!isAdmin ? userProfile?.lastName : undefined)
   );
   const [email, setEmail] = useState<string | undefined>(
-    initialOrder?.email ?? user?.email
+    initialOrder?.email ?? (!isAdmin ? user?.email ?? undefined : undefined)
   );
   const [phoneNumber, setPhoneNumber] = useState<string | undefined>(
-    initialOrder?.phoneNumber ?? userProfile?.phoneNumber
+    initialOrder?.phoneNumber ?? (!isAdmin ? userProfile?.phoneNumber ?? undefined : undefined)
   );
   const [submissionLevel, setSubmissionLevel] = useState<
     SubmissionLevel | undefined

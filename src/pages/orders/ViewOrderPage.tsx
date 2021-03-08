@@ -74,6 +74,8 @@ const ViewOrderPage = () => {
               <CardEntryForm
                 initialOrder={order}
                 setShowEditModal={setShowEditModal}
+                // don't have to worry about admin overwriting info on an order that already exists
+                isAdmin={false}
               />
             </Modal.Body>
             <Modal.Footer>

@@ -13,7 +13,6 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import axios from "axios";
 import cuid from "cuid";
-import { FileEarmarkPost } from "react-bootstrap-icons";
 
 const ordersCollection =
   process.env.NODE_ENV === "development" ? "devOrders" : "orders";
@@ -69,12 +68,13 @@ export const createUserProfile = async (user: User) => {
   });
 };
 
-export const updateUserProfile = async (updatedUser: User) => {
+export const updateUserProfile = async (updatedUser: Pick<User, "firstName" | "lastName" | "phoneNumber" | "email">) => {
   return await firestore
     .collection(userDocCollection)
     .doc(updatedUser.email)
-    .update({
-      firstname: updatedUser.firstName,
+    .set({
+      email: updatedUser.email,
+      firstName: updatedUser.firstName,
       lastName: updatedUser.lastName,
       phoneNumber: updatedUser.phoneNumber,
     });
@@ -82,7 +82,7 @@ export const updateUserProfile = async (updatedUser: User) => {
 
 export const useUserProfile = () => {
   const [user] = useUser();
-  return useDocumentData<User>(
+  return useDocumentData<Partial<User>>(
     firestore.collection(userDocCollection).doc(user?.email ?? "doesnot@exist.com")
   );
 };
