@@ -10788,3 +10788,18 @@ input[type='file'] {
   50%  { transform: translate(0, 15px); } 
   100%   { transform: translate(0, -0px); }     
 } 
+
+.profile-wrap{
+  height: 80vh;
+  background-color:black;
+  margin-top:12vh;
+}
+
+.profile-container{
+  min-height: 80vh;
+}
+
+.profile-container form{
+  margin-top:20%;
+  color:white;
+}
