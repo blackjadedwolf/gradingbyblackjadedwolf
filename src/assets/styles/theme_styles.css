@@ -10792,7 +10792,7 @@ input[type='file'] {
 .profile-wrap{
   height: 80vh;
   background-color:black;
-  margin-top:12vh;
+  margin-top:8vh;
 }
 
 .profile-container{
@@ -10800,6 +10800,41 @@ input[type='file'] {
 }
 
 .profile-container form{
-  margin-top:20%;
+  margin-top:5%;
   color:white;
+}
+
+
+.profile-header{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family: "Montserrat";
+  font-size: 1.3rem;
+  font-weight: 600;
+  color:white;
+  padding-bottom:1rem;
+  padding-top:1rem;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+  .profile-wrap{
+    height: 125vh;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .profile-wrap{
+    margin-top:7vh;
+    height: 130vh;
+  }
+}
+
+@media only screen and (min-width: 990px) {
+  .profile-wrap{
+    margin-top:7vh;
+    height: 71.55vh;
+  }
 }

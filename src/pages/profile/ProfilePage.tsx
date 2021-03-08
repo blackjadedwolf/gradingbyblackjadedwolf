@@ -80,32 +80,20 @@ const ProfilePage = (props: {
                 defaultValue={user?.email ?? userProfile?.email}
               />
             </div>
-            {!sentPasswordReset ? <button className="btn btn-primary col-md-6" onClick={() => {
-              if(user?.email) {
-                resetPassword(user.email).then(() => {
-                  setSentPasswordReset(true);
-                })
-              } else if (userProfile?.email) {
-                resetPassword(userProfile.email).then(() => {
-                  setSentPasswordReset(true);
-                })
-              }
-            }}>
-              Send Password Reset Email
-            </button> : <p>Look at your email for password reset link!</p>}
-          </div>
-          <div className="form-group">
-            <label>Phone Number</label>
-            <input
-              type="tel"
-              className="form-control"
-              id="phoneNum"
-              placeholder="Phone Number"
-              value={phoneNumber}
-              onChange={(event) => {
-                setPhoneNumber(event.target.value);
-              }}
-            />
+            <div className="form-group col-md-6">
+              <label>Phone Number</label>
+              <input
+                type="tel"
+                className="form-control"
+                id="phoneNum"
+                placeholder="Phone Number"
+                value={phoneNumber}
+                onChange={(event) => {
+                  setPhoneNumber(event.target.value);
+                }}
+              />
+            </div>
+
           </div>
           {/* <div className="form-row">
             <div className="form-group col-md-6">
@@ -125,6 +113,19 @@ const ProfilePage = (props: {
             </div>
           </div> */}
           <div className="row">
+          {!sentPasswordReset ? <button className="btn btn-primary col-md-6" onClick={() => {
+              if(user?.email) {
+                resetPassword(user.email).then(() => {
+                  setSentPasswordReset(true);
+                })
+              } else if (userProfile?.email) {
+                resetPassword(userProfile.email).then(() => {
+                  setSentPasswordReset(true);
+                })
+              }
+            }}>
+              Send Password Reset Email
+            </button> : <p>Look at your email for password reset link!</p>}
             <button type="submit" className="btn btn-primary">
               Save
             </button>
