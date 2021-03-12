@@ -112,10 +112,12 @@ const OrdersPage = () => {
         <div className="container-fluid table-headings">
           <div className="table-heading">Order #</div>
           {isAdmin && <div className="table-heading order-hide">Email</div>}
+          {/* 
           {isAdmin && <div className="table-heading order-hide">Last Name</div>}
           {isAdmin && (
             <div className="table-heading order-hide">First Name</div>
           )}
+          */}
           {isAdmin && (
             <div className="table-heading order-hide">Phone Number</div>
           )}
@@ -139,19 +141,21 @@ const OrdersPage = () => {
                     {isAdmin && (
                       <div className="order order-hide">{order.email}</div>
                     )}
+                    {/*
                     {isAdmin && (
                       <div className="order order-hide">{order.lastName}</div>
                     )}
                     {isAdmin && (
                       <div className="order order-hide">{order.firstName}</div>
                     )}
+                    */}
                     {isAdmin && (
                       <div className="order order-hide">
                         {order.phoneNumber}
                       </div>
                     )}
                     <div className="order order-hide">
-                      {new Date(order.dateCreated).toDateString()}
+                      {new Date(order.dateCreated).toISOString().split('T')[0]}
                     </div>
                     <div className="order order-hide">
                       {" "}
