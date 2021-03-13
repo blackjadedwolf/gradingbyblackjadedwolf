@@ -4,7 +4,6 @@ import { useOrders, useUser } from "services/api";
 import { Link } from "react-router-dom";
 import { OrderStatus } from "models";
 import { updateOrder } from "services/api";
-import { FileX } from "react-bootstrap-icons";
 
 const OrdersPage = () => {
   enum SearchTypes {
