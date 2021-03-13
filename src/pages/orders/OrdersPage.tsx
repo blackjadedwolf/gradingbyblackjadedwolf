@@ -4,6 +4,7 @@ import { useOrders, useUser } from "services/api";
 import { Link } from "react-router-dom";
 import { OrderStatus } from "models";
 import { updateOrder } from "services/api";
+import { FileX } from "react-bootstrap-icons";
 
 const OrdersPage = () => {
   enum SearchTypes {
@@ -112,19 +113,20 @@ const OrdersPage = () => {
         <div className="container-fluid table-headings">
           <div className="table-heading">Order #</div>
           {isAdmin && <div className="table-heading order-hide">Email</div>}
-          {/* 
-          {isAdmin && <div className="table-heading order-hide">Last Name</div>}
+          {isAdmin && <div className="table-heading order-hide" id="lastname-heading">Last Name</div>}
+          {/*
           {isAdmin && (
             <div className="table-heading order-hide">First Name</div>
           )}
-          */}
+        
           {isAdmin && (
             <div className="table-heading order-hide">Phone Number</div>
           )}
-          <div className="table-heading order-hide">Date Submitted</div>
+          */}
+          <div className="table-heading order-hide" id="date-heading">Date Submitted</div>
           <div className="table-heading order-hide">Submission Level</div>
-          {isAdmin && <div className="table-heading order-hide">PSA ID</div>}
-          <div className="table-heading order-hide">Order Status</div>
+          {isAdmin && <div className="table-heading order-hide" id="psa-heading">PSA ID</div>}
+          <div className="table-heading order-hide" id="status-form">Order Status</div>
         </div>
         {!ordersLoading ? (
           userOrders && (
@@ -141,20 +143,22 @@ const OrdersPage = () => {
                     {isAdmin && (
                       <div className="order order-hide">{order.email}</div>
                     )}
-                    {/*
                     {isAdmin && (
-                      <div className="order order-hide">{order.lastName}</div>
+                      <div className="order order-hide" id="lastname-heading">{order.lastName}</div>
                     )}
+                    {/*
                     {isAdmin && (
                       <div className="order order-hide">{order.firstName}</div>
                     )}
-                    */}
+                      {/*
                     {isAdmin && (
                       <div className="order order-hide">
                         {order.phoneNumber}
-                      </div>
+                      </div
+                      >
                     )}
-                    <div className="order order-hide">
+                    */}
+                    <div className="order order-hide" id="date-heading">
                       {new Date(order.dateCreated).toISOString().split('T')[0]}
                     </div>
                     <div className="order order-hide">
@@ -162,12 +166,12 @@ const OrdersPage = () => {
                       {order.submissionLevel}
                     </div>
                     {isAdmin && (
-                      <div className="order order-hide">
+                      <div className="order order-hide" id="psa-heading">
                         {order.psa_id ?? <p>No ID yet</p>}
                       </div>
                     )}
                     {isAdmin ? (
-                      <Form className="order order-hide">
+                      <Form className="order form-style order-hide" id="status-form">
                         <Form.Control
                           style={{ width: "12.5rem" }}
                           as="select"

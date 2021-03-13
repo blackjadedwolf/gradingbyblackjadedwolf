@@ -10510,7 +10510,7 @@ form .row:first-child .floating-label-form-group {
 }
 
 .table-heading{
-  flex:1;
+  flex:2;
   border-top:0px solid black !important;
   border-bottom:0px solid black !important;
   font-family: "Montserrat";
@@ -10528,7 +10528,29 @@ form .row:first-child .floating-label-form-group {
 
 .order{ 
   flex:1;
-  color:white; 
+  color:white;
+}
+
+.form-style{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#date-heading{
+  max-width: 100px;
+}
+
+#lastname-heading{
+  max-width:140px;
+}
+
+#psa-heading{
+  max-width: 150px;
+}
+
+#status-form{
+  max-width:180px;
 }
 
 .order:first-child:hover{
