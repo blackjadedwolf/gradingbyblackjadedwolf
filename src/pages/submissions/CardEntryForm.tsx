@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { Modal, Form, Button, Col, Card } from "react-bootstrap";
-import { SubmittedCard, SubmissionLevel, Order, User } from "models";
+import {
+  SubmittedCard,
+  SubmissionLevelsBeforeMar012021,
+  SubmissionLevels,
+  Order,
+  User,
+  SubmissionLevel,
+} from "models";
 import { saveOrder, updateOrder } from "services/api";
 import { PlusCircle, Trash } from "react-bootstrap-icons";
 import "./CardEntryForm.css";
@@ -31,6 +38,14 @@ export const CardEntryForm = (props: Props) => {
     ...props,
   };
 
+  // Price change occured on March 01 2021, we are supporting old orders for a while
+  const orderDate = initialOrder?.dateCreated
+    ? new Date(initialOrder.dateCreated)
+    : undefined;
+
+  const isOrderBeforeMar012021 =
+    orderDate && orderDate < new Date("March 01 2021");
+
   const [firstName, setFirstName] = useState<string | undefined>(
     initialOrder?.firstName ?? (!isAdmin ? userProfile?.firstName : undefined)
   );
@@ -41,11 +56,17 @@ export const CardEntryForm = (props: Props) => {
     initialOrder?.email ?? (!isAdmin ? user?.email ?? undefined : undefined)
   );
   const [phoneNumber, setPhoneNumber] = useState<string | undefined>(
-    initialOrder?.phoneNumber ?? (!isAdmin ? userProfile?.phoneNumber ?? undefined : undefined)
+    initialOrder?.phoneNumber ??
+      (!isAdmin ? userProfile?.phoneNumber ?? undefined : undefined)
   );
+
+
+  /* If order uses old submission level, this field is irrelevent because
+     it is readonly on the form. If it is a fresh order or order since price
+     update it will have SubmissionLevel type */
   const [submissionLevel, setSubmissionLevel] = useState<
     SubmissionLevel | undefined
-  >(initialOrder?.submissionLevel);
+  >(initialOrder?.submissionLevel as SubmissionLevel);
   const [cards, setCards] = useState<SubmittedCard[] | undefined>(
     initialOrder?.cards
   );
@@ -61,32 +82,12 @@ export const CardEntryForm = (props: Props) => {
   const [estimatedValue, setEstimatedValue] = useState<string | null>();
   const [showTermsModal, setShowTermsModal] = useState(false);
 
-  const getDVFromSubmissionLevel = () => {
-    let subLevel = submissionLevel;
-    switch (subLevel) {
-      case SubmissionLevel.Standard5:
-        return 2499;
-      case SubmissionLevel.Standard10:
-        return 999;
-      case SubmissionLevel.Standard20:
-        return 499;
-      case SubmissionLevel.BulkBefore1971:
-        return 199;
-      case SubmissionLevel.Bulk1971to2016:
-        return 199;
-      case SubmissionLevel.BulkAfter2017:
-        return 199;
-      default:
-        return 0;
-    }
-  };
-
   const validateCardValueInput = (input: string) => {
     let inputPrice = 0;
     let maxPrice = 0;
     if (!(estimatedValue === null || estimatedValue === undefined)) {
       inputPrice = parseInt(input, 10);
-      maxPrice = getDVFromSubmissionLevel();
+      maxPrice = submissionLevel?.maxDeclaredvalue;
     }
     return inputPrice > maxPrice ? false : true;
   };
@@ -123,7 +124,7 @@ export const CardEntryForm = (props: Props) => {
           phoneNumber: phoneNumber,
           submissionLevel: submissionLevel,
           cards: cards,
-          // Include psa_id if it is set, or not include it in the update if not to prevent crash
+          // Avoid crash related to updating with an unset psaID by only including it if it is set
           ...(psaID && { psa_id: psaID }),
         }).then(() => {
           setShowEditModal(false);
@@ -260,47 +261,64 @@ export const CardEntryForm = (props: Props) => {
               required
               as="select"
               placeholder="Submission Level"
-              value={submissionLevel}
+              readOnly={initialOrder && isOrderBeforeMar012021}
+              value={isOrderBeforeMar012021 ? initialOrder?.submissionLevel : submissionLevel.n}
               onChange={(event) => {
-                let subLevel: SubmissionLevel;
+                if(initialOrder) {
+                  if(isOrderBeforeMar012021) {
+                    // DO NOTHING
 
-                switch (event.target.value) {
-                  case SubmissionLevel.Standard5.toString():
-                    subLevel = SubmissionLevel.Standard5;
-                    break;
-                  case SubmissionLevel.Standard10.toString():
-                    subLevel = SubmissionLevel.Standard10;
-                    break;
-                  case SubmissionLevel.Standard20.toString():
-                    subLevel = SubmissionLevel.Standard20;
-                    break;
-                  case SubmissionLevel.BulkBefore1971.toString():
-                    subLevel = SubmissionLevel.BulkBefore1971;
-                    break;
-                  case SubmissionLevel.Bulk1971to2016.toString():
-                    subLevel = SubmissionLevel.Bulk1971to2016;
-                    break;
-                  case SubmissionLevel.BulkAfter2017.toString():
-                    subLevel = SubmissionLevel.BulkAfter2017;
-                    break;
-                  default:
-                    throw new Error(
-                      "Invalid argument in submission level selection switch statement"
-                    );
+                    // let subLevel: SubmissionLevelsBeforeMar012021;
+
+                    // switch (event.target.value) {
+                    //   case SubmissionLevelsBeforeMar012021.Standard5.toString():
+                    //     subLevel = SubmissionLevelsBeforeMar012021.Standard5;
+                    //     break;
+                    //   case SubmissionLevelsBeforeMar012021.Standard10.toString():
+                    //     subLevel = SubmissionLevelsBeforeMar012021.Standard10;
+                    //     break;
+                    //   case SubmissionLevelsBeforeMar012021.Standard20.toString():
+                    //     subLevel = SubmissionLevelsBeforeMar012021.Standard20;
+                    //     break;
+                    //   case SubmissionLevelsBeforeMar012021.BulkBefore1971.toString():
+                    //     subLevel = SubmissionLevelsBeforeMar012021.BulkBefore1971;
+                    //     break;
+                    //   case SubmissionLevelsBeforeMar012021.Bulk1971to2016.toString():
+                    //     subLevel = SubmissionLevelsBeforeMar012021.Bulk1971to2016;
+                    //     break;
+                    //   case SubmissionLevelsBeforeMar012021.BulkAfter2017.toString():
+                    //     subLevel = SubmissionLevelsBeforeMar012021.BulkAfter2017;
+                    //     break;
+                    //   default:
+                    //     throw new Error(
+                    //       "Invalid argument in submission level selection switch statement"
+                    //     );
+                    // }
+                    // setSubmissionLevel(subLevel);
+                  }
+                } else {
+                  const match: SubmissionLevel | undefined = SubmissionLevels.find((level) => level.name === event.target.value);
+                  if(match) {
+                    setSubmissionLevel(match)
+                  }
                 }
-                setSubmissionLevel(subLevel);
               }}
             >
               <option value="none" selected disabled hidden>
                 Please choose a submission level
               </option>
-              {Object.entries(SubmissionLevel).map((entry) => {
+              {Object.entries(SubmissionLevelsBeforeMar012021).map((entry) => {
                 return (
                   <option key={entry[0]} value={entry[1]}>
                     {entry[1]}
                   </option>
                 );
               })}
+              {SubmissionLevels.map(level => (
+                <option key={level.name} value={level.name}>
+                  {`${level.name} | Cost per card ${level.cost} | Max DV ${level.maxDeclaredvalue}`}
+                </option>
+              ))}
             </Form.Control>
             <Form.Control.Feedback type="valid">
               Looks good!

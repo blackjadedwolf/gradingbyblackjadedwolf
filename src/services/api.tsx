@@ -3,7 +3,6 @@ import {
   Order,
   User,
   OrderStatus,
-  SubmissionLevel,
 } from "../models";
 import { auth, firestore, storage } from "./firebase";
 import {
@@ -114,7 +113,7 @@ const generateUniqueOrderID = async (): Promise<string> => {
 }
 
 export const saveOrder = async (
-  submissionLevel: SubmissionLevel,
+  submissionLevel: SubmissionLevelsBeforeMar012020,
   cards: SubmittedCard[],
   userDetails: User
 ) => {
