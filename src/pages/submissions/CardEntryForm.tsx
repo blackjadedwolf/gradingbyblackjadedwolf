@@ -262,7 +262,7 @@ export const CardEntryForm = (props: Props) => {
               as="select"
               placeholder="Submission Level"
               readOnly={initialOrder && isOrderBeforeMar012021}
-              value={isOrderBeforeMar012021 ? initialOrder?.submissionLevel : submissionLevel.n}
+              value={isOrderBeforeMar012021 ? initialOrder?.submissionLevel : submissionLevel.name}
               onChange={(event) => {
                 if(initialOrder) {
                   if(isOrderBeforeMar012021) {
@@ -307,13 +307,13 @@ export const CardEntryForm = (props: Props) => {
               <option value="none" selected disabled hidden>
                 Please choose a submission level
               </option>
-              {Object.entries(SubmissionLevelsBeforeMar012021).map((entry) => {
+              {/* {Object.entries(SubmissionLevelsBeforeMar012021).map((entry) => {
                 return (
                   <option key={entry[0]} value={entry[1]}>
                     {entry[1]}
                   </option>
                 );
-              })}
+              })} */}
               {SubmissionLevels.map(level => (
                 <option key={level.name} value={level.name}>
                   {`${level.name} | Cost per card ${level.cost} | Max DV ${level.maxDeclaredvalue}`}

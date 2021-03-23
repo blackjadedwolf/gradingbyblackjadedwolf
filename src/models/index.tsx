@@ -46,7 +46,7 @@ export interface SubmissionLevel {
 }
 
 export const SubmissionLevels: SubmissionLevel[] = [
-  {
+  { 
     name: "Value 2018 - Current",
     cost: 25,
     maxDeclaredvalue: 499,
