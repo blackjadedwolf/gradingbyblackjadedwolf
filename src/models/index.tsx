@@ -112,7 +112,7 @@ export const SubmissionLevels: SubmissionLevel[] = [
 export interface Order {
   id?: string;
   psa_id?: number;
-  submissionLevel: SubmissionLevelsBeforeMar012021 | SubmissionLevel;
+  submissionLevel: SubmissionLevel;
   firstName: string;
   lastName: string;
   email: string;

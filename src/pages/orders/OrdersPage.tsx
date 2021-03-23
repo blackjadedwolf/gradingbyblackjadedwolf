@@ -4,6 +4,7 @@ import { useOrders, useUser } from "services/api";
 import { Link } from "react-router-dom";
 import { OrderStatus } from "models";
 import { updateOrder } from "services/api";
+import { isOrderBeforeMar232021 } from "services/compatibility";
 
 const OrdersPage = () => {
   enum SearchTypes {
@@ -48,6 +49,11 @@ const OrdersPage = () => {
           }
         })
       : userOrders;
+
+  // Display orders in reverse chronological order (newest first)
+  userOrders?.sort((a, b) =>
+    new Date(a.dateCreated) > new Date(b.dateCreated) ? -1 : 1
+  );
 
   return (
     <div className="orders-wrap">
@@ -112,7 +118,11 @@ const OrdersPage = () => {
         <div className="container-fluid table-headings">
           <div className="table-heading">Order #</div>
           {isAdmin && <div className="table-heading order-hide">Email</div>}
-          {isAdmin && <div className="table-heading order-hide" id="lastname-heading">Last Name</div>}
+          {isAdmin && (
+            <div className="table-heading order-hide" id="lastname-heading">
+              Last Name
+            </div>
+          )}
           {/*
           {isAdmin && (
             <div className="table-heading order-hide">First Name</div>
@@ -122,10 +132,18 @@ const OrdersPage = () => {
             <div className="table-heading order-hide">Phone Number</div>
           )}
           */}
-          <div className="table-heading order-hide" id="date-heading">Date Submitted</div>
+          <div className="table-heading order-hide" id="date-heading">
+            Date Submitted
+          </div>
           <div className="table-heading order-hide">Submission Level</div>
-          {isAdmin && <div className="table-heading order-hide" id="psa-heading">PSA ID</div>}
-          <div className="table-heading order-hide" id="status-form">Order Status</div>
+          {isAdmin && (
+            <div className="table-heading order-hide" id="psa-heading">
+              PSA ID
+            </div>
+          )}
+          <div className="table-heading order-hide" id="status-form">
+            Order Status
+          </div>
         </div>
         {!ordersLoading ? (
           userOrders && (
@@ -143,7 +161,9 @@ const OrdersPage = () => {
                       <div className="order order-hide">{order.email}</div>
                     )}
                     {isAdmin && (
-                      <div className="order order-hide" id="lastname-heading">{order.lastName}</div>
+                      <div className="order order-hide" id="lastname-heading">
+                        {order.lastName}
+                      </div>
                     )}
                     {/*
                     {isAdmin && (
@@ -158,11 +178,13 @@ const OrdersPage = () => {
                     )}
                     */}
                     <div className="order order-hide" id="date-heading">
-                      {new Date(order.dateCreated).toISOString().split('T')[0]}
+                      {new Date(order.dateCreated).toISOString().split("T")[0]}
                     </div>
                     <div className="order order-hide">
                       {" "}
-                      {order.submissionLevel}
+                      {isOrderBeforeMar232021(order)
+                        ? String(order.submissionLevel)
+                        : order.submissionLevel.name}
                     </div>
                     {isAdmin && (
                       <div className="order order-hide" id="psa-heading">
@@ -170,7 +192,10 @@ const OrdersPage = () => {
                       </div>
                     )}
                     {isAdmin ? (
-                      <Form className="order form-style order-hide" id="status-form">
+                      <Form
+                        className="order form-style order-hide"
+                        id="status-form"
+                      >
                         <Form.Control
                           style={{ width: "12.5rem" }}
                           as="select"

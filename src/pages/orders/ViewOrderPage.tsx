@@ -7,6 +7,7 @@ import { Invoice } from "./Invoice";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { UploadAndViewAttachments } from "./UploadAndViewAttachments";
 import { CardEntryForm } from "pages/submissions/CardEntryForm";
+import { isOrderBeforeMar232021 } from "services/compatibility";
 
 interface RouteParams {
   orderID: string;
@@ -250,7 +251,7 @@ const ViewOrderPage = () => {
                 <span className="indiv-order-caption">
                   Submission Level: &nbsp;
                 </span>
-                {order.submissionLevel.split("|")[1]}
+                {isOrderBeforeMar232021(order) ? String(order.submissionLevel) : order.submissionLevel.name}
               </div>
             </div>
 
