@@ -9,7 +9,6 @@ import {
   PasswordReset as PasswordResetPage,
   Orders as OrdersPage,
   ViewOrder as ViewOrderPage,
-  SubmissionMaintenance as SubmissionMaintenancePage,
   Profile as ProfilePage,
 } from "pages";
 
@@ -17,8 +16,6 @@ import { PublicRoute, PrivateRoute, Header, Footer } from "components";
 import { useUser, useUserProfile } from "services/api";
 
 const App = () => {
-  const maintenanceMode = process.env.NODE_ENV !== "development";
-
   const [user] = useUser();
   const [userProfile] = useUserProfile();
 
@@ -36,11 +33,7 @@ const App = () => {
           <PublicRoute exact path="/register" component={RegisterPage} />
           <Route exact path="/passwordreset" component={PasswordResetPage} />
           <Route exact path="/submit">
-            {!isAdmin && maintenanceMode ? (
-              <SubmissionMaintenancePage />
-            ) : (
-              <SubmissionsPage user={user} userProfile={userProfile} isAdmin={isAdmin}/>
-            )}
+            <SubmissionsPage user={user} userProfile={userProfile} isAdmin={isAdmin}/>
           </Route>
           <PrivateRoute exact path="/orders" component={OrdersPage} />
           <PrivateRoute exact path="/profile">

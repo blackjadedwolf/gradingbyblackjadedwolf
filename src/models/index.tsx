@@ -28,14 +28,14 @@ export enum OrderStatus {
 }
 
 // Price change occured on March 01 2021, we are supporting old orders for a while
-export enum SubmissionLevelsBeforeMar012021 {
-  Standard5 = "Standard | 5 Day Subs | $80.00 | Max DV $2499.00",
-  Standard10 = "Standard | 10 Day Subs | $50.00 | Max DV $999.00",
-  Standard20 = "Standard | 20 Day Subs | $25.00 | Max DV $499.00",
-  BulkBefore1971 = "Bulk | Before 1971 | 45 Day Subs | $12.00 | Max DV $199.00",
-  Bulk1971to2016 = "Bulk | 1971-2016 | 45 Day Subs | $12.00 | Max DV $199.00",
-  BulkAfter2017 = "Bulk | 2017-Present | 45 Day Subs | $15.00 | Max DV $199.00"
-}
+// export enum SubmissionLevelsBeforeMar012021 {
+//   Standard5 = "Standard | 5 Day Subs | $80.00 | Max DV $2499.00",
+//   Standard10 = "Standard | 10 Day Subs | $50.00 | Max DV $999.00",
+//   Standard20 = "Standard | 20 Day Subs | $25.00 | Max DV $499.00",
+//   BulkBefore1971 = "Bulk | Before 1971 | 45 Day Subs | $12.00 | Max DV $199.00",
+//   Bulk1971to2016 = "Bulk | 1971-2016 | 45 Day Subs | $12.00 | Max DV $199.00",
+//   BulkAfter2017 = "Bulk | 2017-Present | 45 Day Subs | $15.00 | Max DV $199.00"
+// }
 
 // cost is the cost per submitting each card
 export interface SubmissionLevel {
@@ -102,7 +102,7 @@ export const SubmissionLevels: SubmissionLevel[] = [
   },
   {
     name: "Premium Service",
-    cost: 1050,
+    cost: 1100,
     maxDeclaredvalue: 19999,
     enabled: true,
   },

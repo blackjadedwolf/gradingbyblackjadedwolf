@@ -260,6 +260,7 @@ export const CardEntryForm = (props: Props) => {
                   | undefined = SubmissionLevels.find(
                   (level) => level.name === event.target.value
                 );
+                
                 if (match) {
                   setSubmissionLevel(match);
                 }
@@ -268,11 +269,14 @@ export const CardEntryForm = (props: Props) => {
               <option value="none" selected disabled hidden>
                 Please choose a submission level
               </option>
-              {SubmissionLevels.map((level) => (
-                <option key={level.name} value={level.name}>
-                  {`${level.name} | Cost per card $${level.cost} | Max DV $${level.maxDeclaredvalue}`}
-                </option>
-              ))}
+              {SubmissionLevels.map(
+                (level) =>
+                  level.enabled && (
+                    <option key={level.name} value={level.name}>
+                      {`${level.name} | Cost per card $${level.cost} | Max DV $${level.maxDeclaredvalue}`}
+                    </option>
+                  )
+              )}
             </Form.Control>
             <Form.Control.Feedback type="valid">
               Looks good!
