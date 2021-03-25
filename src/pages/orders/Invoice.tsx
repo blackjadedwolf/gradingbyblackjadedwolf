@@ -169,6 +169,8 @@ export const Invoice = (props: Props) => {
     ? Number(String(order.submissionLevel).split("|")[2].split("$")[1])
     : order.submissionLevel.cost;
 
+  // we'll need this when we fix the invoice
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const subTotal = cards
     .map((card) => {
       return (
@@ -280,10 +282,10 @@ export const Invoice = (props: Props) => {
           <Text>Total Declared Value: </Text>
           <Text style={styles.total}> ${totalDeclaredValue.toFixed(2)}</Text>
         </View>
-        <View style={[styles.row, styles.description]}>
+        {/* <View style={[styles.row, styles.description]}>
           <Text>Sub Total: </Text>
           <Text style={styles.total}> ${subTotal}</Text>
-        </View>
+        </View> */}
 
         <View style={{ marginTop: "40" }}>
           <Text>
