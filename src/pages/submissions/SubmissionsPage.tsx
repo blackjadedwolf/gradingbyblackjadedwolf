@@ -28,7 +28,7 @@ const Submissions = (props: {
           <div className="submission-row">
             <div className="submission-days text-center">
               {" "}
-              20 Day Subs <br></br> $25.00{" "}
+              Economy Service <br></br> $50.00{" "}
             </div>
             <div className="submission-price text-center"> Max DV $499.00 </div>
           </div>
@@ -36,7 +36,7 @@ const Submissions = (props: {
           <div className="submission-row">
             <div className="submission-days text-center">
               {" "}
-              10 Day Subs <br></br> $50.00{" "}
+              Regular Service <br></br> $100.00{" "}
             </div>
             <div className="submission-price text-center"> Max DV $999.00 </div>
           </div>
@@ -44,11 +44,40 @@ const Submissions = (props: {
           <div className="submission-row">
             <div className="submission-days text-center">
               {" "}
-              5 Day Subs <br></br> $80.00{" "}
+              Express Service <br></br> $175.00{" "}
             </div>
             <div className="submission-price text-center">
               {" "}
               Max DV $2499.00{" "}
+            </div>
+          </div>
+        </div>
+
+        <div className="container submission-row-wrap pt">
+          <div className="submission-row">
+            <div className="submission-days text-center">
+              {" "}
+              Super Express Service <br></br> $350.00{" "}
+            </div>
+            <div className="submission-price text-center"> Max DV $4999.00 </div>
+          </div>
+
+          <div className="submission-row">
+            <div className="submission-days text-center">
+              {" "}
+              Walk Through Service <br></br> $650.00{" "}
+            </div>
+            <div className="submission-price text-center"> Max DV $9999.00 </div>
+          </div>
+
+          <div className="submission-row">
+            <div className="submission-days text-center">
+              {" "}
+              Premium Service <br></br> $1100.00{" "}
+            </div>
+            <div className="submission-price text-center">
+              {" "}
+              Max DV $19999.00{" "}
             </div>
           </div>
 
@@ -70,25 +99,33 @@ const Submissions = (props: {
           <div className="submission-row">
             <div className="submission-days text-center">
               {" "}
-              2018-Present | 45 Day Subs <br></br> $15.00{" "}
+              Value 2018-Present <br></br> $25.00{" "}
             </div>
-            <div className="submission-price text-center"> Max DV $199.00 </div>
+            <div className="submission-price text-center"> Max DV $499.00 </div>
           </div>
 
           <div className="submission-row">
             <div className="submission-days text-center">
               {" "}
-              1972-2017 | 45 Day Subs <br></br> $12.00{" "}
+              Value 1972-2017 <br></br> $20.00{" "}
             </div>
-            <div className="submission-price text-center"> Max DV $199.00 </div>
+            <div className="submission-price text-center"> Max DV $499.00 </div>
           </div>
 
           <div className="submission-row">
             <div className="submission-days text-center">
               {" "}
-              Before 1972 | 45 Day Subs <br></br> $10.00{" "}
+              Value 1971 and Earlier <br></br> $20.00{" "}
             </div>
-            <div className="submission-price text-center"> Max DV $199.00 </div>
+            <div className="submission-price text-center"> Max DV $499.00 </div>
+          </div>
+
+          <div className="submission-row">
+            <div className="submission-days text-center">
+              {" "}
+              Value TCG <br></br> $20.00{" "}
+            </div>
+            <div className="submission-price text-center"> Max DV $499.00 </div>
           </div>
 
           <div className="text-center mt-4">
