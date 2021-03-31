@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { CardEntryForm } from "./CardEntryForm";
 import psaLogo from "../../assets/img/psa-logo.png";
 import bulk_pdf from "../../assets/bulk.pdf";
+import suspended_levels_letter from "../../assets/img/PSA_Service_Suspension_Letter.jpg";
 import submission_pdf from "../../assets/submission.pdf";
 import { User } from "models";
 
@@ -18,6 +19,9 @@ const Submissions = (props: {
 
   return (
     <div className="submission-wrap">
+      <div className="psa-submission-letter-wrap">
+        <img className="psa-submission-letter-img" src={suspended_levels_letter} alt="Letter describing current suspended levels"/>
+      </div>
       <div className="submission-description mt-2 pt-5">
         <div className="submission-heading text-center text-uppercase">
           {" "}

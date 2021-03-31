@@ -10429,6 +10429,17 @@ form .row:first-child .floating-label-form-group {
   width: 200px;
 }
 
+.psa-submission-letter-wrap {
+  display: flex;
+}
+
+.psa-submission-letter-img {
+  width: 500px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 2;
+}
+
 /* = = = = = = = = = = = SUBMISSION FORM = = = = = = = = = = = */
 
 
